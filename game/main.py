@@ -9,4 +9,4 @@ from rich.console import Console
 
 print("[blue]CARTER [orange]BRAYDEN")
 console = Console()
-console.print("[blue underline]CARTER[white on red] [orange1]BRAYDEN")
+console.print("[blue underline]CARTER[white on orange1] [orange1 on white]BRAYDEN")

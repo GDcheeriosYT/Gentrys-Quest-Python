@@ -21,6 +21,14 @@ python-versions = ">=3.6"
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pypresence"
+version = "4.2.1"
+description = "Discord RPC client written in Python"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[[package]]
 name = "rich"
 version = "12.5.1"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
@@ -47,10 +55,11 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "870d15e4a4882d98db947d70cb1efb5071431b6ef24b7c552bbda084648625ab"
+content-hash = "baabf6d21f21862e35b1485498b32ed7b9be5c6d1ced7bd42aed5c9b6ec4be8a"
 
 [metadata.files]
 commonmark = []
 pygments = []
+pypresence = []
 rich = []
 typing-extensions = []

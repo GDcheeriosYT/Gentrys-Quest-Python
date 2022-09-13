@@ -12,6 +12,7 @@ from Online.API import Login
 
 # built-in packages
 import sys
+import time
 
 # important variables
 args = sys.argv
@@ -21,6 +22,5 @@ game_data = Login.login(account_info.username, account_info.password, server.url
 user = User(AccountInfo.username, game_data["inventory"])
 
 # code
-print("[blue]CARTER [orange]BRAYDEN")
 console = Console()
-console.print("[blue underline]CARTER[white on orange1] [orange1 on white]BRAYDEN")
+console.print("[blue bold underline]CARTER[white on orange1] [orange1 on white]BRAYDEN")

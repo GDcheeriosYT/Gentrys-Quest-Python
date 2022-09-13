@@ -5,3 +5,4 @@ class Text:
     color = Color.Color("white")
 
     def __init__(self, content, color):
+        c

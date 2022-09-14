@@ -1,7 +1,7 @@
 class User:
     username = None
-    inventory = None
 
-    def __init__(self, username, inventory):
+    def __init__(self, username, powerlevel, aura):
         self.username = username
-        self.inventory = inventory
+        self.powerlevel = powerlevel
+        self.aura = None

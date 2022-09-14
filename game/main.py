@@ -10,6 +10,15 @@ from Online.Account import AccountInfo
 from Online.User import User
 from Online.API import Login
 
+# graphic game packages
+from Graphics.Style import Style
+
+# IO game packages
+from IO import Window
+
+# game data packages
+import GameData
+
 # built-in packages
 import sys
 import time
@@ -18,9 +27,12 @@ import time
 args = sys.argv
 server = Server(args[3])
 account_info = AccountInfo(args[1], args[2])
-game_data = Login.login(account_info.username, account_info.password, server.url)
-user = User(AccountInfo.username, game_data["inventory"])
+game_data = GameData.GameData(Login.login(account_info.username, account_info.password, server.url))
+user = game_data
+console = Console()
 
 # code
-console = Console()
-console.print("[blue bold underline]CARTER[white on orange1] [orange1 on white]BRAYDEN")
+console.rule("Gentry's Quest")
+console.print(f"Welcome {'guy'}!")
+console.print(f"Loading your")
+time.sleep(2)

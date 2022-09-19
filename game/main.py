@@ -28,11 +28,11 @@ args = sys.argv
 server = Server(args[3])
 account_info = AccountInfo(args[1], args[2])
 game_data = GameData.GameData(Login.login(account_info.username, account_info.password, server.url))
-user = game_data
+user = User(account_info.username, game_data.generate_powerlevel())
 console = Console()
 
 # code
 console.rule("Gentry's Quest")
-console.print(f"Welcome {'guy'}!")
-console.print(f"Loading your")
+console.print(f"Welcome {user.username}!")
+console.status(f"Loading your data", spinner="dots").start()
 time.sleep(2)

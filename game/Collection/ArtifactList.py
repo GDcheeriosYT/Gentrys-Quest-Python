@@ -9,5 +9,5 @@ class ArtifactList:
 
     artifacts = None
 
-    def __int__(self, artifacts=[]):
+    def __init__(self, artifacts=[]):
         self.artifacts = artifacts

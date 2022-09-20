@@ -1,6 +1,6 @@
-from ArtifactList import ArtifactList
-from CharacterList import CharacterList
-from WeaponList import WeaponList
+from .ArtifactList import ArtifactList
+from .CharacterList import CharacterList
+from .WeaponList import WeaponList
 
 
 class Inventory:

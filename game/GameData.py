@@ -39,8 +39,3 @@ class GameData:
             self.inventory = Inventory.Inventory(json_object["inventory"])
             self.startup_amount = json_object["startupamount"]
             self.settings = json_object["settings"]
-
-    def generate_powerlevel(self):
-        for character in self.inventory.characters:
-
-

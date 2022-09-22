@@ -11,6 +11,7 @@ from Online.User.User import User
 
 # graphic game packages
 from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Content.Text.InfoText import InfoText
 
 # IO game packages
 from IO import Window
@@ -24,19 +25,30 @@ import time
 
 # important variables
 args = sys.argv
+
+"""
+Initializing server connection info.
+
+Incase of someone starting this without arguments we run through try and except blocks.
+If a try bock finds an exception we'll use a default value.
+"""
+
 try:
-    server = Server(args[3])
+    server = Server(args[3])  # make class to store server info
 except IndexError:
-    WarningText("No argument for server!").display()
-    exit(1)
+    WarningText("No argument for server!\n").display()
+    InfoText("Defaulting to https://gdcheerios.com\n").display()
+    server = Server("https://gdcheerios.com")  # default server url
 try:
-    account_info = AccountInfo(args[1], args[2])
-except:
-    WarningText("No argument for account info!").display()
+    account_info = AccountInfo(args[1], args[2])  # make class to store account info
+except IndexError:
+    WarningText("No argument for account info!\n").display()
+    InfoText("Program will now exit...")
+    time.sleep(1)
     exit(1)
 
-game_data = GameData.GameData(server.API.login(account_info.username, account_info.password))
-user = User(account_info.username, 99999, None)
+game_data = GameData.GameData(server.API.login(account_info.username, account_info.password))  # game data class initialization
+user = User(account_info.username, 99999, None)  # user class initialization
 console = Console()
 
 # code

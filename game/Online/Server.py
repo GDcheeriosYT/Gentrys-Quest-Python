@@ -1,5 +1,6 @@
 # online game packages
 from .API.API import API
+from .API.Token import Token
 
 # built-in packages
 import requests
@@ -19,4 +20,4 @@ class Server:
         except:
             WarningText("Couldn't connect to server...").display()
             exit(1)
-        self.API = API(requests.get(f"{url}/api/generate-token").text, url)
+        self.API = API(Token(url))

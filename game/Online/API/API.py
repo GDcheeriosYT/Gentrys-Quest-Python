@@ -24,18 +24,12 @@ class API:
         self.token = token
         self.url = url
 
-    def verify_token(self):
-        if requests.get(f"{self.url}/api/verify-token/{self.token}").text == "False":
-            WarningText("Couldn't verify token").display()
-            time.sleep(3)
-            exit(0)
-
     def login(self, username, password):
-        self.verify_token()
+        self.token.verify()
         try:
             return login(username, password, self.url)
         except:
             WarningText("Couldn't Log In...").display()
             time.sleep(3)
+            self.token.delete()
             exit(0)
-

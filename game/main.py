@@ -57,3 +57,5 @@ console.rule("Gentry's Quest")
 console.print(f"Welcome {user.username}!")
 console.status(f"Loading your data", spinner="dots").start()
 time.sleep(2)
+
+server.API.token.delete()

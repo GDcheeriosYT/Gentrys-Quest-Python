@@ -3,9 +3,8 @@ from .Login import login
 
 # graphics game packages
 from Graphics.Content.Text.WarningText import WarningText
-
+from Graphics.Content.Text.InfoText import InfoText
 # external packages
-import requests
 import time
 
 
@@ -28,8 +27,9 @@ class API:
         self.token.verify()
         try:
             return login(username, password, self.url)
-        except:
+        except Exception as exception:
             WarningText("Couldn't Log In...").display()
+            InfoText(f"{exception}").display()
             time.sleep(3)
             self.token.delete()
             exit(0)

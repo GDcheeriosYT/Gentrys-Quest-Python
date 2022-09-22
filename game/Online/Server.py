@@ -13,11 +13,11 @@ class Server:
     url = None
     API = None
 
-    def __init__(self, url="http://gdcheerios.com"):
+    def __init__(self, url="https://gdcheerios.com"):
         self.url = url
         try:
             requests.get(url)
         except:
             WarningText("Couldn't connect to server...").display()
             exit(1)
-        self.API = API(Token(url))
+        self.API = API(Token(url), self.url)

@@ -16,7 +16,7 @@ class TextAnimation:
     """
 
     interval = None
-    text_frame = None
+    text_frames = None
 
     def __init__(self, interval=0.3, text_frames=[]):
         self.interval = interval

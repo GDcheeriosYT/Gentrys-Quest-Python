@@ -1,7 +1,7 @@
 # game packages
 # graphics packages
-from ..Graphics.Text.Text import Text
-from ..Graphics.Text.Style import Style
+from game.Graphics.Text.Text import Text
+from game.Graphics.Text.Style import Style
 
 # external packages
 

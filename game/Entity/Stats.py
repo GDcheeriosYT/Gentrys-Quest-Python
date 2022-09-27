@@ -10,5 +10,3 @@ class Stats(Enum):
     Magic_Defense = 7
     Arcane = 8
     Dexterity = 9
-
-

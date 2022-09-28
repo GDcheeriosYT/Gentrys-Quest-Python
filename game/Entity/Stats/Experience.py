@@ -12,7 +12,7 @@ class Experience:
     xp_required = None
     level = None
 
-    def __init__(self, level, xp=0, xp_required=100):
+    def __init__(self, level=1, xp=0, xp_required=100):
         self.level = level,
         self.xp = xp
         self.xp_required = xp_required

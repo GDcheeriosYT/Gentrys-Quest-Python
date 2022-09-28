@@ -1,6 +1,7 @@
 # game packages
 #entity packages
-from game.Entity.Stats.StarRating import StarRating
+from Stats.StarRating import StarRating
+from Stats.Experience import Experience
 
 # external packages
 
@@ -19,27 +20,17 @@ class Entity:
     star_rating: StarRating
         the star rating of the Entity
 
-    xp: int
-        the xp of the Entity
-
-    xp_required: int
-        the xp required to level up the Entity
-
-    level: int
-        the level of the Entity
+    experience: Experience
+        the experience of the Entity
     """
 
     name = None
     description = None
     star_rating = None
-    xp = None
-    xp_required = None
-    level = None
+    experience = None
 
-    def __init__(self, name, description="description", star_rating=StarRating(1), xp=0, xp_required=0, level=1):
+    def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience()):
         self.name = name
         self.description = description
         self.star_rating = star_rating
-        self.xp = xp
-        self.xp_required = xp_required
-        self.level = level
+        self.experience = experience

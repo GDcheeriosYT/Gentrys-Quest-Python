@@ -33,8 +33,8 @@ class Text:
     def display(self):
         Console().print(f"{self.style}{self.content}")
 
-    def animate(self):
+    """def animate(self):
         for text_frame in self.text_animation.text_frames:
             text_counter = 0
             for style_mapping in text_frame.text_style_range.range:
-
+"""

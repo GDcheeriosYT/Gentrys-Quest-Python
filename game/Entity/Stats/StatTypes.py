@@ -1,5 +1,7 @@
 from enum import Enum
-class Stats(Enum):
+
+
+class StatTypes(Enum):
     Health = 0
     Attack = 1
     Defense = 2
@@ -10,3 +12,6 @@ class Stats(Enum):
     Magic_Defense = 7
     Arcane = 8
     Dexterity = 9
+
+    def __repr__(self):
+        return self.name

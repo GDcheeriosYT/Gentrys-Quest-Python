@@ -12,6 +12,15 @@ from Online.User.User import User
 # graphic game packages
 from Graphics.Content.Text.WarningText import WarningText
 from Graphics.Content.Text.InfoText import InfoText
+from Graphics.Text.Text import Text
+from Graphics.Text.Text import Style
+
+# Interface packages
+from Interface.Interface import Interface
+from Interface.InterfaceContent import InterfaceContent
+
+# content packages
+#from Content.Interfaces.Settings import
 
 # IO game packages
 from IO import Window
@@ -25,6 +34,10 @@ import time
 
 # important variables
 args = sys.argv
+
+console = Console()  # the console
+Window.clear()  # clear window
+console.rule("Gentry's Quest")  #THE THINGGGGG
 
 """
 Initializing server connection info.
@@ -47,15 +60,22 @@ except IndexError:
     time.sleep(1)
     exit(1)
 
-game_data = GameData.GameData(server.API.login(account_info.username, account_info.password))  # game data class initialization
 user = User(account_info.username, 99999, None)  # user class initialization
-console = Console()
+game_data = GameData.GameData(server.API.login(account_info.username, account_info.password))  # game data class initialization
 
-# code
-Window.clear()
-console.rule("Gentry's Quest")
-console.print(f"Welcome {user.username}!")
-console.status(f"Loading your data", spinner="dots").start()
-time.sleep(2)
+# main code
+in_game = True
+while in_game:
+    print("main menu")
+    choices = int(input("1. play\n"
+                    "2. settings\n"
+                    "3. quit\n"))
+
+    if choices == 1:
+        print("now playing")
+    elif choices == 2:
+        print("now viewing settings")
+    else:
+        in_game = False
 
 server.API.token.delete()

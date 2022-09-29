@@ -1,6 +1,7 @@
 # game packages
 # graphics packages
 from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Status import Status
 
 # external packages
 import requests
@@ -21,7 +22,10 @@ class Token:
 
     def __init__(self, url):
         self.url = url
+        token_status = Status("Generating token", "dots8Bit")
+        token_status.start()
         self.token = requests.get(f"{url}/api/generate-token").text
+        token_status.stop()
 
     def delete(self):
         requests.post(f"{self.url}/api/delete-token/{self.token}")

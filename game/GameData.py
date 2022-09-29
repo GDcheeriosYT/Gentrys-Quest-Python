@@ -2,8 +2,7 @@
 import json
 
 # game packages
-from Collection import Inventory
-
+from Collection.Inventory.Inventory import Inventory
 
 class GameData:
     """
@@ -19,8 +18,8 @@ class GameData:
     startup_amount = None
     settings = None
 
-    def __init__(self, json_string):
-        if len(json_string) < 10:
+    def __init__(self, json_data):
+        if json_data == None:
             data = {
                 "startupamount": 1,
                 "settings": {},
@@ -31,11 +30,11 @@ class GameData:
                     "money": 0
                 }
             }
-            self.inventory = Inventory.Inventory(data["inventory"])
+            self.inventory = Inventory(data["inventory"])
             self.startup_amount = data["startupamount"]
             self.settings = data["settings"]
         else:
-            json_object = json.loads(json_string)
-            self.inventory = Inventory.Inventory(json_object["inventory"])
+            json_object = json_data
+            self.inventory = Inventory(json_object["inventory"])
             self.startup_amount = json_object["startupamount"]
             self.settings = json_object["settings"]

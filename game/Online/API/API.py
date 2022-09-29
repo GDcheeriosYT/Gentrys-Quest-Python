@@ -25,11 +25,11 @@ class API:
 
     def login(self, username, password):
         self.token.verify()
-        try:
-            return login(username, password, self.url)
-        except Exception as exception:
+        login_result = login(username, password, self.url)
+        if login_result is None:
             WarningText("Couldn't Log In...").display()
-            InfoText(f"{exception}").display()
-            time.sleep(3)
+            time.sleep(1)
             self.token.delete()
             exit(0)
+        else:
+            return login_result

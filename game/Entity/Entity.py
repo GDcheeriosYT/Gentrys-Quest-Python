@@ -1,7 +1,7 @@
 # game packages
 #entity packages
-from Stats.StarRating import StarRating
-from Stats.Experience import Experience
+from .Stats.StarRating import StarRating
+from .Stats.Experience import Experience
 
 # external packages
 

@@ -1,7 +1,7 @@
 # game packages
 # entity packages
-from StatTypes import StatTypes
-from Experience import Experience
+from .StatTypes import StatTypes
+from .Experience import Experience
 
 # built-in packages
 import random
@@ -18,11 +18,16 @@ class Buff:
 
     experience: Experience
         the experience of the buff
+
+    is_percent: boolean
+        determines if the buff is a percent type
     """
 
     attribute_type = None
     experience = None
+    is_percent = None
 
-    def __init__(self, attribute_type=random.choice(list(StatTypes)), experience=Experience):
+    def __init__(self, attribute_type=random.choice(list(StatTypes)), experience=Experience, is_percent=False):
         self.attribute_type = attribute_type
         self.experience = experience
+        self.is_percent = is_percent

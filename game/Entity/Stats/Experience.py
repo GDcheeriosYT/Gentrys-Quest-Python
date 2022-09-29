@@ -4,7 +4,7 @@ class Experience:
 
     parameters
 
-    xp, xp_required, level: int
+    xp, level: int
         values for experience
     """
 
@@ -12,7 +12,9 @@ class Experience:
     xp_required = None
     level = None
 
-    def __init__(self, level=1, xp=0, xp_required=100):
-        self.level = level,
+    def __init__(self, level=1, xp=0):
+        self.level = level
         self.xp = xp
-        self.xp_required = xp_required
+
+    def __repr__(self):
+        return f"level {self.level} {self.xp}xp"

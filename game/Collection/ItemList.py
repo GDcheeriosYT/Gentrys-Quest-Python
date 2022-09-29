@@ -1,6 +1,6 @@
 # game packages
 # graphics packages
-from ..Graphics.Content.Text.WarningText import WarningText
+from Graphics.Content.Text.WarningText import WarningText
 
 # external packages
 from rich.console import Console
@@ -24,16 +24,18 @@ class ItemList:
     size = None
     content_type = None
 
-    def __init__(self, size=None, content_type=None):
+    def __init__(self, size=None, content_type=None, output=True):
         self.content = []
         self.size = size
         self.content_type = content_type
+        self.output = output
 
     def add(self, item):
-        if (len(self.content) < self.size or self.size is None) and (type(item) == type(self.content_type) or self.content_type is None):
+        if (len(self.content) < self.size or self.size is None) and (isinstance(item, self.content_type) or self.content_type is None):
             self.content.append(item)
         else:
-            WarningText(f"This list either is full or doesn't accept {type(item)}").display()
+            if self.output:
+                WarningText(f"The {type(item)} {item.name} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
 
     def remove(self):
         for item in self.content:
@@ -44,6 +46,10 @@ class ItemList:
             return self.content.pop(self.content.index(int(selection) - 1))
         except:
             WarningText(f"Couldn't find item at {selection}").display()
+
+    def fill(self, list):
+        for item in list:
+            self.add(item)
 
     def __repr__(self):
         return {

@@ -4,10 +4,13 @@ from ..Entity import Entity
 from ..Stats.Buff import Buff
 from ..Stats.Experience import Experience
 from ..Stats.StarRating import StarRating
-from ArtifactFamily import ArtifactFamily
+
+# graphics packages
+from Graphics.Text.Text import Text
+from Graphics.Text.Style import Style
 
 # collection packages
-from ...Collection.ItemList import ItemList
+from Collection.ItemList import ItemList
 
 
 class Artifact(Entity):
@@ -18,9 +21,6 @@ class Artifact(Entity):
 
     name: string
         the name of the Artifact
-
-    description: string
-        the description of the Artifact
 
     star_rating: StarRating
         the star rating of the Artifact
@@ -39,15 +39,28 @@ class Artifact(Entity):
     """
 
     name = None
-    description = None
     star_rating = None
     family = None
     main_attribute = None
     attributes = None
     experience = None
 
-    def __init__(self, name, description="description", star_rating=StarRating(1), family=ArtifactFamily(), main_attributes=Buff(), attributes=[], experience=Experience()):
-        super().__init__(name, description, star_rating, experience)
+    def __init__(self, name, star_rating=StarRating(), family=None, main_attribute=Buff(), attributes=[],
+                 experience=Experience()):
+        super().__init__(name=name, description="description", star_rating=star_rating, experience=experience)
         self.family = family
-        self.main_attribute = main_attributes
+        self.main_attribute = main_attribute
         self.attributes = attributes
+
+    def __repr__(self):
+        return (
+            f"""
+=========================================
+{self.name} {self.star_rating} {self.experience}
+apart of the {self.family} family
+* {self.main_attribute} *
+attributes
+{self.attributes}
+=========================================
+"""
+        )

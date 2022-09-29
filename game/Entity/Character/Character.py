@@ -7,7 +7,7 @@ from ..Stats.Experience import Experience
 from ..Artifact.Artifact import Artifact
 
 # collection packages
-from ...Collection.ItemList import ItemList
+from Collection.ItemList import ItemList
 
 
 class Character(Entity):
@@ -70,9 +70,9 @@ class Character(Entity):
         super().__init__(name, description, star_rating, experience)
         self.weapon = weapon
         self.artifacts = artifacts
-        self.default_health = (2 * super().experience.level + (super().star_rating * 10))
-        self.default_attack = round((super().experience.level * 1.45) + super().star_rating + 2)
-        self.default_defense = round((super().experience.level * 0.2) + super().star_rating)
-        self.default_crit_rate = round(6 + (super().experience.level * 0.2) + super().star_rating)
-        self.default_crit_damage = round((super().experience.level * 1.45) + super().star_rating + 2)
-        self.difficulty = round(1 + (super().experience.level / 20))
+        self.default_health = (2 * self.experience.level + (self.star_rating * 10))
+        self.default_attack = int(((self.experience.level * 1.45) + self.star_rating + 2))
+        self.default_defense = int((self.experience.level * 0.2) + self.star_rating)
+        self.default_crit_rate = int(6 + (self.experience.level * 0.2) + self.star_rating)
+        self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating + 2)
+        self.difficulty = int(1 + (self.experience.level / 20))

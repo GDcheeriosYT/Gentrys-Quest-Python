@@ -30,8 +30,11 @@ class Text:
         self.style = style
         self.text_animation = text_animation
 
-    def display(self):
-        Console().print(f"{self.style}{self.content}")
+    def display(self, same_line=False):
+        Console().print(f"{self.style}{self.content}", end='\r' if same_line else '\n')
+
+    def raw_output(self):
+        return f"{self.style}{self.content}"
 
     """def animate(self):
         for text_frame in self.text_animation.text_frames:

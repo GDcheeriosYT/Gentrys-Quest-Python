@@ -22,7 +22,7 @@ class Style:
     text_color = None
     text_style = None
 
-    def __init__(self, background_color="black", text_color="white", text_style="[]"):
+    def __init__(self, background_color="black", text_color="white", text_style=[]):
         self.background_color = background_color
         self.text_color = text_color
         self.text_style = text_style

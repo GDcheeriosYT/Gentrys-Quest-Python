@@ -33,10 +33,12 @@ import sys
 import time
 
 # important variables
-args = sys.argv
+args = sys.argv[0]
+
 
 console = Console()  # the console
 Window.clear()  # clear window
+print(args)
 console.rule("Gentry's Quest")  #THE THINGGGGG
 
 """
@@ -77,5 +79,7 @@ while in_game:
         print("now viewing settings")
     else:
         in_game = False
+
+    Text(str(game_data.obtain().characters)).display()
 
 server.API.token.delete()

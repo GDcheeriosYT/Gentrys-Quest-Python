@@ -38,3 +38,6 @@ class GameData:
             self.inventory = Inventory(json_object["inventory"])
             self.startup_amount = json_object["startupamount"]
             self.settings = json_object["settings"]
+
+    def obtain(self):
+        return self.inventory, self.startup_amount, self.settings

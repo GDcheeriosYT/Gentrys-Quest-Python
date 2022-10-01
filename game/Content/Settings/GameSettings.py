@@ -4,5 +4,5 @@ from game.Config.StringSetting import StringSetting
 
 
 class GameSettings:
-    debug = ToggleSetting("debug", False)
+    debug = ToggleSetting("testing", False)
     timeout = ToggleSetting("timeout", False)

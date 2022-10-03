@@ -1,4 +1,4 @@
-import Setting
+from .Setting import Setting
 
 
 class NumberSetting(Setting):

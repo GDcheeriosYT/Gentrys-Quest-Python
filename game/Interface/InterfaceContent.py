@@ -16,10 +16,11 @@ class InterfaceContent:
     def __init__(self, info="this is an interface", options=["do nothing"]):
         self.info = info
         self.options = options
+        self.options.append("back")
 
     def show_options(self):
         string = ""
         for option in self.options:
-            string += f"{self.options.index(option)+1}. {option}\n"
+            string += f"{self.options.index(option) + 1}. {option}\n"
 
         return string

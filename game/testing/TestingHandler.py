@@ -5,6 +5,11 @@ from Graphics.Content.Text.QuestionText import QuestionText
 # entity packages
 from Entity.Character.Character import Character
 
+# interface packages
+from Interface.Interface import Interface
+from Interface.InterfaceContent import InterfaceContent
+
+
 class TestingHandler:
     """
     Creates an instance of a handler for testing game stuff
@@ -15,5 +20,5 @@ class TestingHandler:
 
     @staticmethod
     def start():
-        QuestionText("What shall we test today?").display()
-        input()
+        QuestionText("What area shall we test today?").display()
+        Interface("", content=InterfaceContent("", ["player", "entity"])).visit(False)

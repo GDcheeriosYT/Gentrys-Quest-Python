@@ -8,7 +8,8 @@ console = Console()
 
 
 def clear():
-    sys.stdout.flush()
+    for i in range(console.height):
+        print("\n")
 
 
 def move_to_top():

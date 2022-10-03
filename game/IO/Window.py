@@ -1,12 +1,14 @@
+# built-in packages
+import sys
+
+# external packages
 from rich.console import Console
 
 console = Console()
 
+
 def clear():
-    for i in range(console.height):
-        print("\n")
-
-
+    sys.stdout.flush()
 
 
 def move_to_top():

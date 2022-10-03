@@ -1,4 +1,10 @@
+# game packages
+# config packages
 from .Setting import Setting
+
+# graphics packages
+from Graphics.Content.Text.QuestionText import QuestionText
+from Graphics.Content.Text.WarningText import WarningText
 
 
 class NumberSetting(Setting):
@@ -22,9 +28,23 @@ class NumberSetting(Setting):
         self.min_value = min_value
         self.max_value = max_value
 
-    def change_value(self, num):
-        if num < max_value and num > min_value:
-            self.value = num
+    def change_value(self):
+        while True:
+            QuestionText(f"Please enter a value in between {min_value} and {max_value}").display()
+            try:
+                num = int(input())
+
+                if max_value > num > min_value:
+                    self.value = num
+                    break
+                elif num > max_value:
+                    WarningText("Too big!").display()
+                else:
+                    WarningText("Too small!").display()
+
+            except ValueError:
+                WarningText("Bro, that's not even a number...")
+
 
     def __repr__(self):
-        return f"{super()} <{self.value}>"
+        return f"{self.name} <{self.value}>"

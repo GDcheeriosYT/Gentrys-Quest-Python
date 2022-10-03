@@ -10,5 +10,7 @@ class PlayInterface(Interface):
 
     def __repr__(self):
         action = self.visit()
-        if action == self.content.options[0]:
-            TravelInterface()
+        if action == 0:
+            TravelInterface().__repr__()
+        elif action == 1:
+            print("not available yet")

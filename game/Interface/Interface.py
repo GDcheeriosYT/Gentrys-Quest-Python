@@ -36,13 +36,13 @@ class Interface:
         self.is_rule = is_rule
         self.content = content
 
-    def choose(self, selection):
+    @staticmethod
+    def choose(selection):
         selection = selection - 1
-        return self.content.options[selection]
+        return selection
 
     def visit(self, clear_window=True):
-        visiting = True
-        while visiting:
+        while True:
             if clear_window:
                 Window.clear()
             if self.is_rule:
@@ -51,7 +51,6 @@ class Interface:
                 Text(self.content.info).display()
                 try:
                     selection = int(input(self.content.show_options()))
-                    visiting = False
-                    self.choose(selection)
+                    return self.choose(selection)
                 except ValueError:
                     WarningText(f"Nope!").display()

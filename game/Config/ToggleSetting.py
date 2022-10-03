@@ -18,5 +18,11 @@ class ToggleSetting(Setting):
         super().__init__(name)
         self.toggled = toggled
 
+    def toggle_setting(self):
+        if self.toggled:
+            self.toggled = False
+        else:
+            self.toggled = True
+
     def __repr__(self):
-        return f"{super()} [{self.toggled}]"
+        return f"{self.name} [{self.toggled}]"

@@ -81,17 +81,14 @@ else:
     in_game = True
     while in_game:
         print("main menu")
-        choices = int(input("1. singleplayer\n"
-                        "2. multiplayer\n"
-                        "3. settings\n"
-                        "4. quit\n"))
+        choices = int(input("1. play\n"
+                        "2. settings\n"
+                        "3. quit\n"))
 
         if choices == 1:
             PlayInterface().__repr__()
         elif choices == 2:
-            print("Coming Soon!")
-        elif choices == 3:
-            print("now viewing settings")
+            SettingsInterface(game_data.settings).__repr__()
         else:
             in_game = False
 

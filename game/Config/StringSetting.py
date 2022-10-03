@@ -1,4 +1,9 @@
+# game packages
+# config packages
 from .Setting import Setting
+
+# graphics packages
+from Graphics.Content.Text.QuestionText import QuestionText
 
 
 class StringSetting(Setting):
@@ -16,5 +21,9 @@ class StringSetting(Setting):
         super().__init__(name)
         self.text = text
 
+    def change(self):
+        QuestionText("Please enter some text").display()
+        self.text = input()
+
     def __repr__(self):
-        return f"{super()}: {self.text}"
+        return f"{self.name}: {self.text}"

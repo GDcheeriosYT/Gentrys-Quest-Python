@@ -10,5 +10,5 @@ class PlayInterface(Interface):
 
     def __repr__(self):
         action = self.visit()
-        if action == InterfaceContent.options[0]:
+        if action == self.content.options[0]:
             TravelInterface()

@@ -18,10 +18,10 @@ from Graphics.Text.Text import Style
 # Interface packages
 from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
+from Interface.Interfaces.Settings import SettingsInterface
+from Interface.Interfaces.Play.PlayInterface import PlayInterface
 
 # content packages
-from Content.Interfaces.Settings import SettingsInterface
-from Content.Interfaces.Play.PlayInterface import PlayInterface
 
 
 #testing packages

@@ -20,5 +20,15 @@ class TestingHandler:
 
     @staticmethod
     def start():
-        QuestionText("What area shall we test today?").display()
-        Interface("", content=InterfaceContent("", ["player", "entity"])).visit(False)
+        QuestionText("What area shall we test today? (Meow:))").display()
+        in_game = True
+        while in_game:
+            choices = int(input("1. Entity\n"
+                                "2. quit\n"))
+
+            if choices == 1:
+                PlayInterface().__repr__()
+            elif choices == 2:
+                SettingsInterface(game_data.settings).__repr__()
+            else:
+                in_game = False

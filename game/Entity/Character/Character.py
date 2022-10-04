@@ -87,6 +87,7 @@ class Character(Entity):
         self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating + 2)
         self.difficulty = int(1 + (self.experience.level / 20))
 
+
     def level_up(self, amount):
         self.experience.level += amount
         self.default_health = ((self.default_health_points * 2) + (2 * self.experience.level) + (self.star_rating * 10))

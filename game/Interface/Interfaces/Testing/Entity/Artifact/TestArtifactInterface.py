@@ -12,8 +12,8 @@ from Random.Functions import get_random_name
 import random
 
 class TestArtifactInterface(Interface):
-    def __init__(self, artifact=Artifact("")):
-        super().__init__("Artifact stuff", content=InterfaceContent(Artifact(get_random_name(False, StarRating(random.randint(1, 5), None, Experience(), Buff(StatTypes()), []))), ["Artifact", "Character", "Enemy", "Weapon"]))
+    def __init__(self, artifact=Artifact(get_random_name(False), StarRating(random.randint(1, 5)), None, Buff(), [], Experience())):
+        super().__init__("Artifact stuff", content=InterfaceContent(artifact, ["nothing yet..."]))
 
     def __repr__(self):
         action = self.visit()

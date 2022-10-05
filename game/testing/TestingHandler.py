@@ -9,6 +9,7 @@ from Entity.Character.Character import Character
 from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 
+from Interface.Interfaces.Testing.Entity.TestInterfaceEntity import TestInterfaceEntity
 
 class TestingHandler:
     """
@@ -27,7 +28,7 @@ class TestingHandler:
                                 "2. quit\n"))
 
             if choices == 1:
-                PlayInterface().__repr__()
+                TestInterfaceEntity().__repr__()
             elif choices == 2:
                 SettingsInterface(game_data.settings).__repr__()
             else:

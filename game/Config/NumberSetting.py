@@ -24,7 +24,7 @@ class NumberSetting(Setting):
 
     def __init__(self, name="setting", value=0, min_value=-99999999, max_value=99999999):
         super().__init__(name)
-        self.value = value,
+        self.value = value
         self.min_value = min_value
         self.max_value = max_value
 

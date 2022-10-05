@@ -21,9 +21,6 @@ from Interface.InterfaceContent import InterfaceContent
 from Interface.Interfaces.Settings import SettingsInterface
 from Interface.Interfaces.Play.PlayInterface import PlayInterface
 
-# content packages
-
-
 #testing packages
 from testing.TestingHandler import TestingHandler
 
@@ -83,12 +80,13 @@ else:
         print("main menu")
         choices = int(input("1. play\n"
                         "2. settings\n"
-                        "3. quit\n"))
+                        "3. changelog\n"
+                        "4. quit\n"))
 
         if choices == 1:
             PlayInterface().__repr__()
         elif choices == 2:
-            SettingsInterface(game_data.settings).__repr__()
+            game_data.settings = SettingsInterface(game_data).visit()
         else:
             in_game = False
 

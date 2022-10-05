@@ -7,44 +7,17 @@ from Interface.InterfaceContent import InterfaceContent
 from Content.Settings.GameSettings import GameSettings
 
 # config packages
-from Config.ToggleSetting import ToggleSetting
-from Config.NumberSetting import NumberSetting
-from Config.StringSetting import StringSetting
+from Config.SettingManager import SettingManager
 
 # IO packages
 from IO import Window
 
-class SettingsInterface(Interface):
-    def __init__(self, settings):
-        setting_list = []
-        for setting in settings:
-            key = setting
-            value = settings[key]
-            if isinstance(value, bool):
-                setting_list.append(ToggleSetting(key, value))
-            elif isinstance(value, int):
-                setting_list.append(NumberSetting(key, value))
-            else:
-                setting_list.append(StringSetting(key, value))
+class SettingsInterface:
 
-        self.settings_size = len(setting_list)
+    setting_manager = None
 
-        super().__init__("settings", False, InterfaceContent("", setting_list))
+    def __init__(self, game_data):
+        self.setting_manager = SettingManager(game_data.settings)
 
-    def __repr__(self):
-        while True:
-            action = self.visit()
-            if action < self.settings_size:
-                setting = self.content.options[action]
-                print(setting)
-                if isinstance(setting, ToggleSetting):
-                    setting.toggle_setting()
-                elif isinstance(setting, NumberSetting):
-                    setting.change_value()
-                else:
-                    setting.change()
-
-                self.content.options[action] = setting
-            else:
-                Window.clear()
-                break
+    def visit(self):
+        return self.setting_manager.config_settings()

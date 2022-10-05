@@ -1,7 +1,7 @@
 import random
 
 random_character_names = [
-    ""
+    "pooper man"
 ]
 
 random_weapon_names = [

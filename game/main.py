@@ -21,7 +21,7 @@ from Interface.InterfaceContent import InterfaceContent
 from Interface.Interfaces.Settings import SettingsInterface
 from Interface.Interfaces.Play.PlayInterface import PlayInterface
 
-#testing packages
+# testing packages
 from testing.TestingHandler import TestingHandler
 
 # IO game packages
@@ -45,7 +45,6 @@ else:
 console = Console()  # the console
 Window.clear()  # clear window
 
-
 """
 Initializing server connection info.
 
@@ -67,7 +66,8 @@ else:
     try:
         account_info = AccountInfo(args[1], args[2])  # make class to store account info
         user = User(account_info.username, 99999, None)  # user class initialization
-        game_data = GameData.GameData(server.API.login(account_info.username, account_info.password))  # game data class initialization
+        game_data = GameData.GameData(
+            server.API.login(account_info.username, account_info.password))  # game data class initialization
     except IndexError:
         WarningText("No argument for account info!\n").display()
         InfoText("Program will now exit...")
@@ -79,13 +79,14 @@ else:
     while in_game:
         print("main menu")
         choices = int(input("1. play\n"
-                        "2. settings\n"
-                        "3. changelog\n"
-                        "4. quit\n"))
+                            "2. settings\n"
+                            "3. changelog\n"
+                            "4. quit\n"))
 
         if choices == 1:
             PlayInterface().__repr__()
         elif choices == 2:
+            Window.clear()
             game_data.settings = SettingsInterface(game_data).visit()
         else:
             in_game = False

@@ -28,11 +28,11 @@ class SettingManager:
         self.settings = settings
 
     def config_settings(self):
-        for setting in self.settings:
-            Text(f"{self.settings.index(setting) + 1} {setting}").display()
-        Text(f"{len(self.settings) + 1}. back").display()
-
         while True:
+            Text("settings").display()
+            for setting in self.settings:
+                Text(f"{self.settings.index(setting) + 1} {setting}").display()
+            Text(f"{len(self.settings) + 1}. back").display()
             try:
                 value = int(input())
                 setting = self.settings[value - 1]
@@ -43,10 +43,13 @@ class SettingManager:
                 else:
                     setting.change()
                 self.settings[value - 1] = setting
+                Window.clear()
             except ValueError:
+                Window.clear()
                 WarningText("Not a number!").display()
             except IndexError:
                 Window.clear()
                 break
 
+        if self.settings is not None:
             return self.settings

@@ -8,6 +8,3 @@ class GameSettings:
         self.settings = []
         self.settings.append(ToggleSetting("debug", False))
         self.settings.append(ToggleSetting("no timeout", False))
-        self.settings.append(ToggleSetting("test ToggleSetting", False))
-        self.settings.append(NumberSetting("test NumberSetting", False))
-        self.settings.append(StringSetting("test StringSetting", False))

@@ -33,7 +33,6 @@ class NumberSetting(Setting):
             QuestionText(f"Please enter a value in between {self.min_value} and {self.max_value}").display()
             try:
                 num = int(input())
-
                 if self.max_value > num > self.min_value:
                     self.value = num
                     break
@@ -43,8 +42,7 @@ class NumberSetting(Setting):
                     WarningText("Too small!").display()
 
             except ValueError:
-                WarningText("Bro, that's not even a number...")
-
+                WarningText("Bro, that's not even a number...").display()
 
     def __repr__(self):
         return f"{self.name} <{self.value}>"

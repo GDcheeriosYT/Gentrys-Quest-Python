@@ -14,7 +14,8 @@ import random
 class TestArtifactInterface(Interface):
     def __init__(self, artifact=Artifact(get_random_name(False), StarRating(random.randint(1, 5)), None, Buff(), [], Experience())):
         super().__init__("Artifact stuff", content=InterfaceContent(artifact, ["nothing yet..."]))
-
+        self.artifact = artifact
+        
     def __repr__(self):
         action = self.visit()
 

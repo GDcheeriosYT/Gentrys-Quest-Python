@@ -30,14 +30,14 @@ class NumberSetting(Setting):
 
     def change_value(self):
         while True:
-            QuestionText(f"Please enter a value in between {min_value} and {max_value}").display()
+            QuestionText(f"Please enter a value in between {self.min_value} and {self.max_value}").display()
             try:
                 num = int(input())
 
-                if max_value > num > min_value:
+                if self.max_value > num > self.min_value:
                     self.value = num
                     break
-                elif num > max_value:
+                elif num > self.max_value:
                     WarningText("Too big!").display()
                 else:
                     WarningText("Too small!").display()

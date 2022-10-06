@@ -11,9 +11,10 @@ class TestInterfaceEntity(Interface):
                                                   ["Artifact", "Character", "Enemy", "Weapon"]))
 
     def __repr__(self):
+
         action = self.visit()
         if action == 0:
-            TestArtifactInterface().__repr__()  # Temporary
+            TestArtifactInterface().__repr__()
         elif action == 1:
             pass  # Temporary
         elif action == 2:

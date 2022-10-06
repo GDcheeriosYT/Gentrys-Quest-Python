@@ -11,6 +11,9 @@ from Interface.InterfaceContent import InterfaceContent
 
 from Interface.Interfaces.Testing.Entity.TestInterfaceEntity import TestInterfaceEntity
 
+# IO packages
+from IO import Window
+
 class TestingHandler:
     """
     Creates an instance of a handler for testing game stuff
@@ -21,15 +24,14 @@ class TestingHandler:
 
     @staticmethod
     def start():
-        QuestionText("What area shall we test today? (Meow:))").display()
-        in_game = True
-        while in_game:
+        while True:
+            entity_interface = TestInterfaceEntity()
+            Window.clear()
+            QuestionText("What area shall we test today? (Meow:))").display()
             choices = int(input("1. Entity\n"
                                 "2. quit\n"))
 
             if choices == 1:
-                TestInterfaceEntity().__repr__()
-            elif choices == 2:
-                SettingsInterface(game_data.settings).__repr__()
+                entity_interface.__repr__()
             else:
-                in_game = False
+                break

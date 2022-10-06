@@ -27,8 +27,11 @@ class Buff:
     experience = None
     is_percent = None
 
-    def __init__(self, attribute_type=random.choice(list(StatTypes)), experience=Experience, is_percent=random.choice([True, False])):
-        self.attribute_type = attribute_type
+    def __init__(self, attribute_type=None, experience=Experience, is_percent=random.choice([True, False])):
+        if attribute_type is None:
+            self.attribute_type = random.choice(list(StatTypes))
+        else:
+            self.attribute_type = attribute_type
         self.experience = experience
         self.is_percent = is_percent
 

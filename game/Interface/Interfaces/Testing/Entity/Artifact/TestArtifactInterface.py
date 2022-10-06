@@ -9,12 +9,19 @@ from Entity.Stats.StatTypes import StatTypes
 
 from Random.Functions import get_random_name
 
+from Config.NumberSetting import NumberSetting
+from Config.StringSetting import StringSetting
+from Config.ToggleSetting import ToggleSetting
+
 import random
 
 class TestArtifactInterface(Interface):
-    def __init__(self, artifact=Artifact(get_random_name(False), StarRating(random.randint(1, 5)), None, Buff(), [], Experience())):
-        super().__init__("Artifact stuff", content=InterfaceContent(artifact, ["nothing yet..."]))
-        self.artifact = artifact
+
+    artifact = None
+
+    def __init__(self, level=1, star_rating=1, main_attribute=Buff(), attributes=[]):
+        self.artifact=Artifact(get_random_name(False), StarRating(star_rating), None, Buff(), [], Experience())
+        super().__init__("Artifact stuff", content=InterfaceContent(self.artifact, ["nothing yet..."]))
         
     def __repr__(self):
         action = self.visit()

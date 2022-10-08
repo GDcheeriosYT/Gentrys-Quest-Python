@@ -52,13 +52,12 @@ class Artifact(Entity):
         self.main_attribute = main_attribute
         self.attributes = attributes
 
-
     def display_attributes(self):
         string = "\n"
         for attribute in self.attributes:
             string += f"{attribute}\n"
 
-        return  string
+        return string
 
     def __repr__(self):
         return (
@@ -67,7 +66,7 @@ class Artifact(Entity):
 {self.name} {self.star_rating} {self.experience}
 apart of the {self.family} family
 * {self.main_attribute} *
-{(f"attributes{self.display_attributes()}") if len(self.attributes) > 0 else ""}
+{f"attributes{self.display_attributes()}" if len(self.attributes) > 0 else ""}
 =========================================
 """
         )

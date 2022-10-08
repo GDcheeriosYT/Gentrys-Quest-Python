@@ -14,7 +14,12 @@ class TestInterfaceEntity(Interface):
 
         action = self.visit()
         if action == 0:
-            TestArtifactInterface().__repr__()
+            test_interface = TestArtifactInterface()
+            while True:
+                try:
+                    test_interface.__repr__()
+                except TypeError:
+                    break
         elif action == 1:
             pass  # Temporary
         elif action == 2:

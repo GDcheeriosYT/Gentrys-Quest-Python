@@ -16,6 +16,7 @@ from Config.StringSetting import StringSetting
 from Config.ToggleSetting import ToggleSetting
 from Config.SettingManager import SettingManager
 
+from IO import Window
 
 import random
 
@@ -35,8 +36,10 @@ class TestArtifactInterface:
         ]
 
     def __repr__(self):
+        Window.clear()
         Text(self.artifact).display()
-        self.settings = SettingManager(self.settings).config_settings()
+        self.settings = SettingManager(self.settings).config_settings(False)
         self.artifact.name = self.settings[0].text
-        self.artifact.star_rating = StarRating(self.settings[1])
-        self.artifact.experience.level = self.settings[2]
+        self.artifact.star_rating = StarRating(self.settings[1].value)
+        self.artifact.experience.level = self.settings[2].value
+        return self.settings

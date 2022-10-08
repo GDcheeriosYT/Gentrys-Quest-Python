@@ -33,7 +33,7 @@ class NumberSetting(Setting):
             QuestionText(f"Please enter a value in between {self.min_value} and {self.max_value}").display()
             try:
                 num = int(input())
-                if self.max_value > num > self.min_value:
+                if self.max_value >= num >= self.min_value:
                     self.value = num
                     break
                 elif num > self.max_value:

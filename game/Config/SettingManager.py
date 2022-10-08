@@ -41,8 +41,10 @@ class SettingManager:
                         setting.toggle_setting()
                     elif isinstance(setting, NumberSetting):
                         setting.change_value()
-                    else:
+                    elif isinstance(setting, StringSetting):
                         setting.change()
+                    else:
+                        setting.instance_class.test()
                     self.settings[value - 1] = setting
                     Window.clear()
                 except ValueError:
@@ -68,8 +70,10 @@ class SettingManager:
                     setting.toggle_setting()
                 elif isinstance(setting, NumberSetting):
                     setting.change_value()
-                else:
+                elif isinstance(setting, StringSetting):
                     setting.change()
+                else:
+                    setting.instance_class.test()
                 self.settings[value - 1] = setting
                 Window.clear()
             except ValueError:

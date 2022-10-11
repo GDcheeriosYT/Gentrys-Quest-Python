@@ -12,6 +12,13 @@ from Graphics.Text.Style import Style
 # collection packages
 from Collection.ItemList import ItemList
 
+# config packages
+from Config.NumberSetting import NumberSetting
+from Config.StringSetting import StringSetting
+from Config.ToggleSetting import ToggleSetting
+from Config.ClassSetting import ClassSetting
+from Config.SettingManager import SettingManager
+
 
 class Artifact(Entity):
     """
@@ -51,6 +58,13 @@ class Artifact(Entity):
         self.family = family
         self.main_attribute = main_attribute
         self.attributes = attributes
+        self.settings = [
+            StringSetting("name", self.name),
+            NumberSetting("star rating", self.star_rating.value, 1, 5),
+            StringSetting("family", self.family),
+            ClassSetting("main attribute", self.main_attribute),
+            NumberSetting("level", self.experience.level)
+        ]
 
     def display_attributes(self):
         string = "\n"
@@ -70,3 +84,6 @@ apart of the {self.family} family
 =========================================
 """
         )
+
+    def test(self):
+        self.settings = SettingManager(self.settings).config_settings(False)

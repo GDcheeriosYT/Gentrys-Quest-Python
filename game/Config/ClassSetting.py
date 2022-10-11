@@ -18,9 +18,7 @@ class NumberSetting(Setting):
         class to edit
     """
 
-    value = None
-    min_value = None
-    max_value = None
+    instance_class = None
 
     def __init__(self, instance_class, name="setting"):
         super().__init__(name)

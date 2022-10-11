@@ -7,7 +7,7 @@ from Graphics.Content.Text.QuestionText import QuestionText
 from Graphics.Content.Text.WarningText import WarningText
 
 
-class NumberSetting(Setting):
+class ClassSetting(Setting):
     """
     child of Setting.
     returns a class setting
@@ -20,9 +20,9 @@ class NumberSetting(Setting):
 
     instance_class = None
 
-    def __init__(self, instance_class, name="setting"):
+    def __init__(self, name="setting", instance_class=None):
         super().__init__(name)
         self.instance_class = instance_class
 
     def __repr__(self):
-        return f"class: {Type(self.instance_class)}"
+        return f"{self.name}: {type(self.instance_class)}"

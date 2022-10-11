@@ -12,12 +12,13 @@ class Experience:
     xp_required = None
     level = None
 
-    def __init__(self, level=1, xp=0):
+    def __init__(self, level=1, xp=0, limit=None):
         self.level = level
         self.xp = xp
+        self.limit = limit
 
     def __repr__(self):
-        return f"level {self.level} {self.xp}xp"
+        return f"level {self.level}{f'/{self.limit}' if self.limit is not None else ''} {self.xp}xp"
 
 
 # Gives you the amount of xp required to level up given the star rating

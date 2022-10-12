@@ -46,7 +46,7 @@ class TestArtifactInterface:
         self.artifact.name = self.settings[0].text
         self.artifact.star_rating = StarRating(self.settings[1].value)
         self.artifact.experience.limit = self.artifact.star_rating.value*4
-        self.artifact.family = self.settings[2]
+        self.artifact.family = self.settings[2].text
         self.artifact.main_attribute = self.settings[3].instance_class
         self.artifact.experience.level = self.settings[4].value
         self.settings[4] = NumberSetting("level", self.artifact.experience.level, 1, self.artifact.experience.limit)

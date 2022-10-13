@@ -10,6 +10,7 @@ from IO import Window
 from Config.ToggleSetting import ToggleSetting
 from Config.NumberSetting import NumberSetting
 from Config.StringSetting import StringSetting
+from Config.ListSetting import ListSetting
 
 
 class SettingManager:
@@ -43,6 +44,8 @@ class SettingManager:
                         setting.change_value()
                     elif isinstance(setting, StringSetting):
                         setting.change()
+                    elif isinstance(setting, ListSetting):
+                        setting.select()
                     else:
                         setting.instance_class.test()
                     self.settings[value - 1] = setting
@@ -72,6 +75,8 @@ class SettingManager:
                     setting.change_value()
                 elif isinstance(setting, StringSetting):
                     setting.change()
+                elif isinstance(setting, ListSetting):
+                    setting.select()
                 else:
                     setting.instance_class.test()
                 self.settings[value - 1] = setting

@@ -8,6 +8,7 @@ from Config.NumberSetting import NumberSetting
 from Config.StringSetting import StringSetting
 from Config.ToggleSetting import ToggleSetting
 from Config.ClassSetting import ClassSetting
+from Config.ListSetting import ListSetting
 from Config.SettingManager import SettingManager
 
 # IO packages
@@ -40,14 +41,18 @@ class Buff:
     experience = None
     is_percent = None
 
-    def __init__(self, attribute_type=None, experience=Experience, is_percent=random.choice([True, False])):
+    def __init__(self, attribute_type=None, experience=Experience(), is_percent=random.choice([True, False])):
         if attribute_type is None:
             self.attribute_type = random.choice(list(StatTypes))
         else:
             self.attribute_type = attribute_type
         self.experience = experience
         self.is_percent = is_percent
+        stats = []
+        for stat in list(StatTypes):
+            stats.append(stat.name)
         self.settings = [
+            ListSetting("attribute type", self.attribute_type.name, stats),
             NumberSetting("level", self.experience.level, 1),
             ToggleSetting("is percent type", self.is_percent)
         ]
@@ -59,6 +64,14 @@ class Buff:
         Window.clear()
         Text(self.__repr__()).display()
         self.settings = SettingManager(self.settings).config_settings(True)
-        self.experience.level = self.settings[0].value
-        self.is_percent = self.settings[1].toggled
+        counter = 0
+        for stat_type in list(StatTypes):
+            if str(stat_type) == f"StatTypes.{self.settings[0].selected_value}":
+                self.attribute_type = StatTypes(counter)
+                break
+
+            counter += 1
+
+        self.experience.level = self.settings[1].value
+        self.is_percent = self.settings[2].toggled
         return Text(self)

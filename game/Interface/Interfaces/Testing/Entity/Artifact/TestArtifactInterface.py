@@ -1,11 +1,7 @@
-from Interface.Interface import Interface
-from Interface.InterfaceContent import InterfaceContent
-
 from Entity.Artifact.Artifact import Artifact
 from Entity.Stats.StarRating import StarRating
 from Entity.Stats.Experience import Experience
 from Entity.Stats.Buff import Buff
-from Entity.Stats.StatTypes import StatTypes
 
 from Graphics.Text.Text import Text
 
@@ -13,13 +9,10 @@ from Random.Functions import get_random_name
 
 from Config.NumberSetting import NumberSetting
 from Config.StringSetting import StringSetting
-from Config.ToggleSetting import ToggleSetting
 from Config.ClassSetting import ClassSetting
 from Config.SettingManager import SettingManager
 
 from IO import Window
-
-import random
 
 class TestArtifactInterface:
 

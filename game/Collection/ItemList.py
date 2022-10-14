@@ -51,6 +51,12 @@ class ItemList:
         for item in list:
             self.add(item)
 
+    def get(self, index):
+        try:
+            return self.content[index]
+        except IndexError:
+            return None
+
     def __repr__(self):
         return {
             "size": self.size,

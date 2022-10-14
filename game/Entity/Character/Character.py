@@ -80,28 +80,25 @@ class Character(Entity):
         self.default_crit_damage_points = default_crit_damage_points
         self.weapon = weapon
         self.artifacts = artifacts
-        self.default_health = ((self.default_health_points * 2) + (2 * self.experience.level) + (self.star_rating * 10))
-        self.default_attack = int(((self.experience.level * 1.45) + self.star_rating + 2))
-        self.default_defense = int((self.experience.level * 0.2) + self.star_rating)
-        self.default_crit_rate = int(6 + (self.experience.level * 0.2) + self.star_rating)
-        self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating + 2)
-        self.difficulty = int(1 + (self.experience.level / 20))
+        self.update_stats()
 
+    def update_stats(self):
+        self.default_health = int((self.default_health_points * 2) + ((self.experience.level * self.star_rating.value) * 10))
+        self.default_attack = int((1 + self.default_attack_points) * ((self.experience.level * self.star_rating.value) * 1.35))
+        self.default_defense = int((self.experience.level * 0.2) + self.star_rating.value)
+        self.default_crit_rate = int(6 + (self.experience.level * 0.2) + self.star_rating.value)
+        self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating.value + 2)
+        self.difficulty = int(1 + (self.experience.level / 20))
 
     def level_up(self, amount):
         self.experience.level += amount
-        self.default_health = ((self.default_health_points * 2) + (2 * self.experience.level) + (self.star_rating * 10))
-        self.default_attack = int(((self.experience.level * 1.45) + self.star_rating + 2))
-        self.default_defense = int((self.experience.level * 0.2) + self.star_rating)
-        self.default_crit_rate = int(6 + (self.experience.level * 0.2) + self.star_rating)
-        self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating + 2)
-        self.difficulty = int(1 + (self.experience.level / 20))
+        self.update_stats()
 
     def add_xp(self, amount):
         difference = self.experience.get_xp_required(self.star_rating) - self.experience.xp
         still_upgrading = True
         while still_upgrading:
-            if self.experience.xp + amount > self.experience.get_xp_required(self.star_rating):
+            if self.experience.xp + amount > self.experience.get_xp_required(self.star_rating.value):
                 amount -= difference
                 self.level_up(1)
                 self.experience.xp = difference
@@ -113,14 +110,34 @@ class Character(Entity):
     def __repr__(self):
         return (
             f"""
-{self.name} {self.star_rating} {self.experience} / {self.experience.get_xp_required()}xp {self.experience.xp/self.experience.get_xp_required(self.star_rating)}%
-{self.default_health}
-{self.default_attack}
-{self.default_defense}
-{self.default_crit_rate}
-{self.default_crit_damage}
-{self.artifacts}
+{self.name} {self.star_rating}
+level {self.experience.level}
+xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp {self.experience.xp / self.experience.get_xp_required(self.star_rating.value)}% 
+health: {self.default_health}
+attack: {self.default_attack}
+defense: {self.default_defense}
+crit rate: {self.default_crit_rate}
+crit damage: {self.default_crit_damage}
+--------weapon--------
+{self.weapon}
+
+^^^^^^^^artifact^^^^^^^^
+{self.artifacts.get(0)}
+
+^^^^^^^^artifact^^^^^^^^
+{self.artifacts.get(1)}
+
+^^^^^^^^artifact^^^^^^^^
+{self.artifacts.get(2)}
+
+^^^^^^^^artifact^^^^^^^^
+{self.artifacts.get(3)}
+
+^^^^^^^^artifact^^^^^^^^
+{self.artifacts.get(4)}
+
+====================
 {self.description}
+====================
 """
         )
-

@@ -19,6 +19,8 @@ from Config.ToggleSetting import ToggleSetting
 from Config.ClassSetting import ClassSetting
 from Config.SettingManager import SettingManager
 
+# IO packages
+from IO import Window
 
 class Artifact(Entity):
     """
@@ -58,12 +60,13 @@ class Artifact(Entity):
         self.family = family
         self.main_attribute = main_attribute
         self.attributes = attributes
+        self.experience.limit = self.star_rating.value * 4
         self.settings = [
             StringSetting("name", self.name),
             NumberSetting("star rating", self.star_rating.value, 1, 5),
             StringSetting("family", self.family),
             ClassSetting("main attribute", self.main_attribute),
-            NumberSetting("level", self.experience.level)
+            NumberSetting("level", self.experience.level, 1, self.experience.limit)
         ]
 
     def display_attributes(self):
@@ -86,4 +89,14 @@ apart of the {self.family} family
         )
 
     def test(self):
+        Window.clear()
+        Text(self.__repr__()).display()
         self.settings = SettingManager(self.settings).config_settings(False)
+        self.name = self.settings[0].text
+        self.star_rating = StarRating(self.settings[1].value)
+        self.experience.limit = self.star_rating.value * 4
+        self.family = self.settings[2].text
+        self.main_attribute = self.settings[3].instance_class
+        self.experience.level = self.settings[4].value
+        self.settings[4] = NumberSetting("level", self.experience.level, 1, self.experience.limit)
+        return self.settings

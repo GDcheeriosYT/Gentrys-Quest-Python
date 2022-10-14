@@ -2,6 +2,9 @@
 # graphics packages
 from Graphics.Content.Text.WarningText import WarningText
 
+# IO packages
+from IO import Window
+
 # external packages
 from rich.console import Console
 
@@ -56,6 +59,23 @@ class ItemList:
             return self.content[index]
         except IndexError:
             return None
+
+    def test(self):
+        for item in self.content:
+            print(f"{self.content.index(item)}. {item}")
+
+        while True:
+            try:
+                num = int(input())
+                self.content[num - 1] = self.content[num - 1].test()
+            except ValueError:
+                Window.clear()
+                WarningText("Not a number!").display()
+            except NameError:
+                WarningText("Couldn't find a test method for this class").display()
+                break
+            except IndexError:
+                break
 
     def __repr__(self):
         return {

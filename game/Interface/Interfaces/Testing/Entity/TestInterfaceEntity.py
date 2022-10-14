@@ -2,6 +2,7 @@ from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 
 from .Artifact.TestArtifactInterface import TestArtifactInterface
+from .Character.TestCharacterInterface import TestCharacterInterface
 
 
 class TestInterfaceEntity(Interface):
@@ -21,7 +22,12 @@ class TestInterfaceEntity(Interface):
                 except TypeError:
                     break
         elif action == 1:
-            pass  # Temporary
+            test_interface = TestCharacterInterface()
+            while True:
+                try:
+                    test_interface.__repr__()
+                except TypeError:
+                    break
         elif action == 2:
             pass  # Temporary
         elif action == 3:

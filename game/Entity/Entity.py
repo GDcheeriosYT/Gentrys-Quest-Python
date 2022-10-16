@@ -1,7 +1,8 @@
 # game packages
-#entity packages
+# entity packages
 from .Stats.StarRating import StarRating
 from .Stats.Experience import Experience
+
 
 # external packages
 
@@ -34,3 +35,10 @@ class Entity:
         self.description = description
         self.star_rating = star_rating
         self.experience = experience
+
+    @staticmethod
+    def check_minimum(variable, multiplier=1, subtract_one_true=False):
+        if variable < 1:
+            return 1 if not subtract_one_true else 0
+        else:
+            return variable * multiplier

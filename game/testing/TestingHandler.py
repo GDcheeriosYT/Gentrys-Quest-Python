@@ -28,10 +28,14 @@ class TestingHandler:
             entity_interface = TestInterfaceEntity()
             Window.clear()
             QuestionText("What area shall we test today? (Meow:))").display()
-            choices = int(input("1. Entity\n"
-                                "2. quit\n"))
+            try:
+                choices = int(input("1. Entity\n"
+                                    "2. quit\n"))
+                if choices == 1:
+                    entity_interface.__repr__()
+                else:
+                    break
 
-            if choices == 1:
-                entity_interface.__repr__()
-            else:
-                break
+            except ValueError:
+                print(":l")
+

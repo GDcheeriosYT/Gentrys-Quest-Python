@@ -83,12 +83,12 @@ class Character(Entity):
         self.update_stats()
 
     def update_stats(self):
-        self.default_health = int((self.default_health_points * 2) + ((self.experience.level * self.star_rating.value) * 10))
-        self.default_attack = int((1 + self.default_attack_points) * ((self.experience.level * self.star_rating.value) * 1.35))
-        self.default_defense = int((self.experience.level * 0.2) + self.star_rating.value)
-        self.default_crit_rate = int(6 + (self.experience.level * 0.2) + self.star_rating.value)
-        self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating.value + 2)
         self.difficulty = int(1 + (self.experience.level / 20))
+        self.default_health = int((((((self.star_rating.value - 1) * 3.5) + (((self.experience.level - 1) * 2.5) + ((self.star_rating.value - 1) * (self.experience.level * 0.5)))) * self.check_minimum(self.default_health_points, 1.12)) * self.check_minimum(self.difficulty - 1, 1.60)) + 20)
+        self.default_attack = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.80) + (self.check_minimum(self.default_attack_points, 1, True) * (self.experience.level / 4))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
+        self.default_defense = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.5) + (self.check_minimum(self.default_defense_points, 1, True)) * (self.experience.level / 8)) * self.check_minimum(self.difficulty - 1, 1.60)) + 1
+        self.default_crit_rate = int(0)
+        self.default_crit_damage = int(0)
 
     def level_up(self, amount):
         self.experience.level += amount
@@ -113,7 +113,7 @@ class Character(Entity):
 {self.name} {self.star_rating}
 level {self.experience.level}
 xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp {self.experience.xp / self.experience.get_xp_required(self.star_rating.value)}% 
-health: {self.default_health}
+health: {self.default_health} {self.default_health_points}
 attack: {self.default_attack}
 defense: {self.default_defense}
 crit rate: {self.default_crit_rate}

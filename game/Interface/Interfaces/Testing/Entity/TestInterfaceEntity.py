@@ -12,7 +12,6 @@ class TestInterfaceEntity(Interface):
                                                   ["Artifact", "Character", "Enemy", "Weapon"]))
 
     def __repr__(self):
-
         action = self.visit()
         if action == 0:
             test_interface = TestArtifactInterface()

@@ -91,7 +91,7 @@ apart of the {self.family} family
     def test(self):
         Window.clear()
         Text(self.__repr__()).display()
-        self.settings = SettingManager(self.settings).config_settings(False)
+        self.settings = SettingManager(self.settings).config_settings(True)
         self.name = self.settings[0].text
         self.star_rating = StarRating(self.settings[1].value)
         self.experience.limit = self.star_rating.value * 4

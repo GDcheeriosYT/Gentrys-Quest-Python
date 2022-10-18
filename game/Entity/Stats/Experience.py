@@ -23,4 +23,4 @@ class Experience:
 
 # Gives you the amount of xp required to level up given the star rating
     def get_xp_required(self, star_rating):
-        return int(((self.level*100) + (star_rating * 1.25)) * ((self.level / 20) + 1))
+        return int(((self.level*75) + ((star_rating * (self.level * 0.25)) * 25)) * ((self.level / 20) + 1))

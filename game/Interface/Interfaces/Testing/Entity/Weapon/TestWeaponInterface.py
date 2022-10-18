@@ -1,7 +1,7 @@
 from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 
-from Entity.Artifact.Artifact import Artifact
+from Entity.Weapon.Weapon import Weapon
 from Entity.Stats.StarRating import StarRating
 from Entity.Stats.Experience import Experience
 from Entity.Stats.Buff import Buff
@@ -23,30 +23,34 @@ import random
 
 class TestWeaponInterface:
 
-    weapon = none
-    settings = none
+    weapon = None
+    settings = None
 
-    def __init__(self, name="fists", description="punches things", weapon_type=None, attack=3,
-                 buff=Buff(StatTypes.Health, Experience(), False), verbs=None, star_rating=StarRating(), experience=Experience()):
-        super().__init__(name, description, star_rating, experience)
-        self.weapon_type = weapon_type
-        self.attack = attack
-        self.buff = buff
-        self.verbs = verbs
+    def __init__(self):
+        self.weapon = Weapon()
         self.settings = [
-            StringSetting("name", self.name),
-            StringSetting("description", self.description),
-            StringSetting("weapon_type", self.weapon_type),
-            NumberSetting("attack", self.attack),
-            ClassSetting("buff", self.buff),
-            ClassSetting("verbs", self.verbs),
-            NumberSetting("star_rating", self.star_rating),
-            NumberSetting("experience", self.experience)
+            StringSetting("name", self.weapon.name),
+            StringSetting("description", self.weapon.description),
+            StringSetting("weapon_type", self.weapon.weapon_type),
+            NumberSetting("attack", self.weapon.attack),
+            ClassSetting("buff", self.weapon.buff),
+            ClassSetting("verbs", self.weapon.verbs),
+            NumberSetting("star_rating", self.weapon.star_rating.value, 1, 5),
+            NumberSetting("experience", self.weapon.experience.level, 1)
         ]
 
-
-
-
-
+    def __repr__(self):
+        Window.clear()
+        Text(self.weapon).display()
+        self.settings = SettingManager(self.settings).config_settings(False)
+        self.weapon.name = self.settings[0].text
+        self.weapon.description = self.settings[1].text
+        self.weapon.weapon_type = self.settings[2].text
+        self.weapon.attack = self.settings[3].value
+        self.weapon.buff = self.settings[4].instance_class
+        self.weapon.verbs = self.settings[5].instance_class
+        self.weapon.star_rating = StarRating(self.settings[6].value)
+        self.weapon.experience.level = self.settings[7].value
+        return self.settings
 
 

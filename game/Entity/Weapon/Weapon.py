@@ -5,6 +5,7 @@ from ..Stats.StarRating import StarRating
 from ..Stats.Experience import Experience
 from ..Stats.StatTypes import StatTypes
 from ..Stats.Buff import Buff
+from .Verbs import Verbs
 
 # Config packages
 from Config.NumberSetting import NumberSetting
@@ -60,21 +61,21 @@ class Weapon(Entity):
     experience = None
 
     def __init__(self, name="fists", description="punches things", weapon_type=None, attack=3,
-                 buff=Buff(StatTypes.Health, Experience(), False), verbs=None, star_rating=StarRating(), experience=Experience()):
+                 buff=Buff(StatTypes.Health, Experience(), False), verbs=Verbs("punched", "uppercut"), star_rating=StarRating(), experience=Experience()):
         super().__init__(name, description, star_rating, experience)
         self.weapon_type = weapon_type
         self.attack = attack
         self.buff = buff
         self.verbs = verbs
         self.settings = [
-            StringSetting("name", self.weapon.name),
-            StringSetting("description", self.weapon.description),
-            StringSetting("weapon_type", self.weapon.weapon_type),
-            NumberSetting("attack", self.weapon.attack),
-            ClassSetting("buff", self.weapon.buff),
-            ClassSetting("verbs", self.weapon.verbs),
-            NumberSetting("star_rating", self.weapon.star_rating.value, 1, 5),
-            NumberSetting("experience", self.weapon.experience.level, 1)
+            StringSetting("name", self.name),
+            StringSetting("description", self.description),
+            StringSetting("weapon_type", self.weapon_type),
+            NumberSetting("attack", self.attack),
+            ClassSetting("buff", self.buff),
+            ClassSetting("verbs", self.verbs),
+            NumberSetting("star_rating", self.star_rating.value, 1, 5),
+            NumberSetting("experience", self.experience.level, 1)
         ]
 
     def __repr__(self):
@@ -89,14 +90,14 @@ attribute: {self.buff}
 
     def test(self):
         Window.clear()
-        Text(self.weapon).display()
+        Text(self.__repr__()).display()
         self.settings = SettingManager(self.settings).config_settings(False)
-        self.weapon.name = self.settings[0].text
-        self.weapon.description = self.settings[1].text
-        self.weapon.weapon_type = self.settings[2].text
-        self.weapon.attack = self.settings[3].value
-        self.weapon.buff = self.settings[4].instance_class
-        self.weapon.verbs = self.settings[5].instance_class
-        self.weapon.star_rating = StarRating(self.settings[6].value)
-        self.weapon.experience.level = self.settings[7].value
+        self.name = self.settings[0].text
+        self.description = self.settings[1].text
+        self.weapon_type = self.settings[2].text
+        self.attack = self.settings[3].value
+        self.buff = self.settings[4].instance_class
+        self.verbs = self.settings[5].instance_class
+        self.star_rating = StarRating(self.settings[6].value)
+        self.experience.level = self.settings[7].value
         return self.settings

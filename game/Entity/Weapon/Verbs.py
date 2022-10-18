@@ -1,3 +1,14 @@
+# game packages
+# config packages
+from Config.StringSetting import StringSetting
+from Config.SettingManager import SettingManager
+
+# IO packages
+from IO import Window
+
+# mariachis packages
+from Graphics.Text.Text import Text
+
 class Verbs:
     """
     Makes verbs for a weapon

@@ -68,7 +68,7 @@ class Character(Entity):
     default_crit_damage = None
     difficulty = None
 
-    def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience(), weapon=None,
+    def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience(), weapon=Weapon(),
                  artifacts=ItemList(5, Artifact), default_health_points=0, default_attack_points=0,
                  default_defense_points=0, default_crit_rate_points=0,
                  default_crit_damage_points=0):
@@ -122,7 +122,6 @@ crit rate: {self.default_crit_rate}%
 crit damage: {self.default_crit_damage}
 --------weapon--------
 {self.weapon}
-
 ^^^^^^^^artifact^^^^^^^^
 {self.artifacts.get(0)}
 

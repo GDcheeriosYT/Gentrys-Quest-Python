@@ -87,8 +87,10 @@ class Character(Entity):
         self.default_health = int((((((self.star_rating.value - 1) * 3.5) + (((self.experience.level - 1) * 2.5) + ((self.star_rating.value - 1) * (self.experience.level * 0.5)))) * self.check_minimum(self.default_health_points, 1.12)) * self.check_minimum(self.difficulty - 1, 1.60)) + 20)
         self.default_attack = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.80) + (self.check_minimum(self.default_attack_points, 1, True) * (self.experience.level / 4))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
         self.default_defense = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.5) + (self.check_minimum(self.default_defense_points, 1, True)) * (self.experience.level / 8)) * self.check_minimum(self.difficulty - 1, 1.60)) + 1
-        self.default_crit_rate = int(0)
-        self.default_crit_damage = int(0)
+        default_crit_rate = float(self.check_minimum(self.default_crit_rate_points, 3) + self.check_minimum(self.star_rating.value, 0.5) + self.check_minimum(self.experience.level, 0.45) + 3)
+        self.default_crit_rate = 100 if default_crit_rate >= 100 else default_crit_rate
+        self.default_crit_damage = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.28)), 0.15) + (self.check_minimum(self.default_crit_damage_points, 1, True) * (self.experience.level / 2.5))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
+
 
     def level_up(self, amount):
         self.experience.level += amount
@@ -113,10 +115,10 @@ class Character(Entity):
 {self.name} {self.star_rating}
 level {self.experience.level}
 xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp {self.experience.xp / self.experience.get_xp_required(self.star_rating.value)}% 
-health: {self.default_health} {self.default_health_points}
+health: {self.default_health}
 attack: {self.default_attack}
 defense: {self.default_defense}
-crit rate: {self.default_crit_rate}
+crit rate: {self.default_crit_rate}%
 crit damage: {self.default_crit_damage}
 --------weapon--------
 {self.weapon}

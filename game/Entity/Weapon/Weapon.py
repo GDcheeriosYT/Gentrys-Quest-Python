@@ -80,11 +80,11 @@ class Weapon(Entity):
 
     def __repr__(self):
         return (
-f"""
-{self.name} {self.star_rating} {self.experience}
+f"""{self.name} {self.star_rating} {self.experience}
 "meow " type: {self.weapon_type}
 base attack: {self.attack}
 attribute: {self.buff}
+"{self.description}"
 """
         )
 

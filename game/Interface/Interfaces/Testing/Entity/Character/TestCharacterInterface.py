@@ -17,8 +17,8 @@ from Collection.ItemList import ItemList
 
 from IO import Window
 
-class TestCharacterInterface:
 
+class TestCharacterInterface:
     character = None
     settings = None
 
@@ -27,11 +27,11 @@ class TestCharacterInterface:
         self.character = Character(name)
         self.settings = [
             StringSetting("name", self.character.name),
-            NumberSetting("health points", 0, 0),
-            NumberSetting("attack points", 0, 0),
-            NumberSetting("defense points", 0, 0),
-            NumberSetting("critRate points", 0, 0),
-            NumberSetting("critDamage points", 0, 0),
+            NumberSetting("health points", 0, 0, 4),
+            NumberSetting("attack points", 0, 0, 4),
+            NumberSetting("defense points", 0, 0, 4),
+            NumberSetting("critRate points", 0, 0, 4),
+            NumberSetting("critDamage points", 0, 0, 4),
             NumberSetting("star rating", self.character.star_rating.value, 1, 5),
             NumberSetting("level", self.character.experience.level, 1),
             ClassSetting("weapon", self.character.weapon),
@@ -42,7 +42,7 @@ class TestCharacterInterface:
     def __repr__(self):
         Window.clear()
         Text(self.character).display()
-        self.settings = SettingManager(self.settings).config_settings(False)
+        self.settings = SettingManager(self.settings).config_settings()
         self.character.name = self.settings[0].text
         self.character.default_health_points = self.settings[1].value
         self.character.default_attack_points = self.settings[2].value
@@ -55,4 +55,4 @@ class TestCharacterInterface:
         self.character.artifacts = self.settings[9].instance_class
         self.character.description = self.settings[10].text
         self.character.update_stats()
-        return self.settings
+        return self

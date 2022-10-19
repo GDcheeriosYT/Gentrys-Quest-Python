@@ -62,8 +62,7 @@ class Buff:
 
     def test(self):
         Window.clear()
-        Text(self.__repr__()).display()
-        self.settings = SettingManager(self.settings).config_settings(True)
+        self.settings = SettingManager(self.settings).config_settings()
         counter = 0
         for stat_type in list(StatTypes):
             if str(stat_type) == f"StatTypes.{self.settings[0].selected_value}":
@@ -74,4 +73,4 @@ class Buff:
 
         self.experience.level = self.settings[1].value
         self.is_percent = self.settings[2].toggled
-        return Text(self)
+        return self

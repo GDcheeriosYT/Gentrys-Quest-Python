@@ -78,20 +78,15 @@ class Artifact(Entity):
 
     def __repr__(self):
         return (
-            f"""
-=========================================
-{self.name} {self.star_rating} {self.experience}
+            f"""{self.name} {self.star_rating} {self.experience}
 apart of the {self.family} family
 * {self.main_attribute} *
-{f"attributes{self.display_attributes()}" if len(self.attributes) > 0 else ""}
-=========================================
-"""
+{f"attributes{self.display_attributes()}" if len(self.attributes) > 0 else ""}"""
         )
 
     def test(self):
         Window.clear()
-        Text(self.__repr__()).display()
-        self.settings = SettingManager(self.settings).config_settings(True)
+        self.settings = SettingManager(self.settings).config_settings()
         self.name = self.settings[0].text
         self.star_rating = StarRating(self.settings[1].value)
         self.experience.limit = self.star_rating.value * 4
@@ -99,4 +94,4 @@ apart of the {self.family} family
         self.main_attribute = self.settings[3].instance_class
         self.experience.level = self.settings[4].value
         self.settings[4] = NumberSetting("level", self.experience.level, 1, self.experience.limit)
-        return self.settings
+        return self

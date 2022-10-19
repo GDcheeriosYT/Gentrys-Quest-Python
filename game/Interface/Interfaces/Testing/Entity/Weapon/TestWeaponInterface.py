@@ -42,7 +42,7 @@ class TestWeaponInterface:
     def __repr__(self):
         Window.clear()
         Text(self.weapon).display()
-        self.settings = SettingManager(self.settings).config_settings(False)
+        self.settings = SettingManager(self.settings).config_settings()
         self.weapon.name = self.settings[0].text
         self.weapon.description = self.settings[1].text
         self.weapon.weapon_type = self.settings[2].text
@@ -51,6 +51,6 @@ class TestWeaponInterface:
         self.weapon.verbs = self.settings[5].instance_class
         self.weapon.star_rating = StarRating(self.settings[6].value)
         self.weapon.experience.level = self.settings[7].value
-        return self.settings
+        return self
 
 

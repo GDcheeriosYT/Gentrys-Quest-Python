@@ -27,9 +27,12 @@ class ItemList:
     size = None
     content_type = None
 
-    def __init__(self, size=None, content_type=None, output=True):
+    def __init__(self, size=None, content_type=None, fill=False, output=True):
         self.content = []
         self.size = size
+        if fill and size is not None:
+            for i in range(size):
+                self.content.append(None)
         self.content_type = content_type
         self.output = output
 
@@ -47,7 +50,7 @@ class ItemList:
         selection = input("which item would you like to remove?\n")
         try:
             return self.content.pop(self.content.index(int(selection) - 1))
-        except:
+        except IndexError:
             WarningText(f"Couldn't find item at {selection}").display()
 
     def fill(self, list):
@@ -61,13 +64,20 @@ class ItemList:
             return None
 
     def test(self):
-        for item in self.content:
-            print(f"{self.content.index(item)}. {item}")
-
         while True:
             try:
+                Window.clear()
+                counter = 1
+                for item in self.content:
+                    print(f"{counter}. {item}")
+                    counter += 1
+                print(f"{counter}. back")
                 num = int(input())
-                self.content[num - 1] = self.content[num - 1].test()
+                if self.content[num - 1] is None:
+                    self.content[num - 1] = self.content_type("Test Item")
+                    self.content[num - 1] = self.content[num - 1].test()
+                else:
+                    self.content[num - 1] = self.content[num - 1].test()
             except ValueError:
                 Window.clear()
                 WarningText("Not a number!").display()

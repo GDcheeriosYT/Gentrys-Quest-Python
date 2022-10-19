@@ -75,23 +75,24 @@ class Weapon(Entity):
             ClassSetting("buff", self.buff),
             ClassSetting("verbs", self.verbs),
             NumberSetting("star_rating", self.star_rating.value, 1, 5),
-            NumberSetting("experience", self.experience.level, 1)
+            NumberSetting("level", self.experience.level, 1)
         ]
 
     def __repr__(self):
         return (
 f"""{self.name} {self.star_rating} {self.experience}
-"meow " type: {self.weapon_type}
+type: {self.weapon_type}
 base attack: {self.attack}
 attribute: {self.buff}
-"{self.description}"
+##################
+{self.description}
+##################
 """
         )
 
     def test(self):
         Window.clear()
-        Text(self.__repr__()).display()
-        self.settings = SettingManager(self.settings).config_settings(True)
+        self.settings = SettingManager(self.settings).config_settings()
         self.name = self.settings[0].text
         self.description = self.settings[1].text
         self.weapon_type = self.settings[2].text
@@ -100,4 +101,4 @@ attribute: {self.buff}
         self.verbs = self.settings[5].instance_class
         self.star_rating = StarRating(self.settings[6].value)
         self.experience.level = self.settings[7].value
-        return self.settings
+        return self

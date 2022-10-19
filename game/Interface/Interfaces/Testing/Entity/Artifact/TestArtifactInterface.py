@@ -35,7 +35,7 @@ class TestArtifactInterface:
     def __repr__(self):
         Window.clear()
         Text(self.artifact).display()
-        self.settings = SettingManager(self.settings).config_settings(False)
+        self.settings = SettingManager(self.settings).config_settings()
         self.artifact.name = self.settings[0].text
         self.artifact.star_rating = StarRating(self.settings[1].value)
         self.artifact.experience.limit = self.artifact.star_rating.value*4
@@ -43,4 +43,4 @@ class TestArtifactInterface:
         self.artifact.main_attribute = self.settings[3].instance_class
         self.artifact.experience.level = self.settings[4].value
         self.settings[4] = NumberSetting("level", self.artifact.experience.level, 1, self.artifact.experience.limit)
-        return self.settings
+        return self

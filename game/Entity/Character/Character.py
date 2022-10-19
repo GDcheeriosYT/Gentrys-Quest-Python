@@ -69,7 +69,7 @@ class Character(Entity):
     difficulty = None
 
     def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience(), weapon=Weapon(),
-                 artifacts=ItemList(5, Artifact), default_health_points=0, default_attack_points=0,
+                 artifacts=ItemList(5, Artifact, True), default_health_points=0, default_attack_points=0,
                  default_defense_points=0, default_crit_rate_points=0,
                  default_crit_damage_points=0):
         super().__init__(name, description, star_rating, experience)
@@ -90,7 +90,6 @@ class Character(Entity):
         default_crit_rate = float(self.check_minimum(self.default_crit_rate_points, 3) + self.check_minimum(self.star_rating.value, 0.5) + self.check_minimum(self.experience.level, 0.45) + 3)
         self.default_crit_rate = 100 if default_crit_rate >= 100 else default_crit_rate
         self.default_crit_damage = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.28)), 0.15) + (self.check_minimum(self.default_crit_damage_points, 1, True) * (self.experience.level / 2.5))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
-
 
     def level_up(self, amount):
         self.experience.level += amount

@@ -9,6 +9,13 @@ from ..Artifact.Artifact import Artifact
 # collection packages
 from Collection.ItemList import ItemList
 
+# graphics packages
+from Graphics.Text.Text import Text
+from Graphics.Content.Text.WarningText import WarningText
+
+# IO packages
+from IO import Window
+
 
 class Character(Entity):
     """
@@ -109,6 +116,32 @@ class Character(Entity):
             else:
                 self.experience.xp += amount
                 still_upgrading = False
+
+    def level_menu(self, data):
+        percentage = self.experience.xp / self.experience.get_xp_required(self.star_rating.value, True)
+        Text(f"""
+{self.experience}
+{self.experience.xp}xp/{self.experience.get_xp_required(self.star_rating.value, True)}xp ({percentage})%
+upgrade your character?
+/{(self.experience.xp/10) if int(str(self.experience.xp)[len(str(self.experience.xp)) - 1]) != 0 else (self.experience.xp/10) + 1}
+""")
+
+    def manage(self):
+        while True:
+            Window.clear()
+            Text(self.__repr__()).display()
+            try:
+                choice = int(input("1. level up\n"
+                                   "2. manage weapon\n"
+                                   "3. manage artifacts\n"
+                                   "4. equip character\n"
+                                   "5. back"))
+                if choice == 1:
+                    pass
+                    #not sure what to do yet...
+
+            except ValueError:
+                WarningText("That's literally not a number homie...").display()
 
     def __repr__(self):
         return (

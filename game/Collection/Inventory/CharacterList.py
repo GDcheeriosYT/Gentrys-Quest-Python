@@ -13,6 +13,7 @@ from ..Handlers.ArtifactObjectHandler import ArtifactObjectHandler
 
 # graphics packages
 from Graphics.Status import Status
+from Graphics.Content.Text.WarningText import WarningText
 
 # built-in packages
 import time
@@ -71,5 +72,20 @@ class CharacterList:
 
         load_data_status.stop()
 
-    def __repr__(self):
-        return self.characters
+    def list_characters(self):
+        while True:
+            try:
+                x = 1
+                for character in self.characters:
+                    print(f"{x}. {character.name} {character.star_rating} {character.experience}")
+                    x += 1
+
+                num = int(input("select a character\n"))
+                self.select_character(num - 1)
+            except ValueError:
+                WarningText("That's not a number").display()
+            except IndexError:
+                break
+
+    def select_character(self, index):
+        self.characters[index - 1].manage()

@@ -21,4 +21,4 @@ class BuffArrayHandler:
         self.buff_array = buff_array
 
     def create_buff(self):
-        return Buff(StatTypes(self.buff_array[0]), self.buff_array[1] == 1, Experience())
+        return Buff(StatTypes(self.buff_array[0]), Experience(), self.buff_array[1] == 1)

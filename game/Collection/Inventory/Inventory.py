@@ -1,7 +1,11 @@
+# game packages
+# collection packages
 from .ArtifactList import ArtifactList
 from .CharacterList import CharacterList
 from .WeaponList import WeaponList
 
+# graphics packages
+from Graphics.Content.Text.WarningText import WarningText
 
 class Inventory:
     """
@@ -27,6 +31,15 @@ class Inventory:
         self.weapon_list = WeaponList(inventory_data["weapons"])
         self.artifact_list = ArtifactList(inventory_data["artifacts"])
 
+    def manage_input(self):
+        while True:
+            try:
+                num = int(input())
+                if num == 1:
+                    self.character_list.list_characters()
+            except ValueError:
+                WarningText("That's not exactly a number...")
+
     def __repr__(self):
         return (
             f"""
@@ -34,5 +47,6 @@ ${self.money}
 1. characters {len(self.character_list.characters)}
 2. weapons {len(self.weapon_list.weapons)}
 3. artifacts {len(self.artifact_list.artifacts)}
+4. back
 """
         )

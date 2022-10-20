@@ -84,7 +84,7 @@ else:
                             "4. quit\n"))
 
         if choices == 1:
-            PlayInterface().__repr__()
+            PlayInterface(GameData.Inventory).__repr__()
         elif choices == 2:
             Window.clear()
             game_data.settings = SettingsInterface(game_data).visit()

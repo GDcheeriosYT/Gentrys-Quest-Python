@@ -44,5 +44,5 @@ class WeaponList:
                 ExperienceObjectHandler(weapon["experience"]).create_experience()
             )
             self.weapons.append(new_weapon)
-            time.sleep(0.1)
+            #time.sleep(0.1)
         load_data_status.stop()

@@ -30,6 +30,10 @@ from IO import Window
 # game data packages
 import GameData
 
+# editor packages
+from Editor.EditorInterface import EditorInterface
+from Editor.TextAnimationEditor import TextAnimationEditor
+
 # built-in packages
 import sys
 import time
@@ -77,18 +81,28 @@ else:
     # main code
     in_game = True
     while in_game:
-        print("main menu")
-        choices = int(input("1. play\n"
-                            "2. settings\n"
-                            "3. changelog\n"
-                            "4. quit\n"))
+        try:
+            print("main menu")
+            choices = int(input("1. play\n"
+                                "2. editor\n"
+                                "3. settings\n"
+                                "4. changelog\n"
+                                "5. quit\n"))
 
-        if choices == 1:
-            PlayInterface(GameData.Inventory).__repr__()
-        elif choices == 2:
-            Window.clear()
-            game_data.settings = SettingsInterface(game_data).visit()
-        else:
-            in_game = False
+            if choices == 1:
+                PlayInterface(GameData.Inventory).__repr__()
+
+            elif choices == 2:
+                choices1 = int(input("1. text animation editor"))
+                if choices1 == 1:
+                    EditorInterface(TextAnimationEditor).edit()
+
+            elif choices == 3:
+                Window.clear()
+                game_data.settings = SettingsInterface(game_data).visit()
+            else:
+                in_game = False
+        except ValueError:
+            WarningText("number please...").display()
 
     server.API.token.delete()

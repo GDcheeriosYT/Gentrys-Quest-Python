@@ -2,6 +2,9 @@
 # graphics packages
 from Graphics.Content.Text.WarningText import WarningText
 
+# IO packages
+from IO import Window
+
 # external packages
 from rich.console import Console
 
@@ -56,6 +59,57 @@ class ItemList:
             return self.content[index]
         except IndexError:
             return None
+
+    def set(self, index, item):
+        try:
+            if isinstance(item, self.content_type) or self.content_type is None:
+                self.content[index] = item
+            else:
+                WarningText(f"The {type(item)} {item} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
+        except IndexError:
+            WarningText("Can't put that here").display()
+
+    def test(self):
+        while True:
+            try:
+                Window.clear()
+                counter = 1
+                for item in self.content:
+                    print(f"{counter}. {item}")
+                    counter += 1
+                print(f"{counter}. back")
+                num = int(input())
+                if self.content[num - 1] is None:
+                    self.content[num - 1] = self.content_type("Test Item")
+                    self.content[num - 1] = self.content[num - 1].test()
+                else:
+                    self.content[num - 1] = self.content[num - 1].test()
+            except ValueError:
+                Window.clear()
+                WarningText("Not a number!").display()
+            except NameError:
+                WarningText("Couldn't find a test method for this class").display()
+                break
+            except IndexError:
+                break
+
+    def delete_after(self, index):
+        x = len(self.content) - 1
+        while x != index:
+            self.content[x].pop()
+            x -= 1
+
+    def change_limit(self, amount):
+        Window.clear()
+        if amount < self.size:
+            WarningText("You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
+            try:
+                num = int(input("1. yes\n2. no"))
+                if num == 1:
+                    self.size = amount
+                    self.delete_after(self.size)
+            except ValueError:
+                WarningText("mans didn't even put a number...").display()
 
     def __repr__(self):
         return {

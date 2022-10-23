@@ -30,6 +30,6 @@ class ArtifactList:
         self.artifacts = []
         for artifact in artifacts:
             self.artifacts.append(ArtifactObjectHandler(artifact).create_artifact())
-            time.sleep(0.1)
+            #time.sleep(0.1)
 
         load_data_status.stop()

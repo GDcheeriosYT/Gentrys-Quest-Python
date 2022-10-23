@@ -68,7 +68,7 @@ class CharacterList:
                 stat_points["critDamage"]
             )
             self.characters.append(new_character)
-            time.sleep(0.1)
+            #time.sleep(0.1)
 
         load_data_status.stop()
 

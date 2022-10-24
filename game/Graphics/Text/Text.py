@@ -1,5 +1,9 @@
+# game packages
 # graphics packages
 from .Style import Style
+
+# IO packages
+from IO.Input import enter_to_continue
 
 # external packages
 from rich.console import Console
@@ -29,8 +33,10 @@ class Text:
         self.content = content
         self.style = style
 
-    def display(self, same_line=False):
+    def display(self, same_line=False, enter_prompt=False):
         Console().print(f"{self.style}{self.content}", end='\r' if same_line else '\n')
+        if enter_prompt:
+            enter_to_continue()
 
     def raw_output(self):
         return f"{self.style}{self.content}"

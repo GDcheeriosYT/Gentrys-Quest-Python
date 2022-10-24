@@ -88,9 +88,22 @@ else:
                                 "3. settings\n"
                                 "4. changelog\n"
                                 "5. quit\n"))
-
             if choices == 1:
-                PlayInterface(GameData.Inventory).__repr__()
+                choices1 = int(input("1. singleplayer\n"
+                                     "2. multiplayer\n"
+                                     "3. back"))
+                if choices1 == 1:
+                    choices2 = int(input("1. travel\n"
+                                         "2. inventory"))
+                    if choices2 == 1:
+                        InfoText("Coming Soon...").display()
+                    elif choices2 == 2:
+                        InfoText("Coming Soon...").display()
+
+
+                elif choices1 == 2:
+                    InfoText("Coming Soon...").display()
+
 
             elif choices == 2:
                 choices1 = int(input("1. text animation editor"))

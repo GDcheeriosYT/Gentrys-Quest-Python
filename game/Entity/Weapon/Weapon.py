@@ -5,7 +5,20 @@ from ..Stats.StarRating import StarRating
 from ..Stats.Experience import Experience
 from ..Stats.StatTypes import StatTypes
 from ..Stats.Buff import Buff
+from .Verbs import Verbs
 
+# Config packages
+from Config.NumberSetting import NumberSetting
+from Config.StringSetting import StringSetting
+from Config.ToggleSetting import ToggleSetting
+from Config.ClassSetting import ClassSetting
+from Config.SettingManager import SettingManager
+
+# Graphics packages
+from Graphics.Text.Text import Text
+
+# IO packages
+from IO import Window
 
 class Weapon(Entity):
     """
@@ -48,9 +61,44 @@ class Weapon(Entity):
     experience = None
 
     def __init__(self, name="fists", description="punches things", weapon_type=None, attack=3,
-                 buff=Buff(StatTypes.Health, Experience(), False), verbs=None, star_rating=StarRating(), experience=Experience()):
+                 buff=Buff(StatTypes.Health, Experience(), False), verbs=Verbs("punched", "uppercut"), star_rating=StarRating(), experience=Experience()):
         super().__init__(name, description, star_rating, experience)
         self.weapon_type = weapon_type
         self.attack = attack
         self.buff = buff
         self.verbs = verbs
+        self.settings = [
+            StringSetting("name", self.name),
+            StringSetting("description", self.description),
+            StringSetting("weapon_type", self.weapon_type),
+            NumberSetting("attack", self.attack),
+            ClassSetting("buff", self.buff),
+            ClassSetting("verbs", self.verbs),
+            NumberSetting("star_rating", self.star_rating.value, 1, 5),
+            NumberSetting("level", self.experience.level, 1)
+        ]
+
+    def __repr__(self):
+        return (
+f"""{self.name} {self.star_rating} {self.experience}
+type: {self.weapon_type}
+base attack: {self.attack}
+attribute: {self.buff}
+##################
+{self.description}
+##################
+"""
+        )
+
+    def test(self):
+        Window.clear()
+        self.settings = SettingManager(self.settings).config_settings()
+        self.name = self.settings[0].text
+        self.description = self.settings[1].text
+        self.weapon_type = self.settings[2].text
+        self.attack = self.settings[3].value
+        self.buff = self.settings[4].instance_class
+        self.verbs = self.settings[5].instance_class
+        self.star_rating = StarRating(self.settings[6].value)
+        self.experience.level = self.settings[7].value
+        return self

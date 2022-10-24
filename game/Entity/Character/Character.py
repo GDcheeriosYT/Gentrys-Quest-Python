@@ -96,14 +96,14 @@ class Character(Entity):
         self.update_stats()
 
     def add_xp(self, amount):
-        difference = self.experience.get_xp_required(self.star_rating) - self.experience.xp
+        difference = self.experience.get_xp_required(self.star_rating.value) - self.experience.xp
         still_upgrading = True
         while still_upgrading:
             if self.experience.xp + amount > self.experience.get_xp_required(self.star_rating.value):
                 amount -= difference
                 self.level_up(1)
                 self.experience.xp = difference
-                difference = self.experience.get_xp_required(self.star_rating) - self.experience.xp
+                difference = self.experience.get_xp_required(self.star_rating.value) - self.experience.xp
             else:
                 self.experience.xp += amount
                 still_upgrading = False

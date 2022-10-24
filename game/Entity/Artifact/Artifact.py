@@ -8,6 +8,8 @@ from ..Stats.StarRating import StarRating
 # graphics packages
 from Graphics.Text.Text import Text
 from Graphics.Text.Style import Style
+from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Content.Text.InfoText import InfoText
 
 # collection packages
 from Collection.ItemList import ItemList
@@ -21,6 +23,7 @@ from Config.SettingManager import SettingManager
 
 # IO packages
 from IO import Window
+
 
 class Artifact(Entity):
     """
@@ -59,6 +62,7 @@ class Artifact(Entity):
         super().__init__(name=name, description="description", star_rating=star_rating, experience=experience)
         self.family = family
         self.main_attribute = main_attribute
+        self.main_attribute.handle_value(self.star_rating.value)
         self.attributes = attributes
         self.experience.limit = self.star_rating.value * 4
         self.settings = [
@@ -69,6 +73,45 @@ class Artifact(Entity):
             NumberSetting("level", self.experience.level, 1, self.experience.limit)
         ]
 
+    def level_up(self, amount):
+        if self.star_rating.value < self.star_rating.value*4:
+            self.experience.level += amount
+            print(f"Your artifact is now level {self.experience.level}!")
+            if self.experience.level % 4 == 0:
+                self.add_new_attribute()
+            self.main_attribute.experience.level = self.experience.level
+            self.main_attribute.handle_value(self.star_rating.value)
+        else:
+            WarningText("Artifact is max level!").display()
+
+        Window.enter_to_continue()
+
+    def add_xp(self, amount):
+        difference = self.experience.get_xp_required(self.star_rating.value, True) - self.experience.xp
+        still_upgrading = True
+        while still_upgrading:
+            if self.experience.xp + amount > self.experience.get_xp_required(self.star_rating.value, True):
+                amount -= difference
+                self.level_up(1)
+                self.experience.xp = difference
+                difference = self.experience.get_xp_required(self.star_rating.value) - self.experience.xp
+            else:
+                self.experience.xp += amount
+                still_upgrading = False
+
+    def add_new_attribute(self):
+        new_attribute = Buff(experience=Experience(1))
+        InfoText(f"^{new_attribute.attribute_type.name}{'%' if new_attribute.is_percent else ''}^").display()
+        for attribute in self.attributes:
+            print(new_attribute.attribute_type, attribute.attribute_type, new_attribute.is_percent, attribute.is_percent)
+            print((new_attribute.attribute_type == attribute.attribute_type), (new_attribute.is_percent == attribute.is_percent))
+            if (new_attribute.attribute_type == attribute.attribute_type) and (new_attribute.is_percent == attribute.is_percent):
+                attribute.experience.level += 1
+                attribute.handle_value(self.star_rating.value)
+                return None
+        new_attribute.handle_value(self.star_rating.value)
+        self.attributes.append(new_attribute)
+
     def display_attributes(self):
         string = "\n"
         for attribute in self.attributes:
@@ -77,9 +120,11 @@ class Artifact(Entity):
         return string
 
     def __repr__(self):
+        percentage = self.experience.xp / self.experience.get_xp_required(self.star_rating.value, True)
         return (
-            f"""{self.name} {self.star_rating} {self.experience}
+            f"""{self.name} {self.star_rating}
 apart of the {self.family} family
+{self.experience} ({int(percentage)})%
 * {self.main_attribute} *
 {f"attributes{self.display_attributes()}" if len(self.attributes) > 0 else ""}"""
         )

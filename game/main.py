@@ -98,7 +98,7 @@ else:
                     if choices2 == 1:
                         InfoText("Coming Soon...").display(enter_prompt=True)
                     elif choices2 == 2:
-                        InfoText("Coming Soon...").display(enter_prompt=True)
+                        GameData.Inventory.manage_input()
 
 
                 elif choices1 == 2:

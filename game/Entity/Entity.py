@@ -34,3 +34,20 @@ class Entity:
         self.description = description
         self.star_rating = star_rating
         self.experience = experience
+
+    def level_up(self, amount):
+        self.experience.level += amount
+        #check stats
+
+    def add_xp(self, amount):
+        difference = self.experience.get_xp_required(self.star_rating) - self.experience.xp
+        still_upgrading = True
+        while still_upgrading:
+            if self.experience.xp + amount > self.experience.get_xp_required(self.star_rating):
+                amount -= difference
+                self.level_up(1)
+                self.experience.xp = difference
+                difference = self.experience.get_xp_required(self.star_rating) - self.experience.xp
+            else:
+                self.experience.xp += amount
+                still_upgrading = False

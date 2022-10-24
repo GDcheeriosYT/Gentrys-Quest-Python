@@ -7,6 +7,10 @@ from .WeaponList import WeaponList
 # graphics packages
 from Graphics.Content.Text.WarningText import WarningText
 
+# IO packages
+from IO.Input import get_int
+
+
 class Inventory:
     """
     Holds all the users owned items
@@ -31,14 +35,24 @@ class Inventory:
         self.weapon_list = WeaponList(inventory_data["weapons"])
         self.artifact_list = ArtifactList(inventory_data["artifacts"])
 
+    def upgrade(self):
+
+
     def manage_input(self):
         while True:
             try:
-                num = int(input())
+                num = get_int("1. characters\n"
+                              "2. artifacts\n"
+                              "3. weapons\n"
+                              "4. back")
                 if num == 1:
                     self.character_list.list_characters()
+                elif num == 2:
+                    self.artifact_list.list_artifacts()
             except ValueError:
                 WarningText("That's not exactly a number...")
+            except IndexError:
+                break
 
     def __repr__(self):
         return (

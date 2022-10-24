@@ -13,10 +13,14 @@ from ..Handlers.ArtifactObjectHandler import ArtifactObjectHandler
 
 # graphics packages
 from Graphics.Status import Status
-from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Text.Text import Text
+
+# IO packages
+from IO.Input import get_int
 
 # built-in packages
 import time
+
 
 class CharacterList:
     """
@@ -68,7 +72,7 @@ class CharacterList:
                 stat_points["critDamage"]
             )
             self.characters.append(new_character)
-            #time.sleep(0.1)
+            # time.sleep(0.1)
 
         load_data_status.stop()
 
@@ -77,15 +81,14 @@ class CharacterList:
             try:
                 x = 1
                 for character in self.characters:
-                    print(f"{x}. {character.name} {character.star_rating} {character.experience}")
+                    Text(f"{x}. {character.name} {character.star_rating} {character.experience}").display()
                     x += 1
 
-                num = int(input("select a character\n"))
-                self.select_character(num - 1)
-            except ValueError:
-                WarningText("That's not a number").display()
+                Text(f"{x}. back").display()
+                num = get_int("select a character\n")
+                return self.select_character(num - 1)
             except IndexError:
                 break
 
     def select_character(self, index):
-        self.characters[index - 1].manage()
+        return self.characters[index - 1].manage()

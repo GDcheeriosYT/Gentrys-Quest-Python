@@ -9,9 +9,14 @@ from ..Handlers.ExperienceObjectHandler import ExperienceObjectHandler
 
 # graphics packages
 from Graphics.Status import Status
+from Graphics.Text.Text import Text
+
+# IO packages
+from IO.Input import get_int
 
 # built-in packages
 import time
+
 
 class WeaponList:
     """
@@ -44,5 +49,22 @@ class WeaponList:
                 ExperienceObjectHandler(weapon["experience"]).create_experience()
             )
             self.weapons.append(new_weapon)
-            #time.sleep(0.1)
+            # time.sleep(0.1)
         load_data_status.stop()
+
+    def list_weapons(self):
+        while True:
+            try:
+                x = 1
+                for weapon in self.weapons:
+                    Text(f"{x}. {weapon.name} {weapon.star_rating} {weapon.experience}").display()
+                    x += 1
+
+                Text(f"{x}. back").display()
+                num = get_int("select a weapon\n")
+                return self.select_weapon(num - 1)
+            except IndexError:
+                break
+
+    def select_weapon(self, index):
+        return self.weapons[index - 1]

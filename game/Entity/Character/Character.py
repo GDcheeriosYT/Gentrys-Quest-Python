@@ -94,38 +94,6 @@ class Character(Entity):
         self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating + 2)
         self.difficulty = int(1 + (self.experience.level / 20))
 
-
-    def level_up(self, amount):
-        self.experience.level += amount
-        self.default_health = ((self.default_health_points * 2) + (2 * self.experience.level) + (self.star_rating * 10))
-        self.default_attack = int(((self.experience.level * 1.45) + self.star_rating + 2))
-        self.default_defense = int((self.experience.level * 0.2) + self.star_rating)
-        self.default_crit_rate = int(6 + (self.experience.level * 0.2) + self.star_rating)
-        self.default_crit_damage = int((self.experience.level * 1.45) + self.star_rating + 2)
-        self.difficulty = int(1 + (self.experience.level / 20))
-
-    def add_xp(self, amount):
-        difference = self.experience.get_xp_required(self.star_rating) - self.experience.xp
-        still_upgrading = True
-        while still_upgrading:
-            if self.experience.xp + amount > self.experience.get_xp_required(self.star_rating):
-                amount -= difference
-                self.level_up(1)
-                self.experience.xp = difference
-                difference = self.experience.get_xp_required(self.star_rating) - self.experience.xp
-            else:
-                self.experience.xp += amount
-                still_upgrading = False
-
-    def level_menu(self, data):
-        percentage = self.experience.xp / self.experience.get_xp_required(self.star_rating.value, True)
-        Text(f"""
-{self.experience}
-{self.experience.xp}xp/{self.experience.get_xp_required(self.star_rating.value, True)}xp ({percentage})%
-upgrade your character?
-/{(self.experience.xp/10) if int(str(self.experience.xp)[len(str(self.experience.xp)) - 1]) != 0 else (self.experience.xp/10) + 1}
-""")
-
     def manage(self):
         while True:
             Window.clear()

@@ -19,16 +19,20 @@ from Graphics.Text.Text import Style
 from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 from Interface.Interfaces.Settings import SettingsInterface
-from Interface.Interfaces.Play.PlayInterface import PlayInterface
 
 # testing packages
 from testing.TestingHandler import TestingHandler
 
 # IO game packages
 from IO import Window
+from IO.Input import get_int, get_string
 
 # game data packages
 import GameData
+
+# editor packages
+from Editor.EditorInterface import EditorInterface
+from Editor.TextAnimationEditor import TextAnimationEditor
 
 # built-in packages
 import sys
@@ -77,18 +81,41 @@ else:
     # main code
     in_game = True
     while in_game:
-        print("main menu")
-        choices = int(input("1. play\n"
-                            "2. settings\n"
-                            "3. changelog\n"
-                            "4. quit\n"))
+        try:
+            choices = get_int("main menu\n"
+                              "1. play\n"
+                              "2. editor\n"
+                              "3. settings\n"
+                              "4. changelog\n"
+                              "5. quit")
+            if choices == 1:
+                choices1 = get_int("1. singleplayer\n"
+                                   "2. multiplayer\n"
+                                   "3. back")
+                if choices1 == 1:
+                    choices2 = get_int("1. travel\n"
+                                       "2. inventory")
+                    if choices2 == 1:
+                        InfoText("Coming Soon...").display(enter_prompt=True)
+                    elif choices2 == 2:
+                        InfoText("Coming Soon...").display(enter_prompt=True)
 
-        if choices == 1:
-            PlayInterface().__repr__()
-        elif choices == 2:
-            Window.clear()
-            game_data.settings = SettingsInterface(game_data).visit()
-        else:
-            in_game = False
+
+                elif choices1 == 2:
+                    InfoText("Coming Soon...").display(enter_prompt=True)
+
+
+            elif choices == 2:
+                choices1 = get_int("1. text animation editor")
+                if choices1 == 1:
+                    EditorInterface(TextAnimationEditor).edit()
+
+            elif choices == 3:
+                Window.clear()
+                game_data.settings = SettingsInterface(game_data).visit()
+            else:
+                in_game = False
+        except ValueError:
+            WarningText("number please...").display()
 
     server.API.token.delete()

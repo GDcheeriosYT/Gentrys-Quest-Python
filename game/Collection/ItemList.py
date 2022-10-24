@@ -63,6 +63,15 @@ class ItemList:
         except IndexError:
             return None
 
+    def set(self, index, item):
+        try:
+            if isinstance(item, self.content_type) or self.content_type is None:
+                self.content[index] = item
+            else:
+                WarningText(f"The {type(item)} {item} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
+        except IndexError:
+            WarningText("Can't put that here").display()
+            
     def test(self):
         while True:
             try:
@@ -86,6 +95,25 @@ class ItemList:
                 break
             except IndexError:
                 break
+
+    def delete_after(self, index):
+        x = len(self.content) - 1
+        while x != index:
+            self.content[x].pop()
+            x -= 1
+
+    def change_limit(self, amount):
+        Window.clear()
+        if amount < self.size:
+            WarningText("You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
+            try:
+                num = int(input("1. yes\n2. no"))
+                if num == 1:
+                    self.size = amount
+                    self.delete_after(self.size)
+            except ValueError:
+                WarningText("mans didn't even put a number...").display()
+
 
     def __repr__(self):
         return {

@@ -28,64 +28,33 @@ class SettingManager:
     def __init__(self, settings):
         self.settings = settings
 
-    def config_settings(self, loop=True):
-        if loop:
-            while True:
-                Text("settings").display()
-                for setting in self.settings:
-                    Text(f"{self.settings.index(setting) + 1} {setting}").display()
-                Text(f"{len(self.settings) + 1}. back").display()
-                try:
-                    value = int(input())
-                    setting = self.settings[value - 1]
-                    if isinstance(setting, ToggleSetting):
-                        setting.toggle_setting()
-                    elif isinstance(setting, NumberSetting):
-                        setting.change_value()
-                    elif isinstance(setting, StringSetting):
-                        setting.change()
-                    elif isinstance(setting, ListSetting):
-                        setting.select()
-                    else:
-                        setting.instance_class.test()
-                    self.settings[value - 1] = setting
-                    Window.clear()
-                except ValueError:
-                    Window.clear()
-                    WarningText("Not a number!").display()
-                except IndexError:
-                    Window.clear()
-                    break
+    def config_settings(self):
+        Text("settings").display()
+        for setting in self.settings:
+            Text(f"{self.settings.index(setting) + 1} {setting}").display()
+        Text(f"{len(self.settings) + 1}. back").display()
+        try:
+            value = int(input())
+            if value == len(self.settings) + 1:
+                return None + ""  # causing a TypeError to end the while loop
+            setting = self.settings[value - 1]
+            if isinstance(setting, ToggleSetting):
+                setting.toggle_setting()
+            elif isinstance(setting, NumberSetting):
+                setting.change_value()
+            elif isinstance(setting, StringSetting):
+                setting.change()
+            elif isinstance(setting, ListSetting):
+                setting.select()
+            else:
+                setting.instance_class.test()
+            self.settings[value - 1] = setting
+            Window.clear()
+        except ValueError:
+            Window.clear()
+            WarningText("Not a number!").display()
+        except IndexError:
+            Window.clear()
 
-            if self.settings is not None:
-                return self.settings
-        else:
-            Text("settings").display()
-            for setting in self.settings:
-                Text(f"{self.settings.index(setting) + 1} {setting}").display()
-            Text(f"{len(self.settings) + 1}. back").display()
-            try:
-                value = int(input())
-                if value == len(self.settings) + 1:
-                    return None + ""  # causing a TypeError to end the while loop
-                setting = self.settings[value - 1]
-                if isinstance(setting, ToggleSetting):
-                    setting.toggle_setting()
-                elif isinstance(setting, NumberSetting):
-                    setting.change_value()
-                elif isinstance(setting, StringSetting):
-                    setting.change()
-                elif isinstance(setting, ListSetting):
-                    setting.select()
-                else:
-                    setting.instance_class.test()
-                self.settings[value - 1] = setting
-                Window.clear()
-            except ValueError:
-                Window.clear()
-                WarningText("Not a number!").display()
-            except IndexError:
-                Window.clear()
-
-            if self.settings is not None:
-                return self.settings
+        if self.settings is not None:
+            return self.settings

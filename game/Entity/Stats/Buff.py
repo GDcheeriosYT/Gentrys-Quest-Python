@@ -56,14 +56,20 @@ class Buff:
             NumberSetting("level", self.experience.level, 1),
             ToggleSetting("is percent type", self.is_percent)
         ]
+        self.value = 0
+
+    def handle_value(self, star_rating):
+        calculation = ((self.experience.level * 1.75) + (star_rating * 1.25))
+        non_crit_calculation = (round(calculation / 2, 2) if self.is_percent else int(calculation))
+        crit_calculation = round(calculation / 2, 2)
+        self.value = non_crit_calculation if self.attribute_type != StatTypes.CritRate else crit_calculation
 
     def __repr__(self):
-        return f"{self.attribute_type.name} 0{'%' if self.is_percent else ''}[{self.experience.level}]"
+        return f"{self.attribute_type.name} {self.value}{'%' if self.is_percent else ''}"
 
     def test(self):
         Window.clear()
-        Text(self.__repr__()).display()
-        self.settings = SettingManager(self.settings).config_settings(True)
+        self.settings = SettingManager(self.settings).config_settings()
         counter = 0
         for stat_type in list(StatTypes):
             if str(stat_type) == f"StatTypes.{self.settings[0].selected_value}":
@@ -74,4 +80,4 @@ class Buff:
 
         self.experience.level = self.settings[1].value
         self.is_percent = self.settings[2].toggled
-        return Text(self)
+        return self

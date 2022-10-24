@@ -36,7 +36,7 @@ class Inventory:
         self.artifact_list = ArtifactList(inventory_data["artifacts"])
 
     def upgrade(self):
-
+        None
 
     def manage_input(self):
         while True:

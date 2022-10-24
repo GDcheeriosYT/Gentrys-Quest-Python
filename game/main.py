@@ -94,7 +94,8 @@ else:
                                    "3. back")
                 if choices1 == 1:
                     choices2 = get_int("1. travel\n"
-                                       "2. inventory")
+                                       "2. gacha\n"
+                                       "3. inventory")
                     if choices2 == 1:
                         InfoText("Coming Soon...").display(enter_prompt=True)
                     elif choices2 == 2:

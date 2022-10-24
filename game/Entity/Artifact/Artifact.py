@@ -74,7 +74,7 @@ class Artifact(Entity):
         ]
 
     def level_up(self, amount):
-        if self.star_rating.value < self.star_rating.value*4:
+        if self.star_rating.value < self.star_rating.value * 4:
             self.experience.level += amount
             print(f"Your artifact is now level {self.experience.level}!")
             if self.experience.level % 4 == 0:
@@ -86,26 +86,12 @@ class Artifact(Entity):
 
         Window.enter_to_continue()
 
-    def add_xp(self, amount):
-        difference = self.experience.get_xp_required(self.star_rating.value, True) - self.experience.xp
-        still_upgrading = True
-        while still_upgrading:
-            if self.experience.xp + amount > self.experience.get_xp_required(self.star_rating.value, True):
-                amount -= difference
-                self.level_up(1)
-                self.experience.xp = difference
-                difference = self.experience.get_xp_required(self.star_rating.value) - self.experience.xp
-            else:
-                self.experience.xp += amount
-                still_upgrading = False
-
     def add_new_attribute(self):
         new_attribute = Buff(experience=Experience(1))
         InfoText(f"^{new_attribute.attribute_type.name}{'%' if new_attribute.is_percent else ''}^").display()
         for attribute in self.attributes:
-            print(new_attribute.attribute_type, attribute.attribute_type, new_attribute.is_percent, attribute.is_percent)
-            print((new_attribute.attribute_type == attribute.attribute_type), (new_attribute.is_percent == attribute.is_percent))
-            if (new_attribute.attribute_type == attribute.attribute_type) and (new_attribute.is_percent == attribute.is_percent):
+            if (new_attribute.attribute_type == attribute.attribute_type) and (
+                    new_attribute.is_percent == attribute.is_percent):
                 attribute.experience.level += 1
                 attribute.handle_value(self.star_rating.value)
                 return None

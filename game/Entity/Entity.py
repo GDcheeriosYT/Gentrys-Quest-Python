@@ -40,7 +40,7 @@ class Entity:
         self.experience.level += amount
         try:
             self.update_stats()
-        except:
+        except TypeError:
             pass
 
     def add_xp(self, amount):

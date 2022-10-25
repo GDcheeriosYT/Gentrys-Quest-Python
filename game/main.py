@@ -28,7 +28,7 @@ from IO import Window
 from IO.Input import get_int, get_string
 
 # game data packages
-import GameData
+from GameData import GameData
 
 # editor packages
 from Editor.EditorInterface import EditorInterface
@@ -70,7 +70,7 @@ else:
     try:
         account_info = AccountInfo(args[1], args[2])  # make class to store account info
         user = User(account_info.username, 99999, None)  # user class initialization
-        game_data = GameData.GameData(
+        game_data = GameData(
             server.API.login(account_info.username, account_info.password))  # game data class initialization
     except IndexError:
         WarningText("No argument for account info!\n").display()
@@ -99,7 +99,9 @@ else:
                     if choices2 == 1:
                         InfoText("Coming Soon...").display(enter_prompt=True)
                     elif choices2 == 2:
-                        GameData.Inventory.manage_input()
+                        InfoText("Coming Soon...").display(enter_prompt=True)
+                    elif choices2 == 3:
+                        game_data.inventory.manage_input()
 
 
                 elif choices1 == 2:

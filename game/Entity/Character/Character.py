@@ -2,6 +2,7 @@
 # entity packages
 from ..Entity import Entity
 from ..Weapon.Weapon import Weapon
+from ..Stats.StatTypes import StatTypes
 from ..Stats.StarRating import StarRating
 from ..Stats.Experience import Experience
 from ..Artifact.Artifact import Artifact
@@ -97,6 +98,75 @@ class Character(Entity):
         default_crit_rate = float(self.check_minimum(self.default_crit_rate_points, 3) + self.check_minimum(self.star_rating.value, 0.5) + self.check_minimum(self.experience.level, 0.45) + 3)
         self.default_crit_rate = 100 if default_crit_rate >= 100 else default_crit_rate
         self.default_crit_damage = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.28)), 0.15) + (self.check_minimum(self.default_crit_damage_points, 1, True) * (self.experience.level / 2.5))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
+
+    def get_buff_values(self):
+        buffs = self.create_buff_groups()
+        health = 0
+        attack = 0
+        defense = 0
+        critRate = 0
+        critDamage = 0
+
+        def determine_value(buff):
+            if buff.is_percent:
+                return int(self.default_health / buff.value)
+            else:
+                return buff.value
+
+        for buff in buffs["health"]:
+            health += determine_value(buff)
+
+        for buff in buffs["attack"]:
+            attack += determine_value(buff)
+
+        for buff in buffs["defense"]:
+            defense += determine_value(buff)
+
+        for buff in buffs["critRate"]:
+            critRate += determine_value(buff)
+
+        for buff in buffs["critDamage"]:
+            critDamage += determine_value(buff)
+
+        self.additional_health = health
+        self.additional_attack = attack
+        self.additional_defense = defense
+        self.additional_critRate = critRate
+        self.additional_critDamage = critDamage
+
+    def create_buff_groups(self):
+        health = []
+        attack = []
+        defense = []
+        critRate = []
+        critDamage = []
+        def check_buff(buff):
+            if buff.attribute_type == StatTypes.Health:
+                health.append(buff)
+            elif buff.attribute_type == StatTypes.Attack:
+                attack.append(buff)
+            elif buff.attribute_type == StatTypes.Defense:
+                defense.append(buff)
+            elif buff.attribute_type == StatTypes.CritRate:
+                critRate.append(buff)
+            elif buff.attribute_type == StatTypes.CritDamage:
+                critDamage.append(buff)
+
+        if self.weapon is not None:
+            check_buff(self.weapon.buff)
+
+        for artifact in self.artifacts.content:
+            check_buff(artifact.main_attribute)
+            for attribute in artifact.attributes:
+                check_buff(attribute)
+
+        return {
+            "health": health,
+            "attack": attack,
+            "defense": defense,
+            "critRate": critRate,
+            "critDamage": critDamage,
+        }
 
     def manage(self):
         while True:

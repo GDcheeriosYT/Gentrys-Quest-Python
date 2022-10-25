@@ -36,18 +36,17 @@ class Inventory:
         self.artifact_list = ArtifactList(inventory_data["artifacts"])
 
     def upgrade(self):
-        None
+        pass
 
     def manage_input(self):
         while True:
             try:
-                num = get_int("1. characters\n"
-                              "2. artifacts\n"
-                              "3. weapons\n"
-                              "4. back")
+                num = get_int(self.__repr__())
                 if num == 1:
                     self.character_list.list_characters()
                 elif num == 2:
+                    self.weapon_list.list_weapons()
+                elif num == 3:
                     self.artifact_list.list_artifacts()
             except ValueError:
                 WarningText("That's not exactly a number...")

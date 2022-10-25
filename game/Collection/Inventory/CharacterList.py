@@ -4,6 +4,7 @@ from Entity.Character.Character import Character
 from Entity.Weapon.Weapon import Weapon
 from Entity.Weapon.Verbs import Verbs
 from Entity.Artifact.Artifact import Artifact
+from Entity.Stats.StarRating import StarRating
 
 # collection packages
 from ..Handlers.BuffArrayHandler import BuffArrayHandler
@@ -53,15 +54,15 @@ class CharacterList:
                     weapon["stats"]["attack"],
                     BuffArrayHandler(weapon["stats"]["buff"]).create_buff(),
                     Verbs(weapon["verbs"]["normal"], weapon["verbs"]["critical"]),
-                    weapon["star rating"],
+                    StarRating(weapon["star rating"]),
                     ExperienceObjectHandler(weapon["experience"]).create_experience()
                 )
             except KeyError:
-                weapon = Weapon()
+                weapon = None
             new_character = Character(
                 character["name"],
                 character["description"],
-                character["star rating"],
+                StarRating(character["star rating"]),
                 ExperienceObjectHandler(experience).create_experience(),
                 weapon,
                 artifact_list,

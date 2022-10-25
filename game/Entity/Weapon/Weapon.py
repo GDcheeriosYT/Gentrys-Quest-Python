@@ -20,6 +20,7 @@ from Graphics.Text.Text import Text
 # IO packages
 from IO import Window
 
+
 class Weapon(Entity):
     """
     Makes a weapon
@@ -61,10 +62,12 @@ class Weapon(Entity):
     experience = None
 
     def __init__(self, name="fists", description="punches things", weapon_type=None, attack=3,
-                 buff=Buff(StatTypes.Health, Experience(), False), verbs=Verbs("punched", "uppercut"), star_rating=StarRating(), experience=Experience()):
+                 buff=Buff(StatTypes.Health, Experience(), False), verbs=Verbs("punched", "uppercut"),
+                 star_rating=StarRating(), experience=Experience()):
         super().__init__(name, description, star_rating, experience)
         self.weapon_type = weapon_type
         self.attack = attack
+        buff.handle_value(self.star_rating.value)
         self.buff = buff
         self.verbs = verbs
         self.settings = [
@@ -80,7 +83,7 @@ class Weapon(Entity):
 
     def __repr__(self):
         return (
-f"""{self.name} {self.star_rating} {self.experience}
+            f"""{self.name} {self.star_rating} {self.experience}
 type: {self.weapon_type}
 base attack: {self.attack}
 attribute: {self.buff}

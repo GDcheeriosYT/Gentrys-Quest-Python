@@ -64,6 +64,8 @@ class Artifact(Entity):
         self.main_attribute = main_attribute
         self.main_attribute.handle_value(self.star_rating.value)
         self.attributes = attributes
+        for attribute in self.attributes:
+            attribute.handle_value(self.star_rating.value)
         self.experience.limit = self.star_rating.value * 4
         self.settings = [
             StringSetting("name", self.name),

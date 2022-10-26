@@ -2,6 +2,7 @@
 # entity packages
 from ..Entity import Entity
 from ..Weapon.Weapon import Weapon
+from ..Stats.StatTypes import StatTypes
 from ..Stats.StarRating import StarRating
 from ..Stats.Experience import Experience
 from ..Artifact.Artifact import Artifact
@@ -68,11 +69,21 @@ class Character(Entity):
     default_defense_points = None
     default_crit_rate_points = None
     default_crit_damage_points = None
+    health = None
+    attack = None
+    defense = None
+    critRate = None
+    critDamage = None
     default_health = None
     default_attack = None
     default_defense = None
     default_crit_rate = None
     default_crit_damage = None
+    additional_health = None
+    additional_attack = None
+    additional_defense = None
+    additional_critRate = None
+    additional_critDamage = None
     difficulty = None
 
     def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience(), weapon=Weapon(),
@@ -97,6 +108,82 @@ class Character(Entity):
         default_crit_rate = float(self.check_minimum(self.default_crit_rate_points, 3) + self.check_minimum(self.star_rating.value, 0.5) + self.check_minimum(self.experience.level, 0.45) + 3)
         self.default_crit_rate = 100 if default_crit_rate >= 100 else default_crit_rate
         self.default_crit_damage = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.28)), 0.15) + (self.check_minimum(self.default_crit_damage_points, 1, True) * (self.experience.level / 2.5))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
+        self.get_buff_values()
+        self.health = self.default_health + self.additional_health
+        self.attack = self.default_attack + self.additional_attack
+        self.defense = self.default_defense + self.additional_defense
+        self.critRate = self.default_crit_rate + self.additional_critRate
+        self.critDamage = self.default_crit_damage + self.additional_critDamage
+
+    def get_buff_values(self):
+        buffs = self.create_buff_groups()
+        health = 0
+        attack = 0
+        defense = 0
+        critRate = 0
+        critDamage = 0
+
+        def determine_value(default_stat, buff):
+            if buff.is_percent:
+                return int(default_stat * (buff.value * 0.01))
+            else:
+                return buff.value
+
+        for buff in buffs["health"]:
+            health += determine_value(self.default_health, buff)
+
+        for buff in buffs["attack"]:
+            attack += determine_value(self.default_attack, buff)
+
+        for buff in buffs["defense"]:
+            defense += determine_value(self.default_defense, buff)
+
+        for buff in buffs["critRate"]:
+            critRate += determine_value(self.default_crit_rate, buff)
+
+        for buff in buffs["critDamage"]:
+            critDamage += determine_value(self.default_crit_damage, buff)
+
+        self.additional_health = health
+        self.additional_attack = attack
+        self.additional_defense = defense
+        self.additional_critRate = critRate
+        self.additional_critDamage = critDamage
+
+    def create_buff_groups(self):
+        health = []
+        attack = []
+        defense = []
+        critRate = []
+        critDamage = []
+        def check_buff(buff):
+            if buff.attribute_type == StatTypes.Health:
+                health.append(buff)
+            elif buff.attribute_type == StatTypes.Attack:
+                attack.append(buff)
+            elif buff.attribute_type == StatTypes.Defense:
+                defense.append(buff)
+            elif buff.attribute_type == StatTypes.CritRate:
+                critRate.append(buff)
+            elif buff.attribute_type == StatTypes.CritDamage:
+                critDamage.append(buff)
+
+        if self.weapon is not None:
+            check_buff(self.weapon.buff)
+
+        for artifact in self.artifacts.content:
+            if artifact is not None:
+                check_buff(artifact.main_attribute)
+                for attribute in artifact.attributes:
+                    check_buff(attribute)
+
+        return {
+            "health": health,
+            "attack": attack,
+            "defense": defense,
+            "critRate": critRate,
+            "critDamage": critDamage,
+        }
 
     def manage(self):
         while True:
@@ -120,12 +207,12 @@ class Character(Entity):
             f"""
 {self.name} {self.star_rating}
 level {self.experience.level}
-xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp {self.experience.xp / self.experience.get_xp_required(self.star_rating.value)}% 
-health: {self.default_health}
-attack: {self.default_attack}
-defense: {self.default_defense}
-crit rate: {self.default_crit_rate}%
-crit damage: {self.default_crit_damage}
+xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp {round(self.experience.xp / self.experience.get_xp_required(self.star_rating.value), 2)}% 
+health: {self.default_health} {f"+ {self.additional_health} ({self.health})" if self.additional_health > 0 else ""}
+attack: {self.default_attack} {f"+ {self.additional_attack} ({self.attack})" if self.additional_attack > 0 else ""}
+defense: {self.default_defense} {f"+ {self.additional_defense} ({self.defense})" if self.additional_defense > 0 else ""}
+crit rate: {self.default_crit_rate}% {f"+ {self.additional_critRate}% ({'100%' if self.critRate > 100 else self.critRate})" if self.additional_critRate > 0 else ""}
+crit damage: {self.default_crit_damage} {f"+ {self.additional_critDamage} ({self.critDamage})" if self.additional_critDamage > 0 else ""}
 --------weapon--------
 {self.weapon}
 ^^^^^^^^artifact^^^^^^^^

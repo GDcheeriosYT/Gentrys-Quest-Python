@@ -2,6 +2,7 @@
 # entity packages
 from Entity.Weapon.Weapon import Weapon
 from Entity.Weapon.Verbs import Verbs
+from Entity.Stats.StarRating import StarRating
 
 # collection packages
 from ..Handlers.BuffArrayHandler import BuffArrayHandler
@@ -45,7 +46,7 @@ class WeaponList:
                 weapon["stats"]["attack"],
                 BuffArrayHandler(weapon["stats"]["buff"]).create_buff(),
                 Verbs(weapon["verbs"]["normal"], weapon["verbs"]["critical"]),
-                weapon["star rating"],
+                StarRating(weapon["star rating"]),
                 ExperienceObjectHandler(weapon["experience"]).create_experience()
             )
             self.weapons.append(new_weapon)

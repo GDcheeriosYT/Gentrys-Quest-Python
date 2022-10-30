@@ -4,7 +4,6 @@ from . import Window
 
 
 def get_int(text):
-    Window.clear()
     while True:
         try:
             num = int(input(text + "\n"))

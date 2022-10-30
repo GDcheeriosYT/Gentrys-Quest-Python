@@ -63,9 +63,6 @@ class WeaponList:
 
                 Text(f"{x}. back").display()
                 num = get_int("select a weapon\n")
-                return self.select_weapon(num - 1)
+                return self.weapons[num - 1]
             except IndexError:
                 break
-
-    def select_weapon(self, index):
-        return self.weapons[index - 1]

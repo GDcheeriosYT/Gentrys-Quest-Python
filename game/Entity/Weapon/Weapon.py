@@ -55,6 +55,7 @@ class Weapon(Entity):
     name = None
     description = None
     weapon_type = None
+    base_attack = None
     attack = None
     buff = None
     verbs = None
@@ -66,7 +67,7 @@ class Weapon(Entity):
                  star_rating=StarRating(), experience=Experience()):
         super().__init__(name, description, star_rating, experience)
         self.weapon_type = weapon_type
-        self.attack = attack
+        self.base_attack = attack
         buff.handle_value(self.star_rating.value)
         self.buff = buff
         self.verbs = verbs
@@ -74,12 +75,18 @@ class Weapon(Entity):
             StringSetting("name", self.name),
             StringSetting("description", self.description),
             StringSetting("weapon_type", self.weapon_type),
-            NumberSetting("attack", self.attack),
+            NumberSetting("base attack", self.base_attack),
             ClassSetting("buff", self.buff),
             ClassSetting("verbs", self.verbs),
             NumberSetting("star_rating", self.star_rating.value, 1, 5),
             NumberSetting("level", self.experience.level, 1)
         ]
+        self.update_stats()
+
+    def update_stats(self):
+        self.attack = int(self.base_attack + (self.check_minimum(self.experience.level, 1.2, True) + self.check_minimum(self.star_rating.value, self.experience.level)))
+        self.buff.experience.level = self.experience.level
+        self.buff.handle_value(self.star_rating.value)
 
     def __repr__(self):
         return (

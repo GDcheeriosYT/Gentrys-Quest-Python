@@ -43,6 +43,10 @@ class Entity:
         except TypeError:
             pass
 
+    def get_money_required(self):
+        experience_required = self.experience.get_xp_required(self.star_rating.value)
+        return int(experience_required / 10) + (1 if int(str(experience_required)[len(str(experience_required))-1]) > 0 else 0)
+
     def add_xp(self, amount):
         difference = self.experience.get_xp_required(self.star_rating.value) - self.experience.xp
         still_upgrading = True
@@ -55,6 +59,9 @@ class Entity:
             else:
                 self.experience.xp += amount
                 still_upgrading = False
+
+    def list_view(self):
+        return f"{self.name} {self.star_rating} {self.experience.display_level()}"
 
     @staticmethod
     def check_minimum(variable, multiplier=1, subtract_one_true=False):

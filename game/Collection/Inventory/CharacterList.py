@@ -87,9 +87,6 @@ class CharacterList:
 
                 Text(f"{x}. back").display()
                 num = get_int("select a character\n")
-                return self.select_character(num - 1)
+                return self.characters[num - 1]
             except IndexError:
                 break
-
-    def select_character(self, index):
-        return self.characters[index - 1].manage()

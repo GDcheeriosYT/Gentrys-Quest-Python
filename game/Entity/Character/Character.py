@@ -16,6 +16,7 @@ from Graphics.Content.Text.WarningText import WarningText
 
 # IO packages
 from IO import Window
+from IO.Input import get_int
 
 
 class Character(Entity):
@@ -184,22 +185,13 @@ class Character(Entity):
             "critDamage": critDamage,
         }
 
-    def manage(self):
-        while True:
-            Window.clear()
-            Text(self.__repr__()).display()
-            try:
-                choice = int(input("1. level up\n"
-                                   "2. manage weapon\n"
-                                   "3. manage artifacts\n"
-                                   "4. equip character\n"
-                                   "5. back"))
-                if choice == 1:
-                    pass
-                    #not sure what to do yet...
-
-            except ValueError:
-                WarningText("That's literally not a number homie...").display()
+    def get_option(self):
+        Text(self.__repr__()).display()
+        return(get_int("1. level up\n"
+                       "2. manage weapon\n"
+                       "3. manage artifacts\n"
+                       "4. equip character\n"
+                       "5. back"))
 
     def __repr__(self):
         return (

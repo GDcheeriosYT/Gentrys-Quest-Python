@@ -32,7 +32,7 @@ class TestWeaponInterface:
             StringSetting("name", self.weapon.name),
             StringSetting("description", self.weapon.description),
             StringSetting("weapon_type", self.weapon.weapon_type),
-            NumberSetting("attack", self.weapon.attack),
+            NumberSetting("base attack", self.weapon.attack),
             ClassSetting("buff", self.weapon.buff),
             ClassSetting("verbs", self.weapon.verbs),
             NumberSetting("star_rating", self.weapon.star_rating.value, 1, 5),
@@ -46,11 +46,12 @@ class TestWeaponInterface:
         self.weapon.name = self.settings[0].text
         self.weapon.description = self.settings[1].text
         self.weapon.weapon_type = self.settings[2].text
-        self.weapon.attack = self.settings[3].value
+        self.weapon.base_attack = self.settings[3].value
         self.weapon.buff = self.settings[4].instance_class
         self.weapon.verbs = self.settings[5].instance_class
         self.weapon.star_rating = StarRating(self.settings[6].value)
         self.weapon.experience.level = self.settings[7].value
+        self.weapon.update_stats()
         return self
 
 

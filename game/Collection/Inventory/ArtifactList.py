@@ -48,9 +48,6 @@ class ArtifactList:
 
                 Text(f"{x}. back").display()
                 num = get_int("select an artifact\n")
-                return self.select_artifact(num - 1)
+                return self.artifacts[num - 1]
             except IndexError:
                 break
-
-    def select_artifact(self, index):
-        return self.artifacts[index - 1]

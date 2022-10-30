@@ -17,8 +17,14 @@ class Experience:
         self.xp = xp
         self.limit = limit
 
+    def display_level(self):
+        return f"level {self.level}{f'/{self.limit}'}" if self.limit is not None else f"level {self.level}"
+
+    def display_xp(self):
+        return f"{self.xp}xp"
+
     def __repr__(self):
-        return f"level {self.level}{f'/{self.limit}' if self.limit is not None else ''}"
+        return f"{self.display_level()} {self.display_xp()}"
 
     # Gives you the amount of xp required to level up given the star rating
     def get_xp_required(self, star_rating, is_artifact=False):

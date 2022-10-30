@@ -112,7 +112,7 @@ class Artifact(Entity):
         return (
             f"""{self.name} {self.star_rating}
 apart of the {self.family} family
-{self.experience} ({int(percentage)})%
+{self.experience.display_level()} {self.experience.display_xp()}/{self.experience.get_xp_required(self.star_rating.value)}xp ({int(percentage)})%
 * {self.main_attribute} *
 {f"attributes{self.display_attributes()}" if len(self.attributes) > 0 else ""}"""
         )

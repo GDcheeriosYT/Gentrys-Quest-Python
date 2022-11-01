@@ -40,6 +40,10 @@ class ItemList:
         if (len(self.content) < self.size or self.size is None) and (isinstance(item, self.content_type) or self.content_type is None):
             self.content.append(item)
         else:
+            for thing in self.content:
+                if thing is None:
+                    self.content[self.content.index(thing)] = item
+                    return None
             if self.output:
                 WarningText(f"The {type(item)} {item.name} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
 
@@ -70,7 +74,7 @@ class ItemList:
             else:
                 WarningText(f"The {type(item)} {item} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
         except IndexError:
-            WarningText("Can't put that here").display()
+            WarningText(f"Can't put that here").display()
             
     def test(self):
         while True:

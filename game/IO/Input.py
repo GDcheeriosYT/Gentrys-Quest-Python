@@ -22,3 +22,4 @@ def get_string(text):
 
 def enter_to_continue():
     input("press enter to continue...\n")
+    Window.clear()

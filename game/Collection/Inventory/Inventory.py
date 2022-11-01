@@ -84,6 +84,9 @@ class Inventory:
 
     def manage_artifact(self, artifact):
         while True:
+            if artifact is None:
+                artifact = self.swap_artifact(artifact)
+
             Text(artifact).display()
             choice = get_int("1. switch artifact\n"
                              "2. remove artifact\n"
@@ -96,14 +99,17 @@ class Inventory:
                 self.artifact_list.artifacts.append(artifact)
                 artifact = None
             elif choice == 3:
-                for artifact_listing in self.artifact_list.artifacts:
-                    Text(
-                        f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
+                if artifact.experience.level != artifact.experience.limit:
+                    for artifact_listing in self.artifact_list.artifacts:
+                        Text(
+                            f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
 
-                index = get_int("which artifact will you exchange?") - 1
-                artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))
+                    index = get_int("which artifact will you exchange?") - 1
+                    artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))
             else:
                 break
+
+        return artifact
 
     def manage_weapon(self, weapon):
         while True:
@@ -126,6 +132,7 @@ class Inventory:
             choice = character.get_option()
             if choice == 1:
                 self.level_up_prompt(character)
+
             elif choice == 2:
                 while True:
                     Text(character.weapon).display()
@@ -141,12 +148,17 @@ class Inventory:
                         character.update_stats()
                     else:
                         break
+
             elif choice == 3:
                 for artifact_index in range(5):
                     Text(f"{artifact_index + 1}. {character.artifacts.get(artifact_index)}").display()
                 choice2 = get_int("6. back")
                 if choice2 < 6:
-                    self.manage_artifact(character.artifacts.get(choice2 - 1))
+                    character.artifacts.set(choice2 - 1, self.manage_artifact(character.artifacts.get(choice2 - 1)))
+                    character.update_stats()
+
+            else:
+                break
 
     def swap_artifact(self, artifact_to_swap):
         for artifact in self.artifact_list.artifacts:

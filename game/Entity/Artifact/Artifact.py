@@ -23,6 +23,7 @@ from Config.SettingManager import SettingManager
 
 # IO packages
 from IO import Window
+from IO.Input import enter_to_continue
 
 
 class Artifact(Entity):
@@ -86,7 +87,7 @@ class Artifact(Entity):
         else:
             WarningText("Artifact is max level!").display()
 
-        Window.enter_to_continue()
+        enter_to_continue()
 
     def add_new_attribute(self):
         new_attribute = Buff(experience=Experience(1))
@@ -108,7 +109,7 @@ class Artifact(Entity):
         return string
 
     def __repr__(self):
-        percentage = self.experience.xp / self.experience.get_xp_required(self.star_rating.value, True)
+        percentage = round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value, True) * 100), 2)
         return (
             f"""{self.name} {self.star_rating}
 apart of the {self.family} family

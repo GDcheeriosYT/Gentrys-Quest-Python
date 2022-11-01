@@ -39,7 +39,7 @@ class CharacterList:
         load_data_status.start()
         self.characters = []
         for character in characters:
-            artifact_list = ItemList(5, Artifact)
+            artifact_list = ItemList(5, Artifact, True)
             experience = character["experience"]
             equips = character["equips"]
             for artifact in equips["artifacts"]:

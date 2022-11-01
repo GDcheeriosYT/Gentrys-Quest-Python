@@ -59,8 +59,8 @@ class Entity:
 
     def get_money_required(self):
         experience_required = self.experience.get_xp_required(self.star_rating.value)
-        return int(experience_required / 10) + (
-            1 if int(str(experience_required)[len(str(experience_required)) - 1]) > 0 else 0)
+        current_experience = self.experience.xp
+        return int((experience_required - current_experience) / 10) + (1 if int(str(experience_required - current_experience)[len(str(experience_required - current_experience)) - 1]) > 0 else 0)
 
     def add_xp(self, amount):
         def xp(amount):

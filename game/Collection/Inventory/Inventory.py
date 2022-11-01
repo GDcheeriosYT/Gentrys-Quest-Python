@@ -86,7 +86,7 @@ class Inventory:
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
         self.artifact_list.artifacts.remove(artifact)
-        return int(star_rating * (level * 50))
+        return int((star_rating * 10) + (star_rating * (level * 25)))
 
     def manage_artifact(self, artifact):
         while True:
@@ -174,8 +174,7 @@ class Inventory:
 
     def swap_weapon(self, character):
         for weapon in self.weapon_list.weapons:
-            Text(f"{weapon.list_view()}").display()
-
+            Text(f"{self.weapon_list.weapons.index(weapon)}. {weapon.list_view()}").display()
         try:
             character_weapon = character.weapon
             index = get_int("which weapon will you swap?") - 1

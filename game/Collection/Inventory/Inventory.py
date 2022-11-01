@@ -44,11 +44,17 @@ class Inventory:
             try:
                 num = get_int(self.__repr__())
                 if num == 1:
-                    self.manage_character(self.character_list.list_characters())
+                    character = self.character_list.list_characters()
+                    if character is not None:
+                        self.manage_character(character)
                 elif num == 2:
-                    self.manage_weapon(self.weapon_list.list_weapons())
+                    weapon = self.weapon_list.list_weapons()
+                    if weapon is not None:
+                        self.manage_weapon(weapon)
                 elif num == 3:
-                    self.manage_artifact(self.artifact_list.list_artifacts())
+                    artifact = self.artifact_list.list_artifacts()
+                    if artifact is not None:
+                        self.manage_artifact(artifact)
             except ValueError:
                 WarningText("That's not exactly a number...")
             except IndexError:
@@ -115,15 +121,11 @@ class Inventory:
         while True:
             Text(weapon).display()
             choice = get_int("1. level up\n"
-                             "2. swap weapon\n"
-                             "3. back\n")
+                             "2. back\n")
 
             if choice == 1:
                 self.level_up_prompt(weapon)
 
-            elif choice == 2:
-                self.swap_weapon(weapon)
-                weapon.update_stats()
             else:
                 break
 

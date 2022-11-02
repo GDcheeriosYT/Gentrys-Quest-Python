@@ -107,8 +107,7 @@ class Inventory:
             elif choice == 3:
                 if artifact.experience.level != artifact.experience.limit:
                     for artifact_listing in self.artifact_list.artifacts:
-                        Text(
-                            f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
+                        Text(f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
 
                     index = get_int("which artifact will you exchange?") - 1
                     artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))

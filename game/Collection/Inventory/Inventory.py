@@ -112,6 +112,7 @@ class Inventory:
                     index = get_int("which artifact will you exchange?") - 1
                     artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))
             else:
+                WarningText("Artifact is max level!").display()
                 break
 
         return artifact

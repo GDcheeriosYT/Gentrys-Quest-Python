@@ -7,6 +7,11 @@ from .Difficulty import Difficulty
 from Graphics.Text.Text import Text
 from Graphics.Text.Style import Style
 
+# collection packages
+from Collection.ItemList import ItemList
+
+# entity packages
+from Entity.Entity import Entity
 
 class BattleArea(Area):
     """
@@ -16,10 +21,10 @@ class BattleArea(Area):
     name = None
     difficulty = None
 
-    def __init__(self, name=Text("battle area"), difficulty=Difficulty(1)):
+    def __init__(self, name=Text("battle area"), difficulty=Difficulty(1), artifact_families=ItemList(content_type=str), enemies=ItemList()):
         super().__init__(name)
         self.name.style.text_color = "red"
-        self.difficulty = diff1iculty
+        self.difficulty = difficulty
 
     def __repr__(self):
         return f"{self.name} {self.difficulty}"

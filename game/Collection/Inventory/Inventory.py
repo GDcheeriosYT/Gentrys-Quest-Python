@@ -55,8 +55,10 @@ class Inventory:
                     artifact = self.artifact_list.list_artifacts()
                     if artifact is not None:
                         self.manage_artifact(artifact)
+                else:
+                    break
             except ValueError:
-                WarningText("That's not exactly a number...")
+                WarningText("That's not exactly a number... Bro")
             except IndexError:
                 break
 

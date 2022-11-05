@@ -1,6 +1,7 @@
 # game packages
 # IO packages
 from IO import Window
+from IO.Input import get_int
 
 # Interface packages
 from .InterfaceContent import InterfaceContent
@@ -49,8 +50,5 @@ class Interface:
                 Console().rule(self.title)
             else:
                 Text(self.content.info).display()
-                try:
-                    selection = int(input(self.content.show_options()))
-                    return self.choose(selection)
-                except ValueError:
-                    WarningText(f"Nope!").display()
+                selection = get_int(self.content.show_options())
+                return self.choose(selection)

@@ -13,6 +13,7 @@ from Interface.Interfaces.Testing.Entity.TestInterfaceEntity import TestInterfac
 
 # IO packages
 from IO import Window
+from IO.Input import get_int
 
 class TestingHandler:
     """
@@ -28,14 +29,15 @@ class TestingHandler:
             entity_interface = TestInterfaceEntity()
             Window.clear()
             QuestionText("What area shall we test today? (Meow:))").display()
-            try:
-                choices = int(input("1. Entity\n"
-                                    "2. quit\n"))
-                if choices == 1:
-                    entity_interface.__repr__()
-                else:
-                    break
+            choices = get_int("1. Entity\n"
+                              "2. Location\n"
+                              "3. quit\n")
+            if choices == 1:
+                entity_interface.__repr__()
 
-            except ValueError:
-                print(":l")
+            elif choices == 2:
+                location_interface.__repr__()
+
+            else:
+                break
 

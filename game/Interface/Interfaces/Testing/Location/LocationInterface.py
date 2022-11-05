@@ -15,3 +15,8 @@ class LocationInterface(Interface):
         action = self.visit()
         if action == 1:
             test_interface = BattleAreaTestInterface()
+            while True:
+                try:
+                    test_interface.__repr__()
+                except TypeError:
+                    break

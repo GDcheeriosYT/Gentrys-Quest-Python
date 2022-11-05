@@ -18,6 +18,7 @@ from Config.ClassSetting import ClassSetting
 # IO packages
 from IO.Input import get_int
 
+
 class BattleAreaTestInterface:
     def __init__(self):
         self.character = Character(
@@ -34,7 +35,7 @@ class BattleAreaTestInterface:
             ClassSetting("character", self.character)
         ]
 
-    def test(self):
+    def __repr__(self):
         choice = get_int("1. test battle area\n"
                          "2. modify battle area\n"
                          "3. back")

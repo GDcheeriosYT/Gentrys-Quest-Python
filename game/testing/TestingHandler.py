@@ -10,10 +10,12 @@ from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 
 from Interface.Interfaces.Testing.Entity.TestInterfaceEntity import TestInterfaceEntity
+from Interface.Interfaces.Testing.Location.LocationInterface import LocationInterface
 
 # IO packages
 from IO import Window
 from IO.Input import get_int
+
 
 class TestingHandler:
     """
@@ -27,6 +29,7 @@ class TestingHandler:
     def start():
         while True:
             entity_interface = TestInterfaceEntity()
+            location_interface = LocationInterface()
             Window.clear()
             QuestionText("What area shall we test today? (Meow:))").display()
             choices = get_int("1. Entity\n"

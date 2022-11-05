@@ -5,7 +5,7 @@ from Interface.InterfaceContent import InterfaceContent
 from .BattleArea.BattleAreaTestInterface import BattleAreaTestInterface
 
 
-class location_interface(Interface):
+class LocationInterface(Interface):
     def __init__(self):
         super().__init__("Welcome to the Test Location Interface",
                          content=InterfaceContent("Meow this is some great info",

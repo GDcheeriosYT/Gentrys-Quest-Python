@@ -14,7 +14,7 @@ from Collection.ItemList import ItemList
 from Entity.Entity import Entity
 from Entity.Enemy.Enemy import Enemy
 
-# bult-in packages
+# built-in packages
 import random
 
 

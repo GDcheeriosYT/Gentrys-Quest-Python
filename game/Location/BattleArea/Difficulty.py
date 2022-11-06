@@ -22,5 +22,5 @@ class Difficulty:
     def __repr__(self):
         string = ""
         for _ in range(self.value):
-            string += "⚠"
-        return Text(string).raw_output()
+            string += "!"
+        return string

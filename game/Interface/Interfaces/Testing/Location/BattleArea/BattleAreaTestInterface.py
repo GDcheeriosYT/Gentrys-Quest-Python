@@ -14,9 +14,15 @@ from Entity.Stats.StarRating import StarRating
 from Config.StringSetting import StringSetting
 from Config.NumberSetting import NumberSetting
 from Config.ClassSetting import ClassSetting
+from Config.ToggleSetting import ToggleSetting
+from Config.SettingManager import SettingManager
 
 # IO packages
 from IO.Input import get_int
+from IO import Window
+
+# graphics packages
+from Graphics.Text.Text import Text
 
 
 class BattleAreaTestInterface:
@@ -26,10 +32,13 @@ class BattleAreaTestInterface:
             "just joe mama",
             StarRating(1)
         )
-        self.battle_area = BattleArea("test battle area", 0, ItemList(content_type=str), ItemList(content_type=Enemy))
+        self.battle_area = BattleArea("test battle area")
+        self.battle_area.artifact_families.add("Brayden Messerschmidt")
+        self.battle_area.enemies.add(Enemy())
         self.settings = [
             StringSetting("name", self.battle_area.name),
-            NumberSetting("difficulty", self.battle_area.difficulty),
+            NumberSetting("difficulty", self.battle_area.difficulty.value, 0),
+            ToggleSetting("can run", self.battle_area.is_runnable),
             ClassSetting("artifact families", self.battle_area.artifact_families),
             ClassSetting("enemies", self.battle_area.enemies),
             ClassSetting("character", self.character)
@@ -42,3 +51,22 @@ class BattleAreaTestInterface:
 
         if choice == 1:
             self.battle_area.start(self.character)
+
+        elif choice == 2:
+            while True:
+                try:
+                    Window.clear()
+                    Text(self.battle_area).display()
+                    self.settings = SettingManager(self.settings).config_settings()
+                    self.name = self.settings[0].text
+                    self.battle_area.difficulty.value = self.settings[1].value
+                    self.battle_area.is_runnable = self.settings[2].toggled
+                    self.battle_area.artifact_families = self.settings[3].instance_class
+                    self.battle_area.enemies = self.settings[4].instance_class
+                    self.character = self.settings[5].instance_class
+                except TypeError:
+                    Window.clear()
+                    break
+
+        else:
+            raise TypeError

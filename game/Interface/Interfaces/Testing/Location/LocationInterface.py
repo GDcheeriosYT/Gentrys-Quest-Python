@@ -13,7 +13,7 @@ class LocationInterface(Interface):
 
     def __repr__(self):
         action = self.visit()
-        if action == 1:
+        if action == 0:
             test_interface = BattleAreaTestInterface()
             while True:
                 try:

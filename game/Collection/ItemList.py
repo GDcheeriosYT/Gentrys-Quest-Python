@@ -8,6 +8,7 @@ from IO import Window
 # external packages
 from rich.console import Console
 
+
 class ItemList:
     """
     Makes an ItemList
@@ -37,7 +38,7 @@ class ItemList:
         self.output = output
 
     def add(self, item):
-        if (len(self.content) < self.size or self.size is None) and (isinstance(item, self.content_type) or self.content_type is None):
+        if self.check_item_and_space(item):
             self.content.append(item)
         else:
             for thing in self.content:
@@ -45,7 +46,8 @@ class ItemList:
                     self.content[self.content.index(thing)] = item
                     return None
             if self.output:
-                WarningText(f"The {type(item)} {item.name} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
+                WarningText(
+                    f"The {type(item)} {item.name} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
 
     def remove(self):
         for item in self.content:
@@ -67,15 +69,28 @@ class ItemList:
         except IndexError:
             return None
 
+    def check_item_and_space(self, item):
+        if isinstance(item, self.content_type) or self.content_type is None:
+            if self.size is not None:
+                if len(self.content) < self.size:
+                    return True
+                else:
+                    return False
+            else:
+                return True
+        else:
+            return False
+
     def set(self, index, item):
         try:
-            if isinstance(item, self.content_type) or self.content_type is None:
+            if self.check_item_and_space(item):
                 self.content[index] = item
             else:
-                WarningText(f"The {type(item)} {item} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
+                WarningText(
+                    f"The {type(item)} {item} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
         except IndexError:
             WarningText(f"Can't put that here").display()
-            
+
     def test(self):
         while True:
             try:
@@ -109,7 +124,8 @@ class ItemList:
     def change_limit(self, amount):
         Window.clear()
         if amount < self.size:
-            WarningText("You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
+            WarningText(
+                "You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
             try:
                 num = int(input("1. yes\n2. no"))
                 if num == 1:
@@ -117,7 +133,6 @@ class ItemList:
                     self.delete_after(self.size)
             except ValueError:
                 WarningText("mans didn't even put a number...").display()
-
 
     def __repr__(self):
         return {

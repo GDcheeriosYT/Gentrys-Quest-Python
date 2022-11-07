@@ -27,7 +27,7 @@ class ArtifactContentManager:
         for family in os.listdir("Content/Artifacts"):
             family = family[:-3]  # removing the ".py" so it can be treated as an actual package for import
             if family[0] != "_":
-                family_class = importlib.import_module(f"Artifacts.{family}")
+                family_class = importlib.import_module(f".{family}", f"Content.Artifacts")
                 new_family = None
                 for thing in inspect.getmembers(family_class):
                     thing = thing[1]

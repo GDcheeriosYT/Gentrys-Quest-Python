@@ -20,6 +20,9 @@ from Entity.Artifact.Artifact import Artifact
 from IO.Input import get_int, enter_to_continue
 from IO import Window
 
+# content packages
+from Content.ArtifactContentManager import ArtifactContentManager
+
 # built-in packages
 import random
 from copy import copy
@@ -54,10 +57,16 @@ class BattleArea(Area):
         return enemies
 
     def initialize_artifacts(self, difficulty):
+        families = ArtifactContentManager().load_content()
         artifacts = []
         artifacts_to_choose_from = []
         for family in self.artifact_families.content:
-            pass
+            for family1 in families:
+                if family == family1.name:
+                    for artifact in family1.artifacts:
+                        artifacts_to_choose_from.append(artifact)
+
+        print(artifacts_to_choose_from)
 
         for i in range((difficulty + self.difficulty.value) * random.randint(1, 2)):
             pass
@@ -79,6 +88,7 @@ class BattleArea(Area):
         try:
             Text(f"You enter {self.name}!").display()
             enemies = self.initialize_enemies(character.difficulty)
+            artifacts = self.initialize_artifacts(character.difficulty)
             enemies_killed = 0
             money = 0
             xp = 0

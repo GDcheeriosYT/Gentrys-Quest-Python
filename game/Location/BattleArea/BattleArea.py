@@ -41,17 +41,24 @@ class BattleArea(Area):
     difficulty = None
 
     def __init__(self, name, difficulty=0, artifact_families=ItemList(content_type=str),
-                 enemies=ItemList(content_type=Enemy), is_runnable=True):
+                 enemies=ItemList(content_type=Enemy), is_runnable=True, difficulty_scales=True):
         super().__init__(name)
         self.name = Text(name, Style(text_color="red")).raw_output()
         self.difficulty = Difficulty(difficulty)
         self.artifact_families = artifact_families
         self.enemies = enemies
         self.is_runnable = is_runnable
+        self.difficulty_scales = difficulty_scales
+
+    def get_difficulty(self, difficulty):
+        if self.difficulty_scales:
+            return difficulty + self.difficulty.value
+        else:
+            return self.difficulty
 
     def initialize_enemies(self, difficulty):
         enemies = []
-        for i in range((difficulty + self.difficulty.value) * random.randint(1, 3)):
+        for i in range((self.get_difficulty(difficulty)) * random.randint(1, 3)):
             enemies.append(copy(random.choice(self.enemies.content)))
 
         return enemies
@@ -66,9 +73,7 @@ class BattleArea(Area):
                     for artifact in family1.artifacts:
                         artifacts_to_choose_from.append(artifact)
 
-        print(artifacts_to_choose_from)
-
-        for i in range((difficulty + self.difficulty.value) * random.randint(1, 2)):
+        for i in range((self.get_difficulty(difficulty)) * random.randint(1, 2)):
             pass
 
         return artifacts

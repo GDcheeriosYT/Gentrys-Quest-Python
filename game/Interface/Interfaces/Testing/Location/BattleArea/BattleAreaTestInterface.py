@@ -39,6 +39,7 @@ class BattleAreaTestInterface:
             StringSetting("name", self.battle_area.name),
             NumberSetting("difficulty", self.battle_area.difficulty.value, 0),
             ToggleSetting("can run", self.battle_area.is_runnable),
+            ToggleSetting("difficulty scales", self.battle_area.difficulty_scales),
             ClassSetting("artifact families", self.battle_area.artifact_families),
             ClassSetting("enemies", self.battle_area.enemies),
             ClassSetting("character", self.character)
@@ -61,9 +62,10 @@ class BattleAreaTestInterface:
                     self.name = self.settings[0].text
                     self.battle_area.difficulty.value = self.settings[1].value
                     self.battle_area.is_runnable = self.settings[2].toggled
-                    self.battle_area.artifact_families = self.settings[3].instance_class
-                    self.battle_area.enemies = self.settings[4].instance_class
-                    self.character = self.settings[5].instance_class
+                    self.battle_area.difficulty_scales = self.settings[3].toggled
+                    self.battle_area.artifact_families = self.settings[4].instance_class
+                    self.battle_area.enemies = self.settings[5].instance_class
+                    self.character = self.settings[6].instance_class
                 except TypeError:
                     Window.clear()
                     break

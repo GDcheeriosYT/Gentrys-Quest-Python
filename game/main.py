@@ -82,20 +82,20 @@ else:
     in_game = True
     while in_game:
         try:
-            choices = get_int("main menu\n"
-                              "1. play\n"
-                              "2. editor\n"
-                              "3. settings\n"
-                              "4. changelog\n"
-                              "5. quit")
+            choices = get_int("Main Menu\n"
+                              "1. Play\n"
+                              "2. Editor\n"
+                              "3. Settings\n"
+                              "4. Changelog\n"
+                              "5. Quit")
             if choices == 1:
-                choices1 = get_int("1. singleplayer\n"
-                                   "2. multiplayer\n"
-                                   "3. back")
+                choices1 = get_int("1. Singleplayer\n"
+                                   "2. Multiplayer\n"
+                                   "3. Back")
                 if choices1 == 1:
-                    choices2 = get_int("1. travel\n"
-                                       "2. gacha\n"
-                                       "3. inventory")
+                    choices2 = get_int("1. Travel\n"
+                                       "2. Gacha\n"
+                                       "3. Inventory")
                     if choices2 == 1:
                         InfoText("Coming Soon...").display(enter_prompt=True)
                     elif choices2 == 2:
@@ -109,7 +109,7 @@ else:
 
 
             elif choices == 2:
-                choices1 = get_int("1. text animation editor")
+                choices1 = get_int("1. Text animation editor")
                 if choices1 == 1:
                     EditorInterface(TextAnimationEditor).edit()
 
@@ -119,6 +119,6 @@ else:
             else:
                 in_game = False
         except ValueError:
-            WarningText("number please...").display()
+            WarningText("Number please...").display()
 
     server.API.token.delete()

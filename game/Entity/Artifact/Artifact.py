@@ -77,8 +77,9 @@ class Artifact(Entity):
         ]
 
     def level_up(self, amount):
-        if self.star_rating.value < self.star_rating.value * 4:
+        if self.experience.level < self.star_rating.value * 4:
             self.experience.level += amount
+            self.experience.xp = 0
             print(f"Your artifact is now level {self.experience.level}!")
             if self.experience.level % 4 == 0:
                 self.add_new_attribute()

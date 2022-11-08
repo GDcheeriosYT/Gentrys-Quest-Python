@@ -33,7 +33,7 @@ class Experience:
     def get_xp_required(self, star_rating, is_artifact=False):
         if self.level != self.limit:
             if is_artifact:
-                return int((self.level * 50) * star_rating)
+                return int(star_rating * (self.level * 50))
             else:
                 return int(((self.level * 75) + ((star_rating * (self.level * 0.25)) * 25)) * ((self.level / 20) + 1))
         else:

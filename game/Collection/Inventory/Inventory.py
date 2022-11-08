@@ -52,15 +52,19 @@ class Inventory:
             try:
                 num = get_int(self.__repr__())
                 if num == 1:
-                    self.manage_character(self.character_list.list_characters())
+                    character = self.character_list.list_characters()
+                    if character is not None:
+                        self.manage_character(character)
                 elif num == 2:
-                    self.manage_weapon(self.weapon_list.list_weapons())
+                    weapon = self.weapon_list.list_weapons()
+                    if weapon is not None:
+                        self.manage_weapon(weapon)
                 elif num == 3:
                     self.manage_artifact(self.artifact_list.list_artifacts())
                 else:
                     break
             except ValueError:
-                WarningText("That's not exactly a number...")
+                WarningText("That's not exactly a number... Bro")
             except IndexError:
                 break
 
@@ -90,7 +94,7 @@ class Inventory:
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
         self.artifact_list.artifacts.remove(artifact)
-        return int(star_rating * (level * 50))
+        return int((star_rating * 10) + (star_rating * (level * 25)))
 
     def manage_artifact(self, artifact):
         while True:
@@ -111,12 +115,12 @@ class Inventory:
             elif choice == 3:
                 if artifact.experience.level != artifact.experience.limit:
                     for artifact_listing in self.artifact_list.artifacts:
-                        Text(
-                            f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
+                        Text(f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
 
                     index = get_int("which artifact will you exchange?") - 1
                     artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))
             else:
+                WarningText("Artifact is max level!").display()
                 break
 
         return artifact
@@ -125,15 +129,11 @@ class Inventory:
         while True:
             Text(weapon).display()
             choice = get_int("1. level up\n"
-                             "2. swap weapon\n"
-                             "3. back\n")
+                             "2. back\n")
 
             if choice == 1:
                 self.level_up_prompt(weapon)
 
-            elif choice == 2:
-                self.swap_weapon(weapon)
-                weapon.update_stats()
             else:
                 break
 
@@ -182,8 +182,7 @@ class Inventory:
 
     def swap_weapon(self, character):
         for weapon in self.weapon_list.weapons:
-            Text(f"{weapon.list_view()}").display()
-
+            Text(f"{self.weapon_list.weapons.index(weapon)}. {weapon.list_view()}").display()
         try:
             character_weapon = character.weapon
             index = get_int("which weapon will you swap?") - 1

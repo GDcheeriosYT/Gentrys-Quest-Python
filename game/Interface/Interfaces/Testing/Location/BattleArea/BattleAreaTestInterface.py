@@ -4,6 +4,7 @@ from Location.BattleArea.BattleArea import BattleArea
 
 # collection packages
 from Collection.ItemList import ItemList
+from Collection.Inventory.Inventory import Inventory
 
 # entity packages
 from Entity.Enemy.Enemy import Enemy
@@ -32,6 +33,7 @@ class BattleAreaTestInterface:
             "just joe mama",
             StarRating(1)
         )
+        self.inventory = Inventory(None)
         self.battle_area = BattleArea("test battle area")
         self.battle_area.artifact_families.add("Brayden Messerschmidt")
         self.battle_area.enemies.add(Enemy())
@@ -48,10 +50,11 @@ class BattleAreaTestInterface:
     def __repr__(self):
         choice = get_int("1. test battle area\n"
                          "2. modify battle area\n"
-                         "3. back")
+                         "3. view inventory\n"
+                         "4. back")
 
         if choice == 1:
-            self.battle_area.start(self.character)
+            self.battle_area.start(self.character, self.inventory)
 
         elif choice == 2:
             while True:
@@ -69,6 +72,9 @@ class BattleAreaTestInterface:
                 except TypeError:
                     Window.clear()
                     break
+
+        elif choice == 3:
+            self.inventory.manage_input()
 
         else:
             raise TypeError

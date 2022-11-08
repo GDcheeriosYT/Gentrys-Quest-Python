@@ -1,6 +1,7 @@
 # game packages
 # graphics packages
 from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Text.Text import Text
 
 # IO packages
 from IO import Window
@@ -120,6 +121,10 @@ class ItemList:
         while x != index:
             self.content[x].pop()
             x -= 1
+
+    def list_content(self):
+        for item in self.content:
+            Text(item).display()
 
     def change_limit(self, amount):
         Window.clear()

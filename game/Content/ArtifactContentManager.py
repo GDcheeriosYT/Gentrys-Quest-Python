@@ -38,7 +38,6 @@ class ArtifactContentManager:
                                 if thing_for_family.family is not None:
                                     if new_family is None:
                                         new_family = Family(thing_for_family.family)
-                                        print(new_family)
                                     new_family.artifacts.append(thing)
                             except TypeError as e:
                                 print(f"uh oh...\n{e}")

@@ -15,6 +15,7 @@ from Collection.ItemList import ItemList
 from Entity.Entity import Entity
 from Entity.Enemy.Enemy import Enemy
 from Entity.Artifact.Artifact import Artifact
+from Entity.Stats.StarRating import StarRating
 
 # IO packages
 from IO.Input import get_int, enter_to_continue
@@ -74,7 +75,10 @@ class BattleArea(Area):
                         artifacts_to_choose_from.append(artifact)
 
         for i in range((self.get_difficulty(difficulty)) * random.randint(1, 2)):
-            pass
+            artifact = random.choice(artifacts_to_choose_from)
+            artifact = artifact(StarRating(1))
+            artifacts.append(artifact)
+
 
         return artifacts
 
@@ -84,16 +88,20 @@ class BattleArea(Area):
         Text(f"completion {percentage}%\n"
              "You received:\n"
              f"${money}\n"
-             f"{xp}xp\n"
-             f"{artifacts}").display()
+             f"{xp}xp\n").display()
+        if artifacts is not None:
+            print("\tartifacts")
+            Text(artifacts.list_content()).display()
         enter_to_continue()
         raise EndException
 
-    def start(self, character):
+    def start(self, character, inventory):
         try:
             Text(f"You enter {self.name}!").display()
-            enemies = self.initialize_enemies(character.difficulty)
-            artifacts = self.initialize_artifacts(character.difficulty)
+            enemies = ItemList(content_type=Enemy)
+            enemies.content = self.initialize_enemies(character.difficulty)
+            artifacts = ItemList(content_type=Artifact)
+            artifacts.content = self.initialize_artifacts(character.difficulty)
             enemies_killed = 0
             money = 0
             xp = 0
@@ -101,9 +109,9 @@ class BattleArea(Area):
 
             def calculate_percentage():
                 nonlocal percentage
-                percentage = int((enemies_killed / len(enemies)) * 100)
+                percentage = int((enemies_killed / len(enemies.content)) * 100)
 
-            for enemy in enemies:
+            for enemy in enemies.content:
                 calculate_percentage()
                 Text(f"You encountered an {enemy}").display()
                 enemy.show_stats()
@@ -123,6 +131,7 @@ class BattleArea(Area):
                                  f"you received ${enemy.get_money()} and {enemy.get_xp()}xp").display()
                             xp += enemy.get_xp()
                             money += enemy.get_money()
+                            inventory.money += enemy.get_money()
                             character.add_xp(enemy.get_xp())
                             enter_to_continue()
                             break
@@ -137,7 +146,11 @@ class BattleArea(Area):
 
                 enemies_killed += 1
                 calculate_percentage()
-            self.results(percentage, money, xp)
+
+            for artifact in artifacts.content:
+                inventory.artifact_list.artifacts.append(artifact)
+
+            self.results(percentage, money, xp, artifacts)
         except EndException:
             pass
 

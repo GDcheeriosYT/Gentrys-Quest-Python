@@ -2,7 +2,7 @@
 # interface packages
 from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
-from .BattleArea.BattleAreaTestInterface import BattleAreaTestInterface
+from Interface.Interfaces.Testing.Location.BattleAreaTestInterface import BattleAreaTestInterface
 
 
 class LocationInterface(Interface):

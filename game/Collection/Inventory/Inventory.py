@@ -182,7 +182,7 @@ class Inventory:
 
     def swap_weapon(self, character):
         for weapon in self.weapon_list.weapons:
-            Text(f"{self.weapon_list.weapons.index(weapon)}. {weapon.list_view()}").display()
+            Text(f"{self.weapon_list.weapons.index(weapon) + 1}. {weapon.list_view()}").display()
         try:
             character_weapon = character.weapon
             index = get_int("which weapon will you swap?") - 1

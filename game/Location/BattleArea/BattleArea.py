@@ -76,7 +76,7 @@ class BattleArea(Area):
 
         for i in range((self.get_difficulty(difficulty)) * random.randint(1, 2)):
             artifact = random.choice(artifacts_to_choose_from)
-            artifact = artifact(StarRating(1))
+            artifact = artifact(StarRating(random.randint(1, 5)))
             artifacts.append(artifact)
 
 

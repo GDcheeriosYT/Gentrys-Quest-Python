@@ -144,6 +144,8 @@ class Inventory:
                 self.level_up_prompt(character)
 
             elif choice == 2:
+                if character.weapon is None:
+                    self.swap_weapon(character)
                 while True:
                     Text(character.weapon).display()
                     choice = get_int("1. level up\n"
@@ -185,9 +187,9 @@ class Inventory:
             Text(f"{self.weapon_list.weapons.index(weapon) + 1}. {weapon.list_view()}").display()
         try:
             character_weapon = character.weapon
-            index = get_int("which weapon will you swap?") - 1
+            index = get_int(f"{'which weapon will you equip?' if character_weapon is None else 'which weapon will you swap?'}") - 1
             character.weapon = self.weapon_list.weapons[index]
-            self.weapon_list.weapons[index] = character_weapon
+            self.weapon_list.weapons[index] = character_weapon if character_weapon is not None else Text(f"You have equipped {character.weapon.name}").display()
         except IndexError:
             WarningText("Not in the list")
 

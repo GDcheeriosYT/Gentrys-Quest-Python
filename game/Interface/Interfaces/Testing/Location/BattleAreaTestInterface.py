@@ -10,6 +10,7 @@ from Collection.Inventory.Inventory import Inventory
 from Entity.Enemy.Enemy import Enemy
 from Entity.Character.Character import Character
 from Entity.Stats.StarRating import StarRating
+from Entity.Weapon.Weapon import Weapon
 
 # config packages
 from Config.StringSetting import StringSetting
@@ -31,11 +32,18 @@ class BattleAreaTestInterface:
         self.character = Character(
             "joe mama",
             "just joe mama",
-            StarRating(1)
+            StarRating(1),
+            weapon = Weapon(
+                "test weapon",
+                "just a test weapon",
+                "test weapon",
+            )
         )
         self.inventory = Inventory(None)
         self.battle_area = BattleArea("test battle area")
-        self.battle_area.artifact_families.add("Brayden Messerschmidt")
+        families = ["Brayden Messerschmidt", "Carter Ballard", "Lucas Smidt", "Nathan Tenney"]
+        for family in families:
+            self.battle_area.artifact_families.add(family)
         self.battle_area.enemies.add(Enemy())
         self.settings = [
             StringSetting("name", self.battle_area.name),

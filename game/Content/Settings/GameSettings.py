@@ -7,4 +7,3 @@ class GameSettings:
     def __init__(self):
         self.settings = []
         self.settings.append(ToggleSetting("debug", False))
-        self.settings.append(ToggleSetting("no timeout", False))

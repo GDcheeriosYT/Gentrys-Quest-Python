@@ -41,13 +41,13 @@ class Buff:
     experience = None
     is_percent = None
 
-    def __init__(self, attribute_type=None, experience=Experience(), is_percent=random.choice([True, False])):
+    def __init__(self, attribute_type=None, experience=Experience(), is_percent=False):
         if attribute_type is None:
             self.attribute_type = random.choice(list(StatTypes))
         else:
             self.attribute_type = attribute_type
         self.experience = experience
-        self.is_percent = is_percent
+        self.is_percent = random.choice([True, False])
         stats = []
         for stat in list(StatTypes):
             stats.append(stat.name)

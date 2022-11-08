@@ -16,7 +16,19 @@ from Graphics.Content.Text.WarningText import WarningText
 
 # IO packages
 from IO import Window
-from IO.Input import get_int
+from IO.Input import get_int, enter_to_continue
+
+# config packages
+from Config.SettingManager import SettingManager
+from Config.StringSetting import StringSetting
+from Config.NumberSetting import NumberSetting
+from Config.ClassSetting import ClassSetting
+
+# random packages
+from Random.Functions import determine_crit
+
+# built-in packages
+import random
 
 
 class Character(Entity):
@@ -100,6 +112,63 @@ class Character(Entity):
         self.weapon = weapon
         self.artifacts = artifacts
         self.update_stats()
+        self.settings = [
+            StringSetting("name", self.name),
+            NumberSetting("health points", 0, 0, 4),
+            NumberSetting("attack points", 0, 0, 4),
+            NumberSetting("defense points", 0, 0, 4),
+            NumberSetting("critRate points", 0, 0, 4),
+            NumberSetting("critDamage points", 0, 0, 4),
+            NumberSetting("star rating", self.star_rating.value, 1, 5),
+            NumberSetting("level", self.experience.level, 1),
+            ClassSetting("weapon", self.weapon),
+            ClassSetting("artifacts", self.artifacts),
+            StringSetting("description", self.description)
+        ]
+
+    def test(self):
+        Window.clear()
+        Text(self.__repr__()).display()
+        self.settings = SettingManager(self.settings).config_settings()
+        self.name = self.settings[0].text
+        self.default_health_points = self.settings[1].value
+        self.default_attack_points = self.settings[2].value
+        self.default_defense_points = self.settings[3].value
+        self.default_crit_rate_points = self.settings[4].value
+        self.default_crit_damage_points = self.settings[5].value
+        self.star_rating = StarRating(self.settings[6].value)
+        self.experience.level = self.settings[7].value
+        self.weapon = self.settings[8].instance_class
+        self.artifacts = self.settings[9].instance_class
+        self.description = self.settings[10].text
+        self.update_stats()
+        return self
+
+    def get_battle_options(self):
+        options = []
+        if self.weapon is not None:
+            options.append("attack")
+
+        return options
+
+    def attack_enemy(self, enemy, is_skill=False):
+        damage = self.attack
+        is_crit = determine_crit(self.critRate)
+        damage += self.critDamage if is_crit else 0
+        damage -= random.randint(0, enemy.defense)
+        damage = int(damage)
+        Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {enemy.name} for {damage} damage").display()
+        if damage <= 0:
+            WarningText(f"{enemy.name} has dodged").display()
+        enemy.health -= damage
+        enter_to_continue()
+
+    def manage_battle_input(self, choice, enemy, choices):
+        if choices[choice - 1] == "attack":
+            self.attack_enemy(enemy)
+            return True
+        else:
+            return False
 
     def update_stats(self):
         self.difficulty = int(1 + (self.experience.level / 20))

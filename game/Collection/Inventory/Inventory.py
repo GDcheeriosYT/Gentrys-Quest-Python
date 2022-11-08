@@ -31,6 +31,14 @@ class Inventory:
     money = None
 
     def __init__(self, inventory_data):
+        if inventory_data is None:
+            inventory_data = {
+                "money": 0,
+                "characters": [],
+                "weapons": [],
+                "artifacts": []
+            }
+
         self.money = inventory_data["money"]
         self.character_list = CharacterList(inventory_data["characters"])
         self.weapon_list = WeaponList(inventory_data["weapons"])
@@ -52,9 +60,7 @@ class Inventory:
                     if weapon is not None:
                         self.manage_weapon(weapon)
                 elif num == 3:
-                    artifact = self.artifact_list.list_artifacts()
-                    if artifact is not None:
-                        self.manage_artifact(artifact)
+                    self.manage_artifact(self.artifact_list.list_artifacts())
                 else:
                     break
             except ValueError:

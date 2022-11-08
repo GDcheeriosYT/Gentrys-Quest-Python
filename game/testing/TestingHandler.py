@@ -10,9 +10,12 @@ from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 
 from Interface.Interfaces.Testing.Entity.TestInterfaceEntity import TestInterfaceEntity
+from Interface.Interfaces.Testing.Location.LocationInterface import LocationInterface
 
 # IO packages
 from IO import Window
+from IO.Input import get_int
+
 
 class TestingHandler:
     """
@@ -26,16 +29,18 @@ class TestingHandler:
     def start():
         while True:
             entity_interface = TestInterfaceEntity()
+            location_interface = LocationInterface()
             Window.clear()
             QuestionText("What area shall we test today? (Meow:))").display()
-            try:
-                choices = int(input("1. Entity\n"
-                                    "2. quit\n"))
-                if choices == 1:
-                    entity_interface.__repr__()
-                else:
-                    break
+            choices = get_int("1. Entity\n"
+                              "2. Location\n"
+                              "3. quit\n")
+            if choices == 1:
+                entity_interface.__repr__()
 
-            except ValueError:
-                print(":l")
+            elif choices == 2:
+                location_interface.__repr__()
+
+            else:
+                break
 

@@ -5,6 +5,7 @@ from Graphics.Text.Text import Text
 
 # IO packages
 from IO import Window
+from IO.Input import get_int
 
 # external packages
 from rich.console import Console
@@ -129,15 +130,11 @@ class ItemList:
     def change_limit(self, amount):
         Window.clear()
         if amount < self.size:
-            WarningText(
-                "You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
-            try:
-                num = int(input("1. yes\n2. no"))
-                if num == 1:
-                    self.size = amount
-                    self.delete_after(self.size)
-            except ValueError:
-                WarningText("mans didn't even put a number...").display()
+            WarningText("You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
+            num = get_int("1. yes\n2. no")
+            if num == 1:
+                self.size = amount
+                self.delete_after(self.size)
 
     def __repr__(self):
         return {

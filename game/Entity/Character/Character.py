@@ -227,6 +227,7 @@ class Character(Entity):
         defense = []
         critRate = []
         critDamage = []
+
         def check_buff(buff):
             if buff.attribute_type == StatTypes.Health:
                 health.append(buff)

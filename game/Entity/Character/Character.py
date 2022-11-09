@@ -160,7 +160,8 @@ class Character(Entity):
         Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {enemy.name} for {damage} damage").display()
         if damage <= 0:
             WarningText(f"{enemy.name} has dodged").display()
-        enemy.health -= damage
+        else:
+            enemy.health -= damage
         enter_to_continue()
 
     def manage_battle_input(self, choice, enemy, choices):

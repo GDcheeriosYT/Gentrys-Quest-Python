@@ -46,8 +46,12 @@ class Buff:
             self.attribute_type = random.choice(list(StatTypes))
         else:
             self.attribute_type = attribute_type
-        self.experience = experience
+
         self.is_percent = random.choice([True, False])
+        if attribute_type == StatTypes.CritRate:
+            self.is_percent = False
+
+        self.experience = experience
         stats = []
         for stat in list(StatTypes):
             stats.append(stat.name)
@@ -61,7 +65,7 @@ class Buff:
     def handle_value(self, star_rating):
         calculation = ((self.experience.level * 1.75) + (star_rating * 1.25))
         non_crit_calculation = (round(calculation / 2, 2) if self.is_percent else int(calculation))
-        crit_calculation = round(calculation / 2, 2)
+        crit_calculation = round(calculation / 3, 2)
         self.value = non_crit_calculation if self.attribute_type != StatTypes.CritRate else crit_calculation
 
     def __repr__(self):

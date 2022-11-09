@@ -27,10 +27,10 @@ class Location:
         for area in self.areas:
             Text(f"{self.areas.index(area) + 1}. {area}").display()
 
-        Text(f"{}").display()
+        Text(f"{len(self.areas) + 1}. back").display()
 
     def select_area(self):
-        get_int("")
+        self.areas[get_int("")].start()
 
     def __repr__(self):
         return ""

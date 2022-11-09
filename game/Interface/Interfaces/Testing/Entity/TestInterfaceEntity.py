@@ -4,7 +4,7 @@ from Interface.InterfaceContent import InterfaceContent
 from .Artifact.TestArtifactInterface import TestArtifactInterface
 from .Weapon.TestWeaponInterface import TestWeaponInterface
 from .Character.TestCharacterInterface import TestCharacterInterface
-
+from .Enemy.TestInterfaceEnemy import TestInterfaceEnemy
 
 class TestInterfaceEntity(Interface):
     def __init__(self):
@@ -29,7 +29,12 @@ class TestInterfaceEntity(Interface):
                 except TypeError:
                     break
         elif action == 2:
-            pass  # Temporary
+            test_interface = TestInterfaceEnemy()
+            while True:
+                try:
+                    test_interface.__repr__()
+                except TypeError:
+                    break
         elif action == 3:
             test_interface = TestWeaponInterface()
             while True:

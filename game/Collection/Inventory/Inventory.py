@@ -60,7 +60,7 @@ class Inventory:
                     if weapon is not None:
                         self.manage_weapon(weapon)
                 elif num == 3:
-                    if len(self.artifact_list.artifacts) != 0:
+                    if  len(self.artifact_list.artifacts) != 0:
                         self.manage_artifact(self.artifact_list.list_artifacts())
                     else:
                         WarningText("You Don't Have Any Artifacts!").display()
@@ -104,6 +104,8 @@ class Inventory:
         while True:
             if artifact is None:
                 artifact = self.swap_artifact(artifact)
+            elif artifact == "":
+                break
 
             Text(artifact).display()
             choice = get_int("1. switch artifact\n"

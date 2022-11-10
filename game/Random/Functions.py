@@ -1,7 +1,9 @@
 import random
 
 random_character_names = [
-    "pooper man"
+    "pooper man",
+    "Hot guy",
+    "Brayden"
 ]
 
 random_item_names = [

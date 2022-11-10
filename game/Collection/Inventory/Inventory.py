@@ -60,7 +60,10 @@ class Inventory:
                     if weapon is not None:
                         self.manage_weapon(weapon)
                 elif num == 3:
-                    self.manage_artifact(self.artifact_list.list_artifacts())
+                    if len(self.artifact_list.artifacts) != 0:
+                        self.manage_artifact(self.artifact_list.list_artifacts())
+                    else:
+                        WarningText("You Don't Have Any Artifacts!").display()
                 else:
                     break
             except ValueError:
@@ -89,6 +92,7 @@ class Inventory:
             if self.can_afford(money):
                 self.money -= money
                 entity.add_xp(money * 10)
+
 
     def exchange_artifact(self, artifact):
         star_rating = artifact.star_rating.value

@@ -74,7 +74,7 @@ class ItemList:
     def check_item_and_space(self, item):
         if isinstance(item, self.content_type) or self.content_type is None:
             if self.size is not None:
-                if len(self.content) < self.size:
+                if (len(self.content) < self.size) or (None in self.content):
                     return True
                 else:
                     return False

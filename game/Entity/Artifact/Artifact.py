@@ -58,10 +58,12 @@ class Artifact(Entity):
     attributes = None
     experience = None
 
-    def __init__(self, name, star_rating=StarRating(), family=None, main_attribute=Buff(), attributes=[],
+    def __init__(self, name, star_rating=StarRating(), family=None, main_attribute=None, attributes=[],
                  experience=Experience()):
         super().__init__(name=name, description="description", star_rating=star_rating, experience=experience)
         self.family = family
+        if main_attribute is None:
+            main_attribute = Buff()
         self.main_attribute = main_attribute
         self.main_attribute.handle_value(self.star_rating.value)
         self.attributes = attributes

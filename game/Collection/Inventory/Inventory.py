@@ -96,22 +96,23 @@ class Inventory:
         self.artifact_list.artifacts.remove(artifact)
         return int((star_rating * 10) + (star_rating * (level * 25)))
 
-    def manage_artifact(self, artifact):
+    def manage_artifact(self, artifact, is_equipped=False):
         while True:
             if artifact is None:
                 artifact = self.swap_artifact(artifact)
 
             Text(artifact).display()
             choice = get_int("1. switch artifact\n"
-                             "2. remove artifact\n"
+                             f"2. remove artifact{'' if is_equipped else '(Not equipped)'}\n"
                              "3. upgrade artifact\n"
                              "4. back")
 
             if choice == 1:
                 artifact = self.swap_artifact(artifact)
             elif choice == 2:
-                self.artifact_list.artifacts.append(artifact)
-                artifact = None
+                if is_equipped:
+                    self.artifact_list.artifacts.append(artifact)
+                    artifact = None
             elif choice == 3:
                 if artifact.experience.level != artifact.experience.limit:
                     for artifact_listing in self.artifact_list.artifacts:
@@ -166,7 +167,7 @@ class Inventory:
                     Text(f"{artifact_index + 1}. {character.artifacts.get(artifact_index)}").display()
                 choice2 = get_int("6. back")
                 if choice2 < 6:
-                    character.artifacts.set(choice2 - 1, self.manage_artifact(character.artifacts.get(choice2 - 1)))
+                    character.artifacts.set(choice2 - 1, self.manage_artifact(character.artifacts.get(choice2 - 1), True))
                     character.update_stats()
 
             else:

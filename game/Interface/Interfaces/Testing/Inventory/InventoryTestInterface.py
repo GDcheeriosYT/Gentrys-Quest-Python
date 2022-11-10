@@ -1,5 +1,7 @@
 # game packages
 # collection packages
+import random
+
 from Collection.Inventory.Inventory import Inventory
 
 # config packages
@@ -9,10 +11,14 @@ from Config.NumberSetting import NumberSetting
 from Entity.Character.Character import Character
 from Entity.Artifact.Artifact import Artifact
 from Entity.Weapon.Weapon import Weapon
+from Entity.Stats.StarRating import StarRating
 
 # IO packages
 from IO.Input import get_int
 from IO import Window
+
+# random packages
+from Random.Functions import get_random_name
 
 
 class InventoryTestInterface:
@@ -28,7 +34,7 @@ class InventoryTestInterface:
         self.inventory.character_list.characters.append(Character("Test Character", "just a test character."))
 
     def add_artifact(self):
-        self.inventory.artifact_list.artifacts.append(Artifact("Test Artifact"))
+        self.inventory.artifact_list.artifacts.append(Artifact(get_random_name(False), StarRating(random.randint(1, 5))))
 
     def add_weapon(self):
         self.inventory.weapon_list.weapons.append((Weapon("Test Weapon", "just a test weapon.")))

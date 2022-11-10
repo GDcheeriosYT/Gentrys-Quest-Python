@@ -60,7 +60,10 @@ class Inventory:
                     if weapon is not None:
                         self.manage_weapon(weapon)
                 elif num == 3:
-                    self.manage_artifact(self.artifact_list.list_artifacts())
+                    if  len(self.artifact_list.artifacts) != 0:
+                        self.manage_artifact(self.artifact_list.list_artifacts())
+                    else:
+                        WarningText("You Don't Have Any Artifacts!").display()
                 else:
                     break
             except ValueError:
@@ -90,6 +93,7 @@ class Inventory:
                 self.money -= money
                 entity.add_xp(money * 10)
 
+
     def exchange_artifact(self, artifact):
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
@@ -100,6 +104,8 @@ class Inventory:
         while True:
             if artifact is None:
                 artifact = self.swap_artifact(artifact)
+            elif artifact == "":
+                break
 
             Text(artifact).display()
             choice = get_int("1. switch artifact\n"

@@ -19,7 +19,7 @@ class Tissues(Artifact):
             "Tissues",
             star_rating,
             "Dan Messerschmidt",
-            Buff(StatTypes.defense)
+            Buff(StatTypes.Defense)
         )
 
 class BrokenKeyboard(Artifact):
@@ -28,7 +28,7 @@ class BrokenKeyboard(Artifact):
             "Broken Keyboard",
             star_rating,
             "Dan Messerschmidt",
-            Buff(StatTypes.defense)
+            Buff(StatTypes.Defense)
         )
 
 class Poop(Artifact):
@@ -37,7 +37,7 @@ class Poop(Artifact):
             "Poop",
             star_rating,
             "Dan Messerschmidt",
-            Buff(StatTypes.defense)
+            Buff(StatTypes.Defense)
         )
 
 class Nachos(Artifact):
@@ -46,5 +46,5 @@ class Nachos(Artifact):
             "Nachos",
             star_rating,
             "Dan Messerschmidt",
-            Buff(StatTypes.defense)
+            Buff(StatTypes.Defense)
         )

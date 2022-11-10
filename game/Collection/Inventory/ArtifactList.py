@@ -50,4 +50,5 @@ class ArtifactList:
                 num = get_int("select an artifact\n")
                 return self.artifacts[num - 1]
             except IndexError:
-                break
+                return ""
+

@@ -60,10 +60,39 @@ class BattleArea(Area):
         else:
             return self.difficulty
 
-    def initialize_enemies(self, difficulty):
+    @staticmethod
+    def apply_random_level(number):
+        def get_min(number, difference):
+            while number - difference <= 0:
+                print("poop1: ", number - difference, end="\r")
+                difference -= 1
+
+            return difference
+
+        def get_max(number, difference):
+            print("poop2: ", number - difference, end="\r")
+            while number + difference >= 20:
+                difference -= 1
+
+            return difference
+
+        number_diff = 3
+        min = get_min(number, number_diff)
+        max = get_max(number, number_diff)
+        if min < max:
+            number_diff = min
+        else:
+            number_diff = max
+        return number + random.randint(-abs(number_diff), number_diff)
+
+    def initialize_enemies(self, character):
         enemies = []
-        for i in range((self.get_difficulty(difficulty)) * random.randint(1, 3)):
-            enemies.append(copy(random.choice(self.enemies.content)))
+        for i in range((self.get_difficulty(character.difficulty)) * random.randint(1, 3)):
+            enemy = copy(random.choice(self.enemies.content))
+            level = self.apply_random_level(character.experience.level % 20)
+            enemy.experience.level = (20 * (self.get_difficulty(character.difficulty) - 1)) + level
+            enemy.update_stats()
+            enemies.append(enemy)
 
         return enemies
 
@@ -117,7 +146,7 @@ class BattleArea(Area):
         try:
             Text(f"You enter {self.name}!").display()
             enemies = ItemList(content_type=Enemy)
-            enemies.content = self.initialize_enemies(character.difficulty)
+            enemies.content = self.initialize_enemies(character)
             artifacts = ItemList(content_type=Artifact)
             artifacts.content = self.initialize_artifacts(character.difficulty)
             enemies_killed = 0

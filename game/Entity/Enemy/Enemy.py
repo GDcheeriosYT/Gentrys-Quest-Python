@@ -70,7 +70,7 @@ class Enemy(Entity):
         self.update_stats()
 
     def update_stats(self):
-        self.health = int(self.health_points * self.check_minimum(self.experience.level, 3) + (self.check_minimum(self.experience.level) * (self.check_minimum(self.experience.level / 20, 20))) + 20)
+        self.health = int(self.health_points * self.check_minimum(self.experience.level, 3) + (self.check_minimum(self.experience.level) * (self.check_minimum(self.experience.level / 20, 20))) + 20 + self.check_minimum(self.experience.level, 1.3))
         self.attack = int(self.attack_points * self.check_minimum(self.experience.level, 2) + (self.check_minimum(self.experience.level, 0.5) * (self.check_minimum(self.experience.level / 20, 6))) + 2)
         self.defense = int(self.defense_points * self.check_minimum(self.experience.level, 1.5) + (self.check_minimum(self.experience.level, 0.3) * (self.check_minimum(self.experience.level / 20, 3))) + 1)
 

@@ -41,7 +41,7 @@ class BattleAreaTestInterface:
         )
         self.inventory = Inventory(None)
         self.battle_area = BattleArea("test battle area")
-        families = ["Brayden Messerschmidt", "Carter Ballard", "Lucas Smidt", "Nathan Tenney"]
+        families = ["Brayden Messerschmidt", "Carter Ballard", "Lucas Smidt", "Nathan Tenney", "Dan Messerschmidt", "Lethal Weapon"]
         for family in families:
             self.battle_area.artifact_families.add(family)
         self.battle_area.enemies.add(Enemy())
@@ -62,6 +62,7 @@ class BattleAreaTestInterface:
                          "4. back")
 
         if choice == 1:
+            self.character.update_stats()
             self.battle_area.start(self.character, self.inventory)
 
         elif choice == 2:

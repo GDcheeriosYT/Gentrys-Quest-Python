@@ -111,4 +111,5 @@ attribute: {self.buff}
         self.verbs = self.settings[5].instance_class
         self.star_rating = StarRating(self.settings[6].value)
         self.experience.level = self.settings[7].value
+        self.update_stats()
         return self

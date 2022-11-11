@@ -48,22 +48,24 @@ class Inventory:
         pass
 
     def manage_input(self):
+        def is_not_empty(list, string):
+            if len(list) != 0:
+                return True
+            else:
+                WarningText(f"You don't have any {string}s").display()
+
         while True:
             try:
                 num = get_int(self.__repr__())
                 if num == 1:
-                    character = self.character_list.list_characters()
-                    if character is not None:
-                        self.manage_character(character)
+                    if is_not_empty(self.character_list.characters, "character"):
+                        self.manage_character(self.character_list.list_characters())
                 elif num == 2:
-                    weapon = self.weapon_list.list_weapons()
-                    if weapon is not None:
-                        self.manage_weapon(weapon)
+                    if is_not_empty(self.weapon_list.weapons, "weapon"):
+                        self.manage_weapon(self.weapon_list.list_weapons())
                 elif num == 3:
-                    if  len(self.artifact_list.artifacts) != 0:
+                    if is_not_empty(self.artifact_list.artifacts, "artifact"):
                         self.manage_artifact(self.artifact_list.list_artifacts())
-                    else:
-                        WarningText("You Don't Have Any Artifacts!").display()
                 else:
                     break
             except ValueError:
@@ -93,7 +95,6 @@ class Inventory:
                 self.money -= money
                 entity.add_xp(money * 10)
 
-
     def exchange_artifact(self, artifact):
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
@@ -122,7 +123,8 @@ class Inventory:
             elif choice == 3:
                 if artifact.experience.level != artifact.experience.limit:
                     for artifact_listing in self.artifact_list.artifacts:
-                        Text(f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
+                        Text(
+                            f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
 
                     index = get_int("which artifact will you exchange?") - 1
                     artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))
@@ -173,7 +175,8 @@ class Inventory:
                     Text(f"{artifact_index + 1}. {character.artifacts.get(artifact_index)}").display()
                 choice2 = get_int("6. back")
                 if choice2 < 6:
-                    character.artifacts.set(choice2 - 1, self.manage_artifact(character.artifacts.get(choice2 - 1), True))
+                    character.artifacts.set(choice2 - 1,
+                                            self.manage_artifact(character.artifacts.get(choice2 - 1), True))
                     character.update_stats()
 
             else:
@@ -186,7 +189,8 @@ class Inventory:
         index = get_int("which artifact will you swap?") - 1
 
         artifact = self.artifact_list.artifacts[index]
-        self.artifact_list.artifacts[index] = artifact_to_swap if artifact_to_swap is not None else self.artifact_list.artifacts.pop(index)
+        self.artifact_list.artifacts[
+            index] = artifact_to_swap if artifact_to_swap is not None else self.artifact_list.artifacts.pop(index)
         return artifact
 
     def swap_weapon(self, character):
@@ -194,9 +198,11 @@ class Inventory:
             Text(f"{self.weapon_list.weapons.index(weapon) + 1}. {weapon.list_view()}").display()
         try:
             character_weapon = character.weapon
-            index = get_int(f"{'which weapon will you equip?' if character_weapon is None else 'which weapon will you swap?'}") - 1
+            index = get_int(
+                f"{'which weapon will you equip?' if character_weapon is None else 'which weapon will you swap?'}") - 1
             character.weapon = self.weapon_list.weapons[index]
-            self.weapon_list.weapons[index] = character_weapon if character_weapon is not None else Text(f"You have equipped {character.weapon.name}").display()
+            self.weapon_list.weapons[index] = character_weapon if character_weapon is not None else Text(
+                f"You have equipped {character.weapon.name}").display()
         except IndexError:
             WarningText("Not in the list")
 

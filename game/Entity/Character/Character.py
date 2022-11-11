@@ -152,7 +152,7 @@ class Character(Entity):
         return options
 
     def attack_enemy(self, enemy, is_skill=False):
-        damage = self.attack
+        damage = self.attack + self.weapon.attack
         is_crit = determine_crit(self.critRate)
         damage += self.critDamage if is_crit else 0
         damage -= random.randint(0, enemy.defense)

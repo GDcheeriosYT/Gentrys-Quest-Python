@@ -77,7 +77,7 @@ class Buff:
         counter = 0
         for stat_type in list(StatTypes):
             if str(stat_type) == f"StatTypes.{self.settings[0].selected_value}":
-                self.attribute_type = StatTypes(counter)
+                self.attribute_type = StatTypes(counter + 1)
                 break
 
             counter += 1

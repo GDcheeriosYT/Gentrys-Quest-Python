@@ -40,16 +40,20 @@ class ItemList:
         self.output = output
 
     def add(self, item):
-        if self.check_item_and_space(item):
-            self.content.append(item)
-        else:
-            for thing in self.content:
-                if thing is None:
-                    self.content[self.content.index(thing)] = item
-                    return None
-            if self.output:
-                WarningText(
-                    f"The {type(item)} {item.name} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
+        if isinstance(item, self.content_type):
+            if self.check_item_and_space(item):
+                if None in self.content:
+                    self.content[self.content.index(None)] = item
+                else:
+                    self.content.append(item)
+
+            elif None in self.content:
+                self.content[self.content.index(None)] = item
+
+            else:
+                if self.output:
+                    WarningText(
+                        f"The {type(item)} {item.name} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()
 
     def remove(self):
         for item in self.content:
@@ -71,7 +75,7 @@ class ItemList:
         except IndexError:
             return None
 
-    def check_item_and_space(self, item):
+    def check_item_and_space(self, item, supports_none=False):
         if isinstance(item, self.content_type) or self.content_type is None:
             if self.size is not None:
                 if (len(self.content) < self.size) or (None in self.content):
@@ -81,11 +85,20 @@ class ItemList:
             else:
                 return True
         else:
-            return False
+            if supports_none:
+                if self.size is not None:
+                    if (len(self.content) < self.size) or (None in self.content):
+                        return True
+                    else:
+                        return False
+                else:
+                    return True
+            else:
+                return False
 
-    def set(self, index, item):
+    def set(self, index, item, supports_none=False):
         try:
-            if self.check_item_and_space(item):
+            if self.check_item_and_space(item, supports_none):
                 self.content[index] = item
             else:
                 WarningText(

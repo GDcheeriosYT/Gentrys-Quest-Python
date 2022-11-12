@@ -105,31 +105,41 @@ class Inventory:
         while True:
             if artifact is None:
                 artifact = self.swap_artifact(artifact)
+                return artifact
             elif artifact == "":
                 break
 
             Text(artifact).display()
-            choice = get_int("1. switch artifact\n"
+            choice = get_int(f"1. switch artifact{'' if is_equipped else '(Not equipped)'}\n"
                              f"2. remove artifact{'' if is_equipped else '(Not equipped)'}\n"
                              "3. upgrade artifact\n"
                              "4. back")
 
             if choice == 1:
-                artifact = self.swap_artifact(artifact)
+                if is_equipped:
+                    artifact = self.swap_artifact(artifact)
             elif choice == 2:
                 if is_equipped:
                     self.artifact_list.artifacts.append(artifact)
-                    artifact = None
+                    return None
             elif choice == 3:
                 if artifact.experience.level != artifact.experience.limit:
+                    if not is_equipped:
+                        artifact_index = self.artifact_list.artifacts.index(artifact)
+                        self.artifact_list.artifacts.remove(artifact)  # removes the artifact from the list so it can't be exchanged by itself
                     for artifact_listing in self.artifact_list.artifacts:
                         Text(
                             f"{self.artifact_list.artifacts.index(artifact_listing) + 1}. {artifact_listing.list_view()}").display()
+                    Text(f"{len(self.artifact_list.artifacts) + 1}. back").display()
 
                     index = get_int("which artifact will you exchange?") - 1
-                    artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))
+                    if 0 <= index < len(self.artifact_list.artifacts):
+                        artifact.add_xp(self.exchange_artifact(self.artifact_list.artifacts[index]))
+                    if not is_equipped:
+                        self.artifact_list.artifacts.insert(artifact_index, artifact)  # adds the artifact back
+                else:
+                    WarningText("Artifact is max level!").display()
             else:
-                WarningText("Artifact is max level!").display()
                 break
 
         return artifact
@@ -172,25 +182,30 @@ class Inventory:
 
             elif choice == 3:
                 for artifact_index in range(5):
-                    Text(f"{artifact_index + 1}. {character.artifacts.get(artifact_index)}").display()
+                    artifact = character.artifacts.get(artifact_index)
+                    Text(f"{artifact_index + 1}. {artifact.list_view() if artifact is not None else 'empty'}").display()
                 choice2 = get_int("6. back")
                 if choice2 < 6:
                     character.artifacts.set(choice2 - 1,
-                                            self.manage_artifact(character.artifacts.get(choice2 - 1), True))
+                                            self.manage_artifact(character.artifacts.get(choice2 - 1), True), True)
                     character.update_stats()
 
             else:
                 break
 
     def swap_artifact(self, artifact_to_swap):
+        def list_stuff(list):
+            for thing in list:
+                print(thing.__class__)
+
+            print("\n")
         for artifact in self.artifact_list.artifacts:
             Text(f"{self.artifact_list.artifacts.index(artifact) + 1}. {artifact.list_view()}").display()
+        Text(f"{len(self.artifact_list.artifacts) + 1}. back").display()
 
         index = get_int("which artifact will you swap?") - 1
-
         artifact = self.artifact_list.artifacts[index]
-        self.artifact_list.artifacts[
-            index] = artifact_to_swap if artifact_to_swap is not None else self.artifact_list.artifacts.pop(index)
+        self.artifact_list.artifacts[index] = artifact_to_swap if artifact_to_swap is not None else self.artifact_list.artifacts.pop(index)
         return artifact
 
     def swap_weapon(self, character):

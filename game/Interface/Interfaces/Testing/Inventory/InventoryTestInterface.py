@@ -12,6 +12,7 @@ from Entity.Character.Character import Character
 from Entity.Artifact.Artifact import Artifact
 from Entity.Weapon.Weapon import Weapon
 from Entity.Stats.StarRating import StarRating
+from Entity.Stats.Experience import Experience
 
 # IO packages
 from IO.Input import get_int
@@ -31,13 +32,14 @@ class InventoryTestInterface:
         self.inventory.money = money.value
 
     def add_character(self):
-        self.inventory.character_list.characters.append(Character("Test Character", "just a test character."))
+        self.inventory.character_list.characters.append(Character("Test Character", "just a test character.", experience=Experience()))
 
     def add_artifact(self):
-        self.inventory.artifact_list.artifacts.append(Artifact(get_random_name(False), StarRating(random.randint(1, 5))))
+        star_rating = random.randint(1, 5)
+        self.inventory.artifact_list.artifacts.append(Artifact(get_random_name(False), StarRating(star_rating), experience=Experience(limit=star_rating * 4)))
 
     def add_weapon(self):
-        self.inventory.weapon_list.weapons.append((Weapon("Test Weapon", "just a test weapon.")))
+        self.inventory.weapon_list.weapons.append((Weapon("Test Weapon", "just a test weapon.", experience=Experience())))
 
     def __repr__(self):
         while True:

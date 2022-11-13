@@ -194,11 +194,6 @@ class Inventory:
                 break
 
     def swap_artifact(self, artifact_to_swap):
-        def list_stuff(list):
-            for thing in list:
-                print(thing.__class__)
-
-            print("\n")
         for artifact in self.artifact_list.artifacts:
             Text(f"{self.artifact_list.artifacts.index(artifact) + 1}. {artifact.list_view()}").display()
         Text(f"{len(self.artifact_list.artifacts) + 1}. back").display()

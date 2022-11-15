@@ -203,7 +203,8 @@ class BattleArea(Area):
 
             self.results(percentage, money, xp, artifacts)
         except EndException:
-            character.update_stats()
+            if character is not None:
+                character.update_stats()
             pass
 
     def __repr__(self):

@@ -30,7 +30,11 @@ class Location:
         Text(f"{len(self.areas) + 1}. back").display()
 
     def select_area(self, character, inventory):
-        self.areas[get_int("Select an area") - 1].start(character, inventory)
+        choice = get_int("Select an area") - 1
+        try:
+            self.areas[choice].start(character, inventory)
+        except IndexError:
+            pass
 
     def __repr__(self):
         return ""

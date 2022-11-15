@@ -10,7 +10,7 @@ from ..Weapons.Trident import Trident
 class DemonFromUnderBraydensBed(Enemy):
     def __init__(self):
         super().__init__(
-            "Demons From Under Brayden's Bed",
+            "Demon From Under Brayden's Bed",
             1,
             1,
             0,

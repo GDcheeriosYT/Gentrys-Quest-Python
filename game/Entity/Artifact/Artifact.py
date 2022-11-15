@@ -69,7 +69,7 @@ class Artifact(Entity):
         self.attributes = attributes
         for attribute in self.attributes:
             attribute.handle_value(self.star_rating.value)
-        self.experience.limit = self.star_rating.value * 4
+        self.experience = Experience(limit=self.star_rating.value * 4)
         self.settings = [
             StringSetting("name", self.name),
             NumberSetting("star rating", self.star_rating.value, 1, 5),

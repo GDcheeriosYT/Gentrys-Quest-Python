@@ -34,6 +34,9 @@ from GameData import GameData
 from Editor.EditorInterface import EditorInterface
 from Editor.TextAnimationEditor import TextAnimationEditor
 
+# content packages
+from Content.Locations.Iowa.Iowa import Iowa
+
 # built-in packages
 import sys
 import time
@@ -80,6 +83,7 @@ else:
 
     # main code
     in_game = True
+    equipped_character = None
     while in_game:
         try:
             choices = get_int("Main Menu\n"
@@ -96,17 +100,25 @@ else:
                     choices2 = get_int("1. Travel\n"
                                        "2. Gacha\n"
                                        "3. Inventory")
+
                     if choices2 == 1:
-                        InfoText("Coming Soon...").display(enter_prompt=True)
+                        iowa = Iowa()
+                        choices3 = get_int("1. Iowa\n"
+                                           "2. back")
+
+                        if choices3 == 1:
+                            iowa.list_areas()
+                            iowa.select_area(equipped_character, game_data.inventory)
+
                     elif choices2 == 2:
                         InfoText("Coming Soon...").display(enter_prompt=True)
                     elif choices2 == 3:
-                        game_data.inventory.manage_input()
-
+                        inventory_results = game_data.inventory.manage_input(equipped_character)
+                        if inventory_results is not None:
+                            equipped_character = inventory_results
 
                 elif choices1 == 2:
                     InfoText("Coming Soon...").display(enter_prompt=True)
-
 
             elif choices == 2:
                 choices1 = get_int("1. Text animation editor")

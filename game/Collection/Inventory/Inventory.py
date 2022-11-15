@@ -47,7 +47,7 @@ class Inventory:
     def upgrade(self):
         pass
 
-    def manage_input(self):
+    def manage_input(self, equipped_character=None):
         def is_not_empty(list, string):
             if len(list) != 0:
                 return True
@@ -59,7 +59,7 @@ class Inventory:
                 num = get_int(self.__repr__())
                 if num == 1:
                     if is_not_empty(self.character_list.characters, "character"):
-                        self.manage_character(self.character_list.list_characters())
+                        equipped_character = self.manage_character(self.character_list.list_characters())
                 elif num == 2:
                     if is_not_empty(self.weapon_list.weapons, "weapon"):
                         self.manage_weapon(self.weapon_list.list_weapons())
@@ -72,6 +72,8 @@ class Inventory:
                 WarningText("That's not exactly a number... Bro")
             except IndexError:
                 break
+
+        return equipped_character
 
     def can_afford(self, amount):
         if self.money >= amount:
@@ -189,6 +191,9 @@ class Inventory:
                     character.artifacts.set(choice2 - 1,
                                             self.manage_artifact(character.artifacts.get(choice2 - 1), True), True)
                     character.update_stats()
+
+            elif choice == 4:
+                return character
 
             else:
                 break

@@ -12,7 +12,6 @@ from Graphics.Content.Text.WarningText import WarningText
 from Collection.ItemList import ItemList
 
 # entity packages
-from Entity.Entity import Entity
 from Entity.Enemy.Enemy import Enemy
 from Entity.Artifact.Artifact import Artifact
 from Entity.Stats.StarRating import StarRating
@@ -87,7 +86,8 @@ class BattleArea(Area):
 
     def initialize_enemies(self, character):
         enemies = []
-        for i in range((self.get_difficulty(character.difficulty)) * random.randint(1, 3)):
+        difficulty = self.get_difficulty(character.difficulty)
+        for i in range((difficulty + random.randint(0, difficulty))):
             enemy = copy(random.choice(self.enemies.content))
             level = self.apply_random_level(character.experience.level % 20)
             enemy.experience.level = (20 * (self.get_difficulty(character.difficulty) - 1)) + level
@@ -203,6 +203,7 @@ class BattleArea(Area):
 
             self.results(percentage, money, xp, artifacts)
         except EndException:
+            character.update_stats()
             pass
 
     def __repr__(self):

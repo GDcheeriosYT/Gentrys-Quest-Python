@@ -7,15 +7,15 @@ from Entity.Stats.StarRating import StarRating
 from Entity.Stats.Experience import Experience
 
 
-class Psychology(Weapon):
+class Teeth(Weapon):
     def __init__(self):
         super().__init__(
-            "Psychology",
-            "A psychic weapon",
-            "mental",
+            "Teeth",
+            "Teeth on a guinea pig.",
+            "Teeth",
             0,
             Buff(),
-            Verbs("messed with", "tricked"),
+            Verbs("bit", "chomped on"),
             StarRating(2),
             Experience()
         )

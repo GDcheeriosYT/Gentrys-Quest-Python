@@ -160,6 +160,8 @@ class Inventory:
 
     def manage_character(self, character):
         while True:
+            if character is None:
+                break
             choice = character.get_option()
             if choice == 1:
                 self.level_up_prompt(character)

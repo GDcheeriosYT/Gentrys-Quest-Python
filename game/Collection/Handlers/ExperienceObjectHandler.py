@@ -2,6 +2,7 @@
 # entity packages
 from Entity.Stats.Experience import Experience
 
+
 class ExperienceObjectHandler:
     """
     Makes a Handler for experience arrays
@@ -12,9 +13,9 @@ class ExperienceObjectHandler:
         the object to handle
     """
 
-    experience_array = None
+    experience_object = None
 
-    def __init__(self, experience_object={"level":1,"xp":0}):
+    def __init__(self, experience_object: dict):
         self.experience_object = experience_object
 
     def create_experience(self):

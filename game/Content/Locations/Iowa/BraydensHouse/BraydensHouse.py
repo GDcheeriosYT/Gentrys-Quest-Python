@@ -15,7 +15,6 @@ from .Enemies.Chinchilla import Chinchilla
 from .Enemies.GuineaPig import GuineaPig
 
 
-
 class BraydensHouse(BattleArea):
     def __init__(self):
         artifact_families = ItemList(content_type=str)

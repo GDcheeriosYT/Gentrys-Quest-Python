@@ -163,7 +163,7 @@ class BattleArea(Area):
 
             for enemy in enemies.content:
                 calculate_percentage()
-                Text(f"You encountered an {enemy}").display()
+                Text(f"{character.name} encountered a {enemy}").display()
                 enemy.show_stats()
                 while True:
                     Text(f"{enemy.name} {enemy.health}\n"

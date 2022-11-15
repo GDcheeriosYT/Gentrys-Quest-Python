@@ -4,6 +4,7 @@ from Location.Location import Location
 
 # content packages
 from .BraydensHouse.BraydensHouse import BraydensHouse
+from .CartersHouse.CartersHouse import CartersHouse
 
 
 class Iowa(Location):
@@ -11,6 +12,7 @@ class Iowa(Location):
         super().__init__(
             "Iowa",
             [
-                BraydensHouse()
+                BraydensHouse(),
+                CartersHouse()
             ]
         )

@@ -1,8 +1,5 @@
 # game packages
 # entity packages
-from Entity.Stats.StatTypes import StatTypes
-from Entity.Stats.Buff import Buff
-from Entity.Stats.Experience import Experience
 from Entity.Stats.StarRating import StarRating
 from Entity.Artifact.Artifact import Artifact
 
@@ -27,6 +24,8 @@ class ArtifactObjectHandler:
         self.artifact_object = artifact_object
 
     def create_artifact(self):
+        experience = ExperienceObjectHandler(self.artifact_object["experience"]).create_experience()
+        experience.limit = self.artifact_object["star rating"] * 4
         attributes = []
         for buff in self.artifact_object["stats"]["attributes"]:
             attributes.append(BuffArrayHandler(buff["buff"]).create_buff())
@@ -36,5 +35,5 @@ class ArtifactObjectHandler:
             family=self.artifact_object["family"],
             main_attribute=BuffArrayHandler(self.artifact_object["stats"]["main attribute"]).create_buff(),
             attributes=attributes,
-            experience=ExperienceObjectHandler(self.artifact_object["experience"]).create_experience()
+            experience=experience
         )

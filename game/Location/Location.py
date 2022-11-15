@@ -29,8 +29,8 @@ class Location:
 
         Text(f"{len(self.areas) + 1}. back").display()
 
-    def select_area(self):
-        self.areas[get_int("")].start()
+    def select_area(self, character, inventory):
+        self.areas[get_int("Select an area") - 1].start(character, inventory)
 
     def __repr__(self):
         return ""

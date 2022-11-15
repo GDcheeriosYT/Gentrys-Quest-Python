@@ -150,8 +150,8 @@ class ItemList:
                 self.delete_after(self.size)
 
     def __repr__(self):
-        return {
+        return str({
             "size": self.size,
             "content type": self.content_type,
             "content": self.content
-        }
+        })

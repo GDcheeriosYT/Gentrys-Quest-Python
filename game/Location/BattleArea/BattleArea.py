@@ -144,6 +144,9 @@ class BattleArea(Area):
 
     def start(self, character, inventory):
         try:
+            if character is None:
+                WarningText("You do not have a character equipped!").display()
+                raise EndException
             Text(f"You enter {self.name}!").display()
             enemies = ItemList(content_type=Enemy)
             enemies.content = self.initialize_enemies(character)

@@ -56,7 +56,6 @@ class Buff:
         if attribute_type == StatTypes.CritRate:
             self.is_percent = False
 
-        self.experience = experience
         stats = []
         for stat in list(StatTypes):
             stats.append(stat.name)

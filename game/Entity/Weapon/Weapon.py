@@ -68,8 +68,8 @@ class Weapon(Entity):
         super().__init__(name, description, star_rating, experience)
         self.weapon_type = weapon_type
         self.base_attack = attack
-        buff.handle_value(self.star_rating.value)
         self.buff = buff
+        self.buff.handle_value(self.star_rating.value)
         self.verbs = verbs
         self.settings = [
             StringSetting("name", self.name),

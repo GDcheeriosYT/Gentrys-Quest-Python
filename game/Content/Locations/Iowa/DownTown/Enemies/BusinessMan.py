@@ -7,13 +7,14 @@ from Entity.Stats.Experience import Experience
 from ..Weapons.Briefcase import Briefcase
 
 
-class BuisinessMan(Enemy):
+class BusinessMan(Enemy):
     def __init__(self):
         super().__init__(
-            "Buisiness Man",
+            "Business Man",
             2,
             2,
             0,
             Briefcase(),
+            "Just a business man",
             Experience()
         )

@@ -5,6 +5,7 @@ from Location.Location import Location
 # content packages
 from .BraydensHouse.BraydensHouse import BraydensHouse
 from .CartersHouse.CartersHouse import CartersHouse
+from .UnifinishedConstructionSite.UnfinishedConstructionSite import UnfinishedConstructionSite
 
 
 class Iowa(Location):
@@ -13,6 +14,7 @@ class Iowa(Location):
             "Iowa",
             [
                 BraydensHouse(),
-                CartersHouse()
+                CartersHouse(),
+                UnfinishedConstructionSite()
             ]
         )

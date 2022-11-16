@@ -6,6 +6,7 @@ from Location.Location import Location
 from .BraydensHouse.BraydensHouse import BraydensHouse
 from .CartersHouse.CartersHouse import CartersHouse
 from .UnifinishedConstructionSite.UnfinishedConstructionSite import UnfinishedConstructionSite
+from .DownTown.DownTown import DownTown
 
 
 class Iowa(Location):
@@ -15,6 +16,7 @@ class Iowa(Location):
             [
                 BraydensHouse(),
                 CartersHouse(),
-                UnfinishedConstructionSite()
+                UnfinishedConstructionSite(),
+                DownTown()
             ]
         )

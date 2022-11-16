@@ -7,6 +7,7 @@ from .BraydensHouse.BraydensHouse import BraydensHouse
 from .CartersHouse.CartersHouse import CartersHouse
 from .UnifinishedConstructionSite.UnfinishedConstructionSite import UnfinishedConstructionSite
 from .DownTown.DownTown import DownTown
+from .Target.Target import Target
 
 
 class Iowa(Location):
@@ -17,6 +18,7 @@ class Iowa(Location):
                 BraydensHouse(),
                 CartersHouse(),
                 UnfinishedConstructionSite(),
-                DownTown()
+                DownTown(),
+                Target()
             ]
         )

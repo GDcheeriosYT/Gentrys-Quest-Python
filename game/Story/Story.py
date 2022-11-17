@@ -26,5 +26,6 @@ class Story:
                 event.start(character, inventory)
 
             elif isinstance(event, Artifact):
-                character.artifacts
+                inventory.artifact_list.append(event)
+                inventory.manage_character(character)
 

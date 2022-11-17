@@ -13,6 +13,7 @@ from Entity.Enemy.Enemy import Enemy
 from Entity.Weapon.Weapon import Weapon
 from Entity.Weapon.Verbs import Verbs
 from Entity.Stats.Buff import Buff
+from Entity.
 
 # built-in packages
 import random
@@ -47,6 +48,7 @@ class Intro(Story):
             False,
             False
         )
+        artifact_thing =
         super().__init__(
             [
                 "It's 10PM.",
@@ -59,12 +61,15 @@ class Intro(Story):
                 intro_fight,
                 "{player} wakes up.",
                 "{player} looks around. They notice they're in someone's living room.",
-                "Someone walks into the living room.",
+                "Someone walks in to the living room.",
                 "\"You're awake!\" he says.",
                 "\"I'm glad I could save you. Luckily Chug-Jugs are really useful.\"",
-                "\"Yes, thank you so much.\" says {player}"
+                "\"Yes, thank you so much.\" says {player}",
                 "\"What's your name?\"",
                 "\"My name is Mr.Gentry.\" he replies.",
-                "\"You must help me! My evil twin brother Evil Gentry\""
+                "\"You must help me! My evil twin brother Evil Gentry has overtaken my classroom!\"",
+                "\"I'll supply you with equipment.\"",
+                "\"Take This, It's an artifact.\"",
+
             ]
         )

@@ -7,10 +7,15 @@ from Location.Location import Location
 
 # content packages
 from Content.Locations.Iowa.Iowa import Iowa
+from Content.Stories.Intro import Intro
 
 # IO packages
-from IO.Input import get_int
+from IO.Input import get_int, get_string, enter_to_continue
 from IO import Window
+
+# entity packages
+from Entity.Character.Character import Character
+from Entity.Weapon.Weapon import Weapon
 
 # interface packages
 from Interface.Interfaces.Settings import SettingsInterface
@@ -19,6 +24,9 @@ from Interface.Interfaces.Settings import SettingsInterface
 from Graphics.Content.Text.InfoText import InfoText
 from Graphics.Content.Text.WarningText import WarningText
 
+# built-in packages
+import time
+
 
 class Game:
     def __init__(self, game_data):
@@ -26,7 +34,30 @@ class Game:
         self.equipped_character = None
         self.locations = ItemList(content_type=Location)
 
+    def start_intro(self):
+        intro_scene = Intro()
+        Window.clear()
+        name = get_string("What is this protagonists name?\n")
+        character = Character(
+            name,
+            "The Guy",
+            weapon=Weapon(),
+            default_attack_points=1,
+            default_health_points=1,
+            default_defense_points=1,
+            default_crit_damage_points=1,
+            default_crit_rate_points=1
+        )
+        self.equipped_character = character
+        self.game_data.inventory.character_list.characters.append(character)
+        time.sleep(1)
+        intro_scene.start(self.equipped_character, self.game_data.inventory)
+
     def start(self):
+        if self.game_data.startup_amount < 1:
+            self.start_intro()
+
+        self.game_data.startup_amount += 1
         in_game = True
         while in_game:
             try:

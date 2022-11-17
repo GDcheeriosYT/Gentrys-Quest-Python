@@ -34,7 +34,7 @@ class GameData:
         game_settings = GameSettings().settings
         if json_data == None:
             data = {
-                "startupamount": 1,
+                "startupamount": 0,
                 "settings": {},
                 "inventory": {
                     "characters": [],

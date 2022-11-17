@@ -18,6 +18,7 @@ class Iowa(Location):
                 BraydensHouse(),
                 CartersHouse(),
                 UnfinishedConstructionSite(),
-                DownTown()
+                DownTown(),
+                Target()
             ]
         )

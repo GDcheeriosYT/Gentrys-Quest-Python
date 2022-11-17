@@ -22,7 +22,7 @@ class NumberSetting(Setting):
     min_value = None
     max_value = None
 
-    def __init__(self, name="setting", value=0, min_value=-99999999, max_value=99999999):
+    def __init__(self, name="setting", value=0, min_value=None, max_value=None):
         super().__init__(name)
         self.value = value
         self.min_value = min_value
@@ -30,16 +30,26 @@ class NumberSetting(Setting):
 
     def change_value(self):
         while True:
-            QuestionText(f"Please enter a value in between {self.min_value} and {self.max_value}").display()
+            QuestionText(f"Please enter a value in between {'-unlimited' if self.min_value is None else self.min_value} and {'unlimited' if self.max_value is None else self.max_value}").display()
             try:
                 num = int(input())
-                if self.max_value >= num >= self.min_value:
+                if self.max_value is None and self.min_value is None:
                     self.value = num
                     break
-                elif num > self.max_value:
-                    WarningText("Too big!").display()
-                else:
-                    WarningText("Too small!").display()
+
+                elif self.min_value is None:
+                    if num <= self.max_value:
+                        self.value = num
+                        break
+                    else:
+                        WarningText("Too big!").display()
+
+                elif self.max_value is None:
+                    if num >= self.min_value:
+                        self.value = num
+                        break
+                    else:
+                        WarningText("Too small!").display()
 
             except ValueError:
                 WarningText("Bro, that's not even a number...").display()

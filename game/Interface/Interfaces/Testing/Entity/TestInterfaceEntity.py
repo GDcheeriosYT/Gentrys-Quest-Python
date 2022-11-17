@@ -2,7 +2,9 @@ from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 
 from .Artifact.TestArtifactInterface import TestArtifactInterface
-
+from .Weapon.TestWeaponInterface import TestWeaponInterface
+from .Character.TestCharacterInterface import TestCharacterInterface
+from .Enemy.TestInterfaceEnemy import TestInterfaceEnemy
 
 class TestInterfaceEntity(Interface):
     def __init__(self):
@@ -11,7 +13,6 @@ class TestInterfaceEntity(Interface):
                                                   ["Artifact", "Character", "Enemy", "Weapon"]))
 
     def __repr__(self):
-
         action = self.visit()
         if action == 0:
             test_interface = TestArtifactInterface()
@@ -21,8 +22,23 @@ class TestInterfaceEntity(Interface):
                 except TypeError:
                     break
         elif action == 1:
-            pass  # Temporary
+            test_interface = TestCharacterInterface()
+            while True:
+                try:
+                    test_interface.__repr__()
+                except TypeError:
+                    break
         elif action == 2:
-            pass  # Temporary
+            test_interface = TestInterfaceEnemy()
+            while True:
+                try:
+                    test_interface.__repr__()
+                except TypeError:
+                    break
         elif action == 3:
-            pass  # Temporary
+            test_interface = TestWeaponInterface()
+            while True:
+                try:
+                    test_interface.__repr__()
+                except TypeError:
+                    break

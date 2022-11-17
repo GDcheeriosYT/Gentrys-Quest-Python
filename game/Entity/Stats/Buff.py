@@ -41,13 +41,21 @@ class Buff:
     experience = None
     is_percent = None
 
-    def __init__(self, attribute_type=None, experience=Experience(), is_percent=random.choice([True, False])):
+    def __init__(self, attribute_type=None, experience=None, is_percent=False):
         if attribute_type is None:
             self.attribute_type = random.choice(list(StatTypes))
         else:
             self.attribute_type = attribute_type
-        self.experience = experience
-        self.is_percent = is_percent
+
+        if experience is None:
+            self.experience = Experience()
+        else:
+            self.experience = experience
+
+        self.is_percent = random.choice([True, False])
+        if attribute_type == StatTypes.CritRate:
+            self.is_percent = False
+
         stats = []
         for stat in list(StatTypes):
             stats.append(stat.name)
@@ -56,22 +64,28 @@ class Buff:
             NumberSetting("level", self.experience.level, 1),
             ToggleSetting("is percent type", self.is_percent)
         ]
+        self.value = 0
+
+    def handle_value(self, star_rating):
+        calculation = ((self.experience.level * 1.75) + (star_rating * 1.25))
+        non_crit_calculation = (round(calculation / 2, 2) if self.is_percent else int(calculation))
+        crit_calculation = round(calculation / 3, 2)
+        self.value = non_crit_calculation if self.attribute_type != StatTypes.CritRate else crit_calculation
 
     def __repr__(self):
-        return f"{self.attribute_type.name} 0{'%' if self.is_percent else ''}[{self.experience.level}]"
+        return f"{self.attribute_type.name} {self.value}{'%' if self.is_percent else ''}"
 
     def test(self):
         Window.clear()
-        Text(self.__repr__()).display()
-        self.settings = SettingManager(self.settings).config_settings(True)
+        self.settings = SettingManager(self.settings).config_settings()
         counter = 0
         for stat_type in list(StatTypes):
             if str(stat_type) == f"StatTypes.{self.settings[0].selected_value}":
-                self.attribute_type = StatTypes(counter)
+                self.attribute_type = StatTypes(counter + 1)
                 break
 
             counter += 1
 
         self.experience.level = self.settings[1].value
         self.is_percent = self.settings[2].toggled
-        return Text(self)
+        return self

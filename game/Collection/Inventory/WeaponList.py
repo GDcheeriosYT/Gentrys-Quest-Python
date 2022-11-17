@@ -2,6 +2,7 @@
 # entity packages
 from Entity.Weapon.Weapon import Weapon
 from Entity.Weapon.Verbs import Verbs
+from Entity.Stats.StarRating import StarRating
 
 # collection packages
 from ..Handlers.BuffArrayHandler import BuffArrayHandler
@@ -9,9 +10,14 @@ from ..Handlers.ExperienceObjectHandler import ExperienceObjectHandler
 
 # graphics packages
 from Graphics.Status import Status
+from Graphics.Text.Text import Text
+
+# IO packages
+from IO.Input import get_int
 
 # built-in packages
 import time
+
 
 class WeaponList:
     """
@@ -40,9 +46,23 @@ class WeaponList:
                 weapon["stats"]["attack"],
                 BuffArrayHandler(weapon["stats"]["buff"]).create_buff(),
                 Verbs(weapon["verbs"]["normal"], weapon["verbs"]["critical"]),
-                weapon["star rating"],
+                StarRating(weapon["star rating"]),
                 ExperienceObjectHandler(weapon["experience"]).create_experience()
             )
             self.weapons.append(new_weapon)
-            time.sleep(0.1)
+            # time.sleep(0.1)
         load_data_status.stop()
+
+    def list_weapons(self):
+        while True:
+            try:
+                x = 1
+                for weapon in self.weapons:
+                    Text(f"{x}. {weapon.name} {weapon.star_rating} {weapon.experience}").display()
+                    x += 1
+
+                Text(f"{x}. back").display()
+                num = get_int("select a weapon\n")
+                return self.weapons[num - 1]
+            except IndexError:
+                break

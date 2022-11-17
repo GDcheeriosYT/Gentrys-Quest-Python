@@ -8,6 +8,10 @@ from ..Handlers.ArtifactObjectHandler import ArtifactObjectHandler
 
 # graphics packages
 from Graphics.Status import Status
+from Graphics.Text.Text import Text
+
+# IO packages
+from IO.Input import get_int
 
 # built-in packages
 import time
@@ -30,6 +34,21 @@ class ArtifactList:
         self.artifacts = []
         for artifact in artifacts:
             self.artifacts.append(ArtifactObjectHandler(artifact).create_artifact())
-            time.sleep(0.1)
+            # time.sleep(0.1)
 
         load_data_status.stop()
+
+    def list_artifacts(self):
+        while True:
+            try:
+                x = 1
+                for artifact in self.artifacts:
+                    Text(f"{x}. {artifact.name} {artifact.star_rating} {artifact.experience}").display()
+                    x += 1
+
+                Text(f"{x}. back").display()
+                num = get_int("select an artifact\n")
+                return self.artifacts[num - 1]
+            except IndexError:
+                return ""
+

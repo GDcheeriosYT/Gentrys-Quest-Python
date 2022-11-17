@@ -20,6 +20,6 @@ def login(username, password, server_url):
         time.sleep(1)
     except:
         log_in_status.stop()
-        return None
+        return "nope"
 
     return response["metadata"]["Gentry's Quest data"]

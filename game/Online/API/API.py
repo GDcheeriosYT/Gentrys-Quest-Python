@@ -26,7 +26,7 @@ class API:
     def login(self, username, password):
         self.token.verify()
         login_result = login(username, password, self.url)
-        if login_result is None:
+        if login_result == "nope":
             WarningText("Couldn't Log In...").display()
             time.sleep(1)
             self.token.delete()

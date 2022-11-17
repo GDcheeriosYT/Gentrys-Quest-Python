@@ -4,6 +4,7 @@ from Entity.Character.Character import Character
 from Entity.Weapon.Weapon import Weapon
 from Entity.Weapon.Verbs import Verbs
 from Entity.Artifact.Artifact import Artifact
+from Entity.Stats.StarRating import StarRating
 
 # collection packages
 from ..Handlers.BuffArrayHandler import BuffArrayHandler
@@ -13,9 +14,14 @@ from ..Handlers.ArtifactObjectHandler import ArtifactObjectHandler
 
 # graphics packages
 from Graphics.Status import Status
+from Graphics.Text.Text import Text
+
+# IO packages
+from IO.Input import get_int
 
 # built-in packages
 import time
+
 
 class CharacterList:
     """
@@ -33,7 +39,7 @@ class CharacterList:
         load_data_status.start()
         self.characters = []
         for character in characters:
-            artifact_list = ItemList(5, Artifact)
+            artifact_list = ItemList(5, Artifact, True)
             experience = character["experience"]
             equips = character["equips"]
             for artifact in equips["artifacts"]:
@@ -48,15 +54,15 @@ class CharacterList:
                     weapon["stats"]["attack"],
                     BuffArrayHandler(weapon["stats"]["buff"]).create_buff(),
                     Verbs(weapon["verbs"]["normal"], weapon["verbs"]["critical"]),
-                    weapon["star rating"],
+                    StarRating(weapon["star rating"]),
                     ExperienceObjectHandler(weapon["experience"]).create_experience()
                 )
             except KeyError:
-                weapon = Weapon()
+                weapon = None
             new_character = Character(
                 character["name"],
                 character["description"],
-                character["star rating"],
+                StarRating(character["star rating"]),
                 ExperienceObjectHandler(experience).create_experience(),
                 weapon,
                 artifact_list,
@@ -67,9 +73,20 @@ class CharacterList:
                 stat_points["critDamage"]
             )
             self.characters.append(new_character)
-            time.sleep(0.1)
+            # time.sleep(0.1)
 
         load_data_status.stop()
 
-    def __repr__(self):
-        return self.characters
+    def list_characters(self):
+        while True:
+            try:
+                x = 1
+                for character in self.characters:
+                    Text(f"{x}. {character.name} {character.star_rating} {character.experience}").display()
+                    x += 1
+
+                Text(f"{x}. back").display()
+                num = get_int("select a character\n")
+                return self.characters[num - 1]
+            except IndexError:
+                break

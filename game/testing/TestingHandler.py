@@ -2,17 +2,16 @@
 # graphics packages
 from Graphics.Content.Text.QuestionText import QuestionText
 
-# entity packages
-from Entity.Character.Character import Character
-
 # interface packages
-from Interface.Interface import Interface
-from Interface.InterfaceContent import InterfaceContent
-
 from Interface.Interfaces.Testing.Entity.TestInterfaceEntity import TestInterfaceEntity
+from Interface.Interfaces.Testing.Location.LocationInterface import LocationInterface
+from Interface.Interfaces.Testing.Inventory.InventoryInterface import InventoryInterface
+from Interface.Interfaces.Testing.Game.TestGameInterface import TestGameInterface
 
 # IO packages
 from IO import Window
+from IO.Input import get_int
+
 
 class TestingHandler:
     """
@@ -26,12 +25,27 @@ class TestingHandler:
     def start():
         while True:
             entity_interface = TestInterfaceEntity()
-            Window.clear()
+            location_interface = LocationInterface()
+            inventory_interface = InventoryInterface()
+            game_interface = TestGameInterface()
             QuestionText("What area shall we test today? (Meow:))").display()
-            choices = int(input("1. Entity\n"
-                                "2. quit\n"))
-
+            choices = get_int("1. Entity\n"
+                              "2. Inventory\n"
+                              "3. Location\n"
+                              "4. Game\n"
+                              "5. quit\n")
             if choices == 1:
                 entity_interface.__repr__()
+
+            elif choices == 2:
+                inventory_interface.__repr__()
+
+            elif choices == 3:
+                location_interface.__repr__()
+
+            elif choices == 4:
+                game_interface.start()
+
             else:
                 break
+

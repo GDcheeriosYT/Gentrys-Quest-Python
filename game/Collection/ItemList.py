@@ -98,7 +98,9 @@ class ItemList:
 
     def set(self, index, item, supports_none=False):
         try:
-            if self.check_item_and_space(item, supports_none):
+            if supports_none and item is None:
+                self.content[index] = item
+            elif not supports_none and item is not None:
                 self.content[index] = item
             else:
                 WarningText(

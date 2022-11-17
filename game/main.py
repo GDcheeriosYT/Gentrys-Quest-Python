@@ -4,6 +4,9 @@
 from rich.console import Console
 
 # game packages
+from GameData import GameData
+from Game import Game
+
 # online game packages
 from Online.Server import Server
 from Online.Account import AccountInfo
@@ -12,30 +15,12 @@ from Online.User.User import User
 # graphic game packages
 from Graphics.Content.Text.WarningText import WarningText
 from Graphics.Content.Text.InfoText import InfoText
-from Graphics.Text.Text import Text
-from Graphics.Text.Text import Style
-
-# Interface packages
-from Interface.Interface import Interface
-from Interface.InterfaceContent import InterfaceContent
-from Interface.Interfaces.Settings import SettingsInterface
 
 # testing packages
 from testing.TestingHandler import TestingHandler
 
 # IO game packages
 from IO import Window
-from IO.Input import get_int, get_string
-
-# game data packages
-from GameData import GameData
-
-# editor packages
-from Editor.EditorInterface import EditorInterface
-from Editor.TextAnimationEditor import TextAnimationEditor
-
-# content packages
-from Content.Locations.Iowa.Iowa import Iowa
 
 # built-in packages
 import sys
@@ -80,57 +65,7 @@ else:
         InfoText("Program will now exit...")
         time.sleep(1)
         exit(1)
-
-    # main code
-    in_game = True
-    equipped_character = None
-    while in_game:
-        try:
-            choices = get_int("Main Menu\n"
-                              "1. Play\n"
-                              "2. Editor\n"
-                              "3. Settings\n"
-                              "4. Changelog\n"
-                              "5. Quit")
-            if choices == 1:
-                choices1 = get_int("1. Singleplayer\n"
-                                   "2. Multiplayer\n"
-                                   "3. Back")
-                if choices1 == 1:
-                    choices2 = get_int("1. Travel\n"
-                                       "2. Gacha\n"
-                                       "3. Inventory")
-
-                    if choices2 == 1:
-                        iowa = Iowa()
-                        choices3 = get_int("1. Iowa\n"
-                                           "2. back")
-
-                        if choices3 == 1:
-                            iowa.list_areas()
-                            iowa.select_area(equipped_character, game_data.inventory)
-
-                    elif choices2 == 2:
-                        InfoText("Coming Soon...").display(enter_prompt=True)
-                    elif choices2 == 3:
-                        inventory_results = game_data.inventory.manage_input(equipped_character)
-                        if inventory_results is not None:
-                            equipped_character = inventory_results
-
-                elif choices1 == 2:
-                    InfoText("Coming Soon...").display(enter_prompt=True)
-
-            elif choices == 2:
-                choices1 = get_int("1. Text animation editor")
-                if choices1 == 1:
-                    EditorInterface(TextAnimationEditor).edit()
-
-            elif choices == 3:
-                Window.clear()
-                game_data.settings = SettingsInterface(game_data).visit()
-            else:
-                in_game = False
-        except ValueError:
-            WarningText("Number please...").display()
+    game = Game(game_data)
+    game.start()
 
     server.API.token.delete()

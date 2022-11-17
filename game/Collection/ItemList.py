@@ -102,6 +102,8 @@ class ItemList:
                 self.content[index] = item
             elif not supports_none and item is not None:
                 self.content[index] = item
+            elif supports_none and item is not None:
+                self.content[index] = item
             else:
                 WarningText(
                     f"The {type(item)} {item} isn't accepted in this list. \nEither it's full or it doesn't accept {type(item)}").display()

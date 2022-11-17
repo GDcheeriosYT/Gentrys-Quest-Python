@@ -26,7 +26,7 @@ class Intro(Story):
         angry_pedestrian = Enemy(
             "Angry Pedestrian",
             0,
-            10,
+            25,
             0,
             Weapon(
                 "Knife",
@@ -57,6 +57,14 @@ class Intro(Story):
                 "\"You leave me no choice...\" says the angry pedestrian.",
                 "{player} prepares for battle",
                 intro_fight,
-                "{player} wakes up."
+                "{player} wakes up.",
+                "{player} looks around. They notice they're in someone's living room.",
+                "Someone walks into the living room.",
+                "\"You're awake!\" he says.",
+                "\"I'm glad I could save you. Luckily Chug-Jugs are really useful.\"",
+                "\"Yes, thank you so much.\" says {player}"
+                "\"What's your name?\"",
+                "\"My name is Mr.Gentry.\" he replies.",
+                "\"You must help me! My evil twin brother Evil Gentry\""
             ]
         )

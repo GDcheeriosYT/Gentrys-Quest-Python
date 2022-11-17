@@ -21,6 +21,13 @@ from IO import Window
 # random packages
 from Random.Functions import get_random_name
 
+# content packages
+from Content.ArtifactContentManager import ArtifactContentManager
+artifacts = []
+for family in ArtifactContentManager().load_content():
+    for artifact in family.artifacts:
+        artifacts.append(artifact)
+
 
 class InventoryTestInterface:
     def __init__(self):
@@ -36,7 +43,8 @@ class InventoryTestInterface:
 
     def add_artifact(self):
         star_rating = random.randint(1, 5)
-        self.inventory.artifact_list.artifacts.append(Artifact(get_random_name(False), StarRating(star_rating), experience=Experience(limit=star_rating * 4)))
+        artifact = random.choice(artifacts)
+        self.inventory.artifact_list.artifacts.append(artifact(StarRating(random.randint(1, 5))))
 
     def add_weapon(self):
         self.inventory.weapon_list.weapons.append((Weapon("Test Weapon", "just a test weapon.", experience=Experience())))
@@ -69,4 +77,4 @@ class InventoryTestInterface:
                 self.add_weapon()
 
             else:
-                raise TypeError
+                break

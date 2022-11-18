@@ -64,7 +64,7 @@ class Weapon(Entity):
 
     def __init__(self, name="fists", description="punches things", weapon_type=None, attack=3,
                  buff=Buff(), verbs=Verbs("punched", "uppercut"),
-                 star_rating=StarRating(), experience=Experience()):
+                 star_rating=StarRating(), experience=None):
         super().__init__(name, description, star_rating, experience)
         self.weapon_type = weapon_type
         self.base_attack = attack
@@ -82,6 +82,10 @@ class Weapon(Entity):
             NumberSetting("level", self.experience.level, 1)
         ]
         self.update_stats()
+
+    def gacha_info_view(self):
+        return f"{self.name} {self.star_rating}\n{self.description}\n\t{self.base_attack} base attack"
+
 
     def update_stats(self):
         self.attack = int(self.base_attack + (self.check_minimum(self.experience.level, 1.2, True) + self.check_minimum(self.star_rating.value, self.experience.level)))

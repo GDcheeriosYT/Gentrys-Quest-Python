@@ -33,11 +33,14 @@ class Entity:
     star_rating = None
     experience = None
 
-    def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience()):
+    def __init__(self, name, description="description", star_rating=StarRating(1), experience=None):
         self.name = name
         self.description = description
         self.star_rating = star_rating
-        self.experience = experience
+        if experience is None:
+            self.experience = Experience()
+        else:
+            self.experience = experience
 
     def level_up(self, amount):
         def level():
@@ -81,6 +84,12 @@ class Entity:
 
     def list_view(self):
         return f"{self.name} {self.star_rating} {self.experience.display_level()}"
+
+    def gacha_info_view(self):
+        return f"{self.name} {self.star_rating}"
+
+    def name_and_star_rating(self):
+        return f"{self.name} {self.star_rating}"
 
     @staticmethod
     def check_minimum(variable, multiplier=1, subtract_one_true=False):

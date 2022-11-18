@@ -151,6 +151,23 @@ class Character(Entity):
 
         return options
 
+    def gacha_info_view(self):
+        def perk_point_string_gen(perk, perk_string):
+            if perk > 0:
+                return f"\t+{perk} {perk_string}\n"
+            else:
+                return ""
+
+        perks = "\n"
+
+        perks += perk_point_string_gen(self.default_health_points, "Health")
+        perks += perk_point_string_gen(self.default_attack_points, "Attack")
+        perks += perk_point_string_gen(self.default_defense_points, "Defense")
+        perks += perk_point_string_gen(self.default_crit_rate_points, "CritRate")
+        perks += perk_point_string_gen(self.default_crit_damage_points, "CritDamage")
+
+        return f"{self.name} {self.star_rating}\n{self.description} {perks}"
+
     def attack_enemy(self, enemy, is_skill=False):
         damage = self.attack + self.weapon.attack
         is_crit = determine_crit(self.critRate)

@@ -85,6 +85,12 @@ class Entity:
     def list_view(self):
         return f"{self.name} {self.star_rating} {self.experience.display_level()}"
 
+    def gacha_info_view(self):
+        return f"{self.name} {self.star_rating}"
+
+    def name_and_star_rating(self):
+        return f"{self.name} {self.star_rating}"
+
     @staticmethod
     def check_minimum(variable, multiplier=1, subtract_one_true=False):
         if variable < 1:

@@ -83,6 +83,10 @@ class Weapon(Entity):
         ]
         self.update_stats()
 
+    def gacha_info_view(self):
+        return f"{self.name} {self.star_rating}\n{self.description}\n\t{self.base_attack} base attack"
+
+
     def update_stats(self):
         self.attack = int(self.base_attack + (self.check_minimum(self.experience.level, 1.2, True) + self.check_minimum(self.star_rating.value, self.experience.level)))
         self.buff.experience.level = self.experience.level

@@ -7,6 +7,7 @@ from Location.Location import Location
 
 # content packages
 from Content.Locations.Iowa.Iowa import Iowa
+from Content.Gachas.ValleyHighSchool import ValleyHighSchool
 
 # IO packages
 from IO.Input import get_int
@@ -18,6 +19,7 @@ from Interface.Interfaces.Settings import SettingsInterface
 # graphics packages
 from Graphics.Content.Text.InfoText import InfoText
 from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Text.Text import Text
 
 
 class Game:
@@ -54,7 +56,13 @@ class Game:
                                 iowa.select_area(self.equipped_character, self.game_data.inventory)
 
                         elif choices2 == 2:
-                            InfoText("Coming Soon...").display(enter_prompt=True)
+                            valley_high_school = ValleyHighSchool()
+                            Text(f"1. {valley_high_school.name.raw_output()}").display()
+                            choices3 = get_int("2. back")
+
+                            if choices3 == 1:
+                                valley_high_school.manage_input(self.game_data.inventory)
+
                         elif choices2 == 3:
                             inventory_results = self.game_data.inventory.manage_input(self.equipped_character)
                             if inventory_results is not None:

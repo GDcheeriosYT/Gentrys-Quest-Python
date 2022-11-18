@@ -12,9 +12,9 @@ class CypireanScythe(Weapon):
         super().__init__(
             "Cypirean Scythe",
             "Long black shaft with 死 imprinted on the blade.",
-            "Mace",
+            "Scythe",
             38,
-            Buff(StatTypes.Attack),
-            Verbs("busted", "busted the nuts of"),
-            StarRating(4)
+            Buff(),
+            Verbs("swung at", "did a sweeping 360 BayBlade spin at"),
+            StarRating(5)
         )

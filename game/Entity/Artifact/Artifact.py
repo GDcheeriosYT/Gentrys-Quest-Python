@@ -69,10 +69,6 @@ class Artifact(Entity):
         self.attributes = attributes
         for attribute in self.attributes:
             attribute.handle_value(self.star_rating.value)
-        if experience is None:
-            self.experience = Experience()
-        else:
-            self.experience = experience
         self.experience.limit = self.star_rating.value * 4
         self.settings = [
             StringSetting("name", self.name),

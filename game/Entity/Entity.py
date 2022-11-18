@@ -33,11 +33,14 @@ class Entity:
     star_rating = None
     experience = None
 
-    def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience()):
+    def __init__(self, name, description="description", star_rating=StarRating(1), experience=None):
         self.name = name
         self.description = description
         self.star_rating = star_rating
-        self.experience = experience
+        if experience is None:
+            self.experience = Experience()
+        else:
+            self.experience = experience
 
     def level_up(self, amount):
         def level():

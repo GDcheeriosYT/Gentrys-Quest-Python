@@ -99,7 +99,7 @@ class Character(Entity):
     additional_critDamage = None
     difficulty = None
 
-    def __init__(self, name, description="description", star_rating=StarRating(1), experience=Experience(), weapon=None,
+    def __init__(self, name, description="description", star_rating=StarRating(1), experience=None, weapon=None,
                  artifacts=ItemList(5, Artifact, True), default_health_points=0, default_attack_points=0,
                  default_defense_points=0, default_crit_rate_points=0,
                  default_crit_damage_points=0):

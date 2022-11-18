@@ -64,7 +64,7 @@ class Weapon(Entity):
 
     def __init__(self, name="fists", description="punches things", weapon_type=None, attack=3,
                  buff=Buff(), verbs=Verbs("punched", "uppercut"),
-                 star_rating=StarRating(), experience=Experience()):
+                 star_rating=StarRating(), experience=None):
         super().__init__(name, description, star_rating, experience)
         self.weapon_type = weapon_type
         self.base_attack = attack

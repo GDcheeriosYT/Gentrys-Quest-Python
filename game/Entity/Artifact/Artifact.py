@@ -59,7 +59,7 @@ class Artifact(Entity):
     experience = None
 
     def __init__(self, name, star_rating=StarRating(), family=None, main_attribute=None, attributes=[],
-                 experience=Experience()):
+                 experience=None):
         super().__init__(name=name, description="description", star_rating=star_rating, experience=experience)
         self.family = family
         if main_attribute is None:
@@ -69,6 +69,10 @@ class Artifact(Entity):
         self.attributes = attributes
         for attribute in self.attributes:
             attribute.handle_value(self.star_rating.value)
+        if experience is None:
+            self.experience = Experience()
+        else:
+            self.experience = experience
         self.experience.limit = self.star_rating.value * 4
         self.settings = [
             StringSetting("name", self.name),

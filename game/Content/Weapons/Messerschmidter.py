@@ -11,7 +11,7 @@ class Messerschmidter(Weapon):
     def __init__(self):
         super().__init__(
             "The Messerschmidter",
-            "A life sie version of Brayden Messerschmidt but as a sword.",
+            "A life size version of Brayden Messerschmidt but as a sword.",
             "Sword",
             40,
             Buff(StatTypes.Attack),

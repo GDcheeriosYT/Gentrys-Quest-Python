@@ -40,8 +40,28 @@ from Content.Characters.SeanMcbroom import SeanMcbroom
 from Content.Characters.SethSmith import SethSmith
 from Content.Characters.SpencerGeorge import SpencerGeorge
 from Content.Characters.WillJohnson import WillJohnson
+from Content.Characters.JaredQuitevis import JaredQuitevis
 
 # weapons
+from Content.Weapons.AlecsRock import AlecsRock
+from Content.Weapons.AnubisBlade import AnubisBlade
+from Content.Weapons.Bone import Bone
+from Content.Weapons.BraydensOsuPen import BraydensOsuPen
+from Content.Weapons.BrodysBroadsword import BrodysBroadsword
+from Content.Weapons.Chopsticks import ChopSticks
+from Content.Weapons.CoolWeapon import CoolWeapon
+from Content.Weapons.CypireanScythe import CypireanScythe
+from Content.Weapons.HomemadeStaffOfHoney import HomemadeStaffOfHoney
+from Content.Weapons.Ichimonji import Ichimonji
+from Content.Weapons.KnutsHammer import KnutsHamemr
+from Content.Weapons.Messerschmidter import Messerschmidter
+from Content.Weapons.Masonator import Masonator
+from Content.Weapons.MasonKiller import MasonKiller
+from Content.Weapons.NutBuster import NutBuster
+from Content.Weapons.QuandaleDingle import QuandaleDingle
+from Content.Weapons.SharpThrowingCards import SharpThrowingCards
+from Content.Weapons.ShitLauncherSupreem import ShitLauncherSupreem
+from Content.Weapons.SirFarQuad import SirFarQuad
 
 
 class ValleyHighSchool(Gacha):
@@ -80,8 +100,29 @@ class ValleyHighSchool(Gacha):
                 SeanMcbroom(),
                 SethSmith(),
                 SpencerGeorge(),
-                WillJohnson()
+                WillJohnson(),
+                JaredQuitevis()
             ],
-            [],
+            [
+                AlecsRock(),
+                AnubisBlade(),
+                Bone(),
+                BraydensOsuPen(),
+                BrodysBroadsword(),
+                ChopSticks(),
+                CoolWeapon(),
+                CypireanScythe(),
+                HomemadeStaffOfHoney(),
+                Ichimonji(),
+                KnutsHamemr(),
+                Messerschmidter(),
+                Masonator(),
+                MasonKiller(),
+                NutBuster(),
+                QuandaleDingle(),
+                SharpThrowingCards(),
+                ShitLauncherSupreem(),
+                SirFarQuad()
+            ],
             1000
         )

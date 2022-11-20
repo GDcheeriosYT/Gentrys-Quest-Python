@@ -100,7 +100,7 @@ class BattleArea(Area):
         return enemies
 
     def initialize_artifacts(self, difficulty):
-        points = self.get_difficulty(difficulty) * 100
+        points = self.get_difficulty(difficulty) * 50
         families = ArtifactContentManager().load_content()
         artifacts = []
         artifacts_to_choose_from = []

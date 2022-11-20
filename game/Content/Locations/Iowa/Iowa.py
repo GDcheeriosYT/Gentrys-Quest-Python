@@ -8,6 +8,7 @@ from .CartersHouse.CartersHouse import CartersHouse
 from .UnifinishedConstructionSite.UnfinishedConstructionSite import UnfinishedConstructionSite
 from .DownTown.DownTown import DownTown
 from .Target.Target import Target
+from .ValleyHighSchool.ValleyHighSchool import ValleyHighSchool
 
 
 class Iowa(Location):
@@ -19,6 +20,7 @@ class Iowa(Location):
                 CartersHouse(),
                 UnfinishedConstructionSite(),
                 DownTown(),
-                Target()
+                Target(),
+                ValleyHighSchool()
             ]
         )

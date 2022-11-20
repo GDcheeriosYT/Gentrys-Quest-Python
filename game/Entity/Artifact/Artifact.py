@@ -58,9 +58,11 @@ class Artifact(Entity):
     attributes = None
     experience = None
 
-    def __init__(self, name, star_rating=StarRating(), family=None, main_attribute=None, attributes=[],
+    def __init__(self, name, star_rating=StarRating(), family=None, main_attribute=None, attributes=None,
                  experience=None):
         super().__init__(name=name, description="description", star_rating=star_rating, experience=experience)
+        if attributes is None:
+            attributes = []
         self.family = family
         if main_attribute is None:
             main_attribute = Buff()

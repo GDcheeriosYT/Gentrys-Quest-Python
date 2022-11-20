@@ -19,7 +19,6 @@ class Iowa(Location):
                 CartersHouse(),
                 UnfinishedConstructionSite(),
                 DownTown(),
-                Target(),
-                ValleyHighSchool()
+                Target()
             ]
         )

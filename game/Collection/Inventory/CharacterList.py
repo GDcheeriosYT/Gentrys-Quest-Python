@@ -90,3 +90,10 @@ class CharacterList:
                 return self.characters[num - 1]
             except IndexError:
                 break
+
+    def give_character_json_list(self):
+        data = []
+        for character in self.characters:
+            data.append(character.jsonify())
+
+        return data

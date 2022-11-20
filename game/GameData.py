@@ -90,3 +90,10 @@ class GameData:
 
     def obtain(self):
         return self.inventory, self.startup_amount, self.settings
+
+    def jsonify(self):
+        return {
+            "startupamount": self.startup_amount,
+            "settings": {},
+            "inventory": self.inventory.jsonify()
+        }

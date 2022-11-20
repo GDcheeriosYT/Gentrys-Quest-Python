@@ -89,3 +89,10 @@ class Buff:
         self.experience.level = self.settings[1].value
         self.is_percent = self.settings[2].toggled
         return self
+
+    def jsonify(self):
+        return [
+            self.attribute_type.value,
+            1 if self.is_percent else 0,
+            self.experience.level
+        ]

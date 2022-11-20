@@ -66,3 +66,10 @@ class WeaponList:
                 return self.weapons[num - 1]
             except IndexError:
                 break
+
+    def give_weapon_json_list(self):
+        data = []
+        for weapon in self.weapons:
+            data.append(weapon.jsonify())
+
+        return data

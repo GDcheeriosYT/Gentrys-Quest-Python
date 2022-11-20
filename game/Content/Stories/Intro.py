@@ -13,7 +13,6 @@ from Entity.Enemy.Enemy import Enemy
 from Entity.Weapon.Weapon import Weapon
 from Entity.Weapon.Verbs import Verbs
 from Entity.Stats.Buff import Buff
-from Entity.
 
 # built-in packages
 import random
@@ -48,7 +47,7 @@ class Intro(Story):
             False,
             False
         )
-        artifact_thing =
+        artifact_thing = None
         super().__init__(
             [
                 "It's 10PM.",

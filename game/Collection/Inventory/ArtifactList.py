@@ -52,3 +52,9 @@ class ArtifactList:
             except IndexError:
                 return ""
 
+    def give_artifact_json_list(self):
+        data = []
+        for artifact in self.artifacts:
+            data.append(artifact.jsonify())
+
+        return data

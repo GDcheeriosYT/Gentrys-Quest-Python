@@ -92,6 +92,28 @@ class Weapon(Entity):
         self.buff.experience.level = self.experience.level
         self.buff.handle_value(self.star_rating.value)
 
+    def jsonify(self):
+        return{
+            "weapon type": self.weapon_type,
+            "stats": {
+                "attack": self.base_attack,
+                "buff": self.buff.jsonify()
+            },
+            "name": self.name,
+            "description": self.description,
+            "verbs": {
+                "normal": self.verbs.normal,
+                "critical": self.verbs.critical
+            },
+            "experience": {
+                "xp required": self.experience.get_xp_required(self.star_rating.value, False),
+                "level": self.experience.level,
+                "xp": self.experience.xp,
+                "previous xp required": 0
+            },
+            "star rating": self.star_rating.value
+        }
+
     def __repr__(self):
         return (
             f"""{self.name} {self.star_rating} {self.experience}

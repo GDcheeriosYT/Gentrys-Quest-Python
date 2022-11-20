@@ -91,8 +91,8 @@ class Buff:
         return self
 
     def jsonify(self):
-        return [
+        return {"buff": [
             self.attribute_type.value,
             1 if self.is_percent else 0,
             self.experience.level
-        ]
+        ]}

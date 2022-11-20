@@ -48,7 +48,7 @@ from Content.Weapons.AnubisBlade import AnubisBlade
 from Content.Weapons.Bone import Bone
 from Content.Weapons.BraydensOsuPen import BraydensOsuPen
 from Content.Weapons.BrodysBroadsword import BrodysBroadsword
-from Content.Weapons.Chopsticks import ChopSticks
+from Content.Weapons.Chopsticks import Chopsticks
 from Content.Weapons.CoolWeapon import CoolWeapon
 from Content.Weapons.CypireanScythe import CypireanScythe
 from Content.Weapons.HomemadeStaffOfHoney import HomemadeStaffOfHoney
@@ -109,7 +109,7 @@ class ValleyHighSchool(Gacha):
                 Bone(),
                 BraydensOsuPen(),
                 BrodysBroadsword(),
-                ChopSticks(),
+                Chopsticks(),
                 CoolWeapon(),
                 CypireanScythe(),
                 HomemadeStaffOfHoney(),

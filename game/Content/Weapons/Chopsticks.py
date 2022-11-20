@@ -7,7 +7,7 @@ from Entity.Stats.Buff import Buff
 from Entity.Stats.StatTypes import StatTypes
 
 
-class ChopSticks(Weapon):
+class Chopsticks(Weapon):
     def __init__(self):
         super().__init__(
             "Chopsticks",

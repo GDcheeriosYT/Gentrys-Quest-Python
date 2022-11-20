@@ -6,6 +6,7 @@ from ..Stats.StatTypes import StatTypes
 from ..Stats.StarRating import StarRating
 from ..Stats.Experience import Experience
 from ..Artifact.Artifact import Artifact
+from ..Enemy.Enemy import Enemy
 
 # collection packages
 from Collection.ItemList import ItemList
@@ -309,6 +310,16 @@ class Character(Entity):
             "star rating": self.star_rating.value
         }
 
+    def create_enemy(self, weapon=Weapon()):
+        enemy = Enemy(
+            self.name,
+            self.default_health_points,
+            self.default_attack_points + self.default_crit_rate_points + self.default_crit_damage_points,
+            self.default_defense_points,
+            weapon,
+            self.description
+        )
+        return enemy
 
     def __repr__(self):
         return (

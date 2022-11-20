@@ -77,7 +77,7 @@ class Enemy(Entity):
     def attack_character(self, character):
         is_crit = determine_crit(20)
         damage = int(self.attack + ((self.attack * 0.25) if is_crit else 0) - random.randint(0, character.defense))
-        Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage}").display()
+        Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()
         if damage <= 0:
             Text(f"{character.name} has dodged").display()
         else:

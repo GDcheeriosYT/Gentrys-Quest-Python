@@ -140,3 +140,24 @@ apart of the {self.family} family
         for i in range(int(self.experience.level/4)):
             self.add_new_attribute()
         return self
+
+    def jsonify(self):
+        attributes = []
+        for attribute in self.attributes:
+            attributes.append(attribute.jsonify())
+
+        return {
+            "stats": {
+                "attributes": attributes,
+                "main attribute": self.main_attribute.jsonify()
+            },
+            "name": self.name,
+            "family": self.family,
+            "experience": {
+                "xp required": self.experience.get_xp_required(self.star_rating.value, True),
+                "level": self.experience.level,
+                "xp": self.experience.xp,
+                "previous xp required": 0
+            },
+            "star rating": self.star_rating.value
+        }

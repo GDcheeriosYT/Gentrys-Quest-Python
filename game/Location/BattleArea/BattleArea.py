@@ -57,7 +57,7 @@ class BattleArea(Area):
         if self.difficulty_scales:
             return difficulty + self.difficulty.value
         else:
-            return self.difficulty
+            return self.difficulty.value
 
     @staticmethod
     def apply_random_level(number):
@@ -87,7 +87,10 @@ class BattleArea(Area):
     def initialize_enemies(self, character):
         enemies = []
         difficulty = self.get_difficulty(character.difficulty)
-        for i in range((difficulty + random.randint(0, difficulty))):
+        difficulty = difficulty + random.randint(0, difficulty)
+        if difficulty == 0:
+            difficulty = 1
+        for i in range(difficulty):
             enemy = copy(random.choice(self.enemies.content))
             level = self.apply_random_level(character.experience.level % 20)
             enemy.experience.level = (20 * (self.get_difficulty(character.difficulty) - 1)) + level

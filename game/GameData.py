@@ -34,7 +34,7 @@ class GameData:
         game_settings = GameSettings().settings
         if json_data == None:
             data = {
-                "startupamount": 1,
+                "startupamount": 0,
                 "settings": {},
                 "inventory": {
                     "characters": [],
@@ -90,3 +90,10 @@ class GameData:
 
     def obtain(self):
         return self.inventory, self.startup_amount, self.settings
+
+    def jsonify(self):
+        return {
+            "startupamount": self.startup_amount,
+            "settings": {},
+            "inventory": self.inventory.jsonify()
+        }

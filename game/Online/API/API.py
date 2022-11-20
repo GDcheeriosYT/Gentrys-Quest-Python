@@ -1,9 +1,11 @@
 # online game packages
 from .Login import login
+from .UploadData import upload_data
 
 # graphics game packages
 from Graphics.Content.Text.WarningText import WarningText
 from Graphics.Content.Text.InfoText import InfoText
+
 # external packages
 import time
 
@@ -18,10 +20,12 @@ class API:
 
     token = None
     url = None
+    id = None
 
-    def __init__(self, token=None, url=None):
+    def __init__(self, token=None, url=None, id=None):
         self.token = token
         self.url = url
+        self.id = id
 
     def login(self, username, password):
         self.token.verify()
@@ -32,4 +36,8 @@ class API:
             self.token.delete()
             exit(0)
         else:
+            self.id = login_result["id"]
             return login_result
+
+    def upload_data(self, data):
+        upload_data(self.url, self.id, data, self.token.token)

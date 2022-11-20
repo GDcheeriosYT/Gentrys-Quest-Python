@@ -282,6 +282,34 @@ class Character(Entity):
                        "4. equip character\n"
                        "5. back"))
 
+    def jsonify(self):
+        artifacts = []
+        for artifact in self.artifacts.content:
+            if artifact is not None:
+                artifacts.append(artifact.jsonify())
+
+        return {
+            "stats": {
+                "defense": self.default_defense_points,
+                "attack": self.default_attack_points,
+                "critDamage": self.default_crit_damage_points,
+                "health": self.default_health_points,
+                "critRate": self.default_crit_rate_points
+            },
+            "name": self.name,
+            "description": self.description,
+            "equips": {
+                "weapon": self.weapon.jsonify(),
+                "artifacts": artifacts
+            },
+            "experience": {
+                "level": self.experience.level,
+                "xp": self.experience.xp
+            },
+            "star rating": self.star_rating.value
+        }
+
+
     def __repr__(self):
         return (
             f"""

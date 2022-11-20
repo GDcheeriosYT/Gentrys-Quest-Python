@@ -299,7 +299,7 @@ class Character(Entity):
             "name": self.name,
             "description": self.description,
             "equips": {
-                "weapon": self.weapon.jsonify(),
+                "weapon": self.weapon.jsonify() if self.weapon is not None else None,
                 "artifacts": artifacts
             },
             "experience": {

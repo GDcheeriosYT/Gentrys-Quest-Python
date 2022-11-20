@@ -11,7 +11,7 @@ class Zebra(Weapon):
     def __init__(self):
         super().__init__(
             "Zebra",
-            "Just a scanner phone."
+            "Just a scanner phone.",
             "Phone",
             0,
             Buff(),

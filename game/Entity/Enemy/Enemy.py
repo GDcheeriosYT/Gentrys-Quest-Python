@@ -85,10 +85,20 @@ class Enemy(Entity):
         enter_to_continue()
 
     def get_money(self):
-        return self.experience.level
+        money = 0
+        money += self.defense_points * 1.5
+        money += self.attack_points * 3
+        money += self.health_points * 2
+        money += self.experience.level
+        return int(money)
 
     def get_xp(self):
-        return self.experience.level * 10
+        xp = 0
+        xp += self.defense_points * 1.5
+        xp += self.attack_points * 3
+        xp += self.health_points * 2
+        xp += self.experience.level * 10
+        return int(xp)
 
     def test(self):
         Window.clear()

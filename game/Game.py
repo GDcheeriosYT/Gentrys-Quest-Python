@@ -9,6 +9,7 @@ from Location.Location import Location
 from Content.Locations.Iowa.Iowa import Iowa
 from Content.Stories.Intro import Intro
 from Content.Gachas.ValleyHighSchool import ValleyHighSchool
+from Content.Gachas.BaseGacha import BaseGacha
 
 # IO packages
 from IO.Input import get_int, get_string, enter_to_continue
@@ -54,6 +55,8 @@ class Game:
         self.game_data.inventory.character_list.characters.append(character)
         time.sleep(1)
         intro_scene.start(self.equipped_character, self.game_data.inventory)
+        character.weapon = self.game_data.inventory.weapon_list.weapons[0]
+        self.game_data.inventory.weapon_list.weapons.pop(0)
 
     def start(self):
         if self.game_data.startup_amount < 1:
@@ -88,11 +91,16 @@ class Game:
 
                         elif choices2 == 2:
                             valley_high_school = ValleyHighSchool()
-                            Text(f"1. {valley_high_school.name.raw_output()}").display()
-                            choices3 = get_int("2. back")
+                            base_gacha = BaseGacha()
+                            Text(f"1. {valley_high_school.name.raw_output()}\n"
+                                 f"2. {base_gacha.name.raw_output()}").display()
+                            choices3 = get_int("3. back")
 
                             if choices3 == 1:
                                 valley_high_school.manage_input(self.game_data.inventory)
+
+                            elif choices3 == 2:
+                                base_gacha.manage_input(self.game_data.inventory)
 
                         elif choices2 == 3:
                             inventory_results = self.game_data.inventory.manage_input(self.equipped_character)

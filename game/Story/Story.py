@@ -4,12 +4,16 @@ from IO.Input import enter_to_continue
 
 # graphics packages
 from Graphics.Text.Text import Text
+from Graphics.Text.Style import Style
 
 # location packages
 from Location.BattleArea.BattleArea import BattleArea
 
 # entity packages
 from Entity.Artifact.Artifact import Artifact
+
+# gacha packages
+from Gacha.GachaEvent import GachaEvent
 
 
 class Story:
@@ -26,6 +30,11 @@ class Story:
                 event.start(character, inventory)
 
             elif isinstance(event, Artifact):
-                inventory.artifact_list.append(event)
+                inventory.artifact_list.artifacts.append(event)
+                Text(f"You have recieved {event}\n"
+                     f"Go to {Text('manage artifacts', Style(text_style=['bold'])).raw_output()} to equip it").display()
+                enter_to_continue()
                 inventory.manage_character(character)
 
+            elif isinstance(event, GachaEvent):
+                event.pull(inventory)

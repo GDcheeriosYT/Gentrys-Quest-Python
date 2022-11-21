@@ -56,42 +56,43 @@ class Gacha:
 
         enter_to_continue()
 
+    @staticmethod
+    def generate_output(objects, inventory):
+        object_mapping = {}
+        for object in objects:
+            object_details = object.name_and_star_rating()
+            if object_details not in object_mapping.keys():
+                object_mapping[object_details] = 1
+            else:
+                object_mapping[object_details] += 1
+
+            if isinstance(object, Weapon):
+                in_inventory = False
+                for weapon in inventory.weapon_list.weapons:
+                    if weapon.name == object.name:
+                        in_inventory = True
+                        weapon.add_xp(weapon.star_rating.value * 100),
+
+                if not in_inventory:
+                    inventory.weapon_list.weapons.append(object)
+
+            if isinstance(object, Character):
+                in_inventory = False
+                for character in inventory.character_list.characters:
+                    if character.name == object.name:
+                        in_inventory = True
+                        character.add_xp(character.star_rating.value * 100)
+
+                if not in_inventory:
+                    inventory.character_list.characters.append(object)
+
+        print("You got:")
+        for object in object_mapping.keys():
+            Text(f"{object} {object_mapping[object]}").display()
+
+        enter_to_continue()
+
     def manage_input(self, inventory: Inventory):
-        def generate_output(objects):
-            object_mapping = {}
-            for object in objects:
-                object_details = object.name_and_star_rating()
-                if object_details not in object_mapping.keys():
-                    object_mapping[object_details] = 1
-                else:
-                    object_mapping[object_details] += 1
-
-                if isinstance(object, Weapon):
-                    in_inventory = False
-                    for weapon in inventory.weapon_list.weapons:
-                        if weapon.name == object.name:
-                            in_inventory = True
-                            weapon.add_xp(weapon.star_rating.value * 100),
-
-                    if not in_inventory:
-                        inventory.weapon_list.weapons.append(object)
-
-                if isinstance(object, Character):
-                    in_inventory = False
-                    for character in inventory.character_list.characters:
-                        if character.name == object.name:
-                            in_inventory = True
-                            character.add_xp(character.star_rating.value * 100)
-
-                    if not in_inventory:
-                        inventory.character_list.characters.append(object)
-
-            print("You got:")
-            for object in object_mapping.keys():
-                Text(f"{object} {object_mapping[object]}").display()
-
-            enter_to_continue()
-
         while True:
             choice = get_int("1. pull characters\n"
                              "2. pull weapons\n"
@@ -106,7 +107,7 @@ class Gacha:
                     for i in range(choice2):
                         objects_obtained.append(self.pull_character())
 
-                generate_output(objects_obtained)
+                self.generate_output(objects_obtained, inventory)
 
             if choice == 2:
                 objects_obtained = []
@@ -116,7 +117,7 @@ class Gacha:
                     for i in range(choice2):
                         objects_obtained.append(self.pull_weapon())
 
-                generate_output(objects_obtained)
+                self.generate_output(objects_obtained, inventory)
 
             elif choice == 3:
                 self.display_info()

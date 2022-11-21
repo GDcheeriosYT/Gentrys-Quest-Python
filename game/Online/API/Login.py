@@ -22,4 +22,4 @@ def login(username, password, server_url):
         log_in_status.stop()
         return "nope"
 
-    return response["metadata"]["Gentry's Quest data"]
+    return response

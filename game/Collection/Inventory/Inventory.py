@@ -162,6 +162,7 @@ class Inventory:
         while True:
             if character is None:
                 break
+            character.update_stats()
             choice = character.get_option()
             if choice == 1:
                 self.level_up_prompt(character)
@@ -236,6 +237,14 @@ class Inventory:
 
         except IndexError:
             WarningText("Not in the list")
+
+    def jsonify(self):
+        return {
+            "artifacts": self.artifact_list.give_artifact_json_list(),
+            "weapons": self.weapon_list.give_weapon_json_list(),
+            "characters": self.character_list.give_character_json_list(),
+            "money": self.money
+        }
 
     def __repr__(self):
         return (

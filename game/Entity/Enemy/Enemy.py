@@ -77,7 +77,7 @@ class Enemy(Entity):
     def attack_character(self, character):
         is_crit = determine_crit(20)
         damage = int(self.attack + ((self.attack * 0.25) if is_crit else 0) - random.randint(0, character.defense))
-        Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage}").display()
+        Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()
         if damage <= 0:
             Text(f"{character.name} has dodged").display()
         else:
@@ -85,10 +85,20 @@ class Enemy(Entity):
         enter_to_continue()
 
     def get_money(self):
-        return self.experience.level
+        money = 0
+        money += self.defense_points * 1.5
+        money += self.attack_points * 3
+        money += self.health_points * 2
+        money += self.experience.level
+        return int(money)
 
     def get_xp(self):
-        return self.experience.level * 10
+        xp = 0
+        xp += self.defense_points * 1.5
+        xp += self.attack_points * 3
+        xp += self.health_points * 2
+        xp += self.experience.level * 10
+        return int(xp)
 
     def test(self):
         Window.clear()

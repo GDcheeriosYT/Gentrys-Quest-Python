@@ -58,8 +58,8 @@ else:
     try:
         account_info = AccountInfo(args[1], args[2])  # make class to store account info
         user = User(account_info.username, 99999, None)  # user class initialization
-        game_data = GameData(
-            server.API.login(account_info.username, account_info.password))  # game data class initialization
+        user_data = server.API.login(account_info.username, account_info.password)  # game data class initialization
+        game_data = GameData(user_data["metadata"]["Gentry's Quest data"])
     except IndexError:
         WarningText("No argument for account info!\n").display()
         InfoText("Program will now exit...")
@@ -68,4 +68,5 @@ else:
     game = Game(game_data)
     game.start()
 
+    server.API.upload_data(game.game_data)
     server.API.token.delete()

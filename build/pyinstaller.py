@@ -1,8 +1,11 @@
-import PyInstaller.__main__
+from PyInstaller import __main__
 
-PyInstaller.__main__.run([
-    './game/main.py',
+__main__.run([
+    '../game/main.py',
     '--onefile',
     '-n Gentrys Quest',
     '-c',
+    '--clean',
+    '-p ../game',
+    '--fullscreen'
 ])

@@ -13,6 +13,15 @@ from Entity.Enemy.Enemy import Enemy
 from Entity.Weapon.Weapon import Weapon
 from Entity.Weapon.Verbs import Verbs
 from Entity.Stats.Buff import Buff
+from Entity.Artifact.Artifact import Artifact
+from Entity.Stats.StarRating import StarRating
+from Entity.Stats.StatTypes import StatTypes
+
+# content packages
+from Content.Gachas.BaseGacha import BaseGacha
+
+# gacha packages
+from Gacha.GachaEvent import GachaEvent
 
 # built-in packages
 import random
@@ -47,7 +56,17 @@ class Intro(Story):
             False,
             False
         )
-        artifact_thing = None
+        artifact_thing = Artifact(
+            "Keyboard",
+            StarRating(1),
+            "Gentry",
+            Buff(StatTypes.Health, is_percent=False)
+        )
+        gacha_event = GachaEvent(
+            BaseGacha(),
+            True,
+            1
+        )
         super().__init__(
             [
                 "It's 10PM.",
@@ -68,7 +87,9 @@ class Intro(Story):
                 "\"My name is Mr.Gentry.\" he replies.",
                 "\"You must help me! My evil twin brother Evil Gentry has overtaken my classroom!\"",
                 "\"I'll supply you with equipment.\"",
-                "\"Take This, It's an artifact.\"",
-
+                artifact_thing,
+                gacha_event,
+                "\"I wish you luck {player}!\"",
+                "welcome to Gentry's Quest!"
             ]
         )

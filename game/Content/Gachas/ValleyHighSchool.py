@@ -43,6 +43,7 @@ from Content.Characters.WillJohnson import WillJohnson
 from Content.Characters.JaredQuitevis import JaredQuitevis
 from Content.Characters.LukeEllens import LukeEllens
 from Content.Characters.LinLaoShi import LinLaoShi
+from Content.Characters.CarterBallard import CarterBallard
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -106,6 +107,8 @@ class ValleyHighSchool(Gacha):
                 JaredQuitevis(),
                 LukeEllens(),
                 LinLaoShi()
+                LukeEllens(),
+                CarterBallard()
             ],
             [
                 AlecsRock(),

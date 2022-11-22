@@ -42,6 +42,7 @@ from Content.Characters.SpencerGeorge import SpencerGeorge
 from Content.Characters.WillJohnson import WillJohnson
 from Content.Characters.JaredQuitevis import JaredQuitevis
 from Content.Characters.LukeEllens import LukeEllens
+from Content.Characters.LinLaoShi import LinLaoShi
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -103,7 +104,8 @@ class ValleyHighSchool(Gacha):
                 SpencerGeorge(),
                 WillJohnson(),
                 JaredQuitevis(),
-                LukeEllens()
+                LukeEllens(),
+                LinLaoShi()
             ],
             [
                 AlecsRock(),

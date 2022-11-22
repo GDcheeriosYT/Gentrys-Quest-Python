@@ -51,6 +51,7 @@ from Content.Characters.SeanMcbroom import SeanMcbroom
 from Content.Characters.SethSmith import SethSmith
 from Content.Characters.SpencerGeorge import SpencerGeorge
 from Content.Characters.WillJohnson import WillJohnson
+from Content.Characters.LukeEllens import LukeEllens
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -139,6 +140,7 @@ class ValleyHighSchool(BattleArea):
         enemies.add(SethSmith().create_enemy())
         enemies.add(SpencerGeorge().create_enemy(SharpThrowingCards()))
         enemies.add(WillJohnson().create_enemy())
+        enemies.add(LukeEllens().create_enemy())
         super().__init__(
             "Valley High School",
             0,

@@ -41,6 +41,7 @@ from Content.Characters.SethSmith import SethSmith
 from Content.Characters.SpencerGeorge import SpencerGeorge
 from Content.Characters.WillJohnson import WillJohnson
 from Content.Characters.JaredQuitevis import JaredQuitevis
+from Content.Characters.LukeEllens import LukeEllens
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -101,7 +102,8 @@ class ValleyHighSchool(Gacha):
                 SethSmith(),
                 SpencerGeorge(),
                 WillJohnson(),
-                JaredQuitevis()
+                JaredQuitevis(),
+                LukeEllens()
             ],
             [
                 AlecsRock(),

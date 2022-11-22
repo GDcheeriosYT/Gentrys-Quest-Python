@@ -10,6 +10,7 @@ from Content.Locations.Iowa.Iowa import Iowa
 from Content.Stories.Intro import Intro
 from Content.Gachas.ValleyHighSchool import ValleyHighSchool
 from Content.Gachas.BaseGacha import BaseGacha
+from Content.CharacterContentManager import CharacterContentManager
 
 # IO packages
 from IO.Input import get_int, get_string, enter_to_continue
@@ -37,30 +38,50 @@ class Game:
         self.equipped_character = None
         self.locations = ItemList(content_type=Location)
 
-    def start_intro(self):
+    def start_intro(self, character_name):
         intro_scene = Intro()
         Window.clear()
-        name = get_string("What is this protagonists name?\n")
-        character = Character(
-            name,
-            "The Guy",
-            weapon=Weapon(),
-            default_attack_points=1,
-            default_health_points=1,
-            default_defense_points=1,
-            default_crit_damage_points=1,
-            default_crit_rate_points=1
-        )
-        self.equipped_character = character
+        characters = CharacterContentManager.get_content()
+        self.equipped_character = None
+        if character_name is not None:
+            for character in characters:
+                try:
+                    character = character()
+                    if character.name == character_name:
+                        Text("Thanks for contributing to Gentry's Quest!\nAs a gift take this:").display()
+                        Text(character.list_view()).display()
+                        self.equipped_character = character
+                        enter_to_continue()
+                        break
+                except TypeError:
+                    pass
+
+            if self.equipped_character is None:
+                WarningText("We couldn't find this character...").display()
+
+        else:
+            name = get_string("What is this protagonists name?\n")
+            character = Character(
+                name,
+                "The Guy",
+                default_attack_points=1,
+                default_health_points=1,
+                default_defense_points=1,
+                default_crit_damage_points=1,
+                default_crit_rate_points=1
+            )
+            self.equipped_character = character
+
+        self.equipped_character.weapon = Weapon()
         self.game_data.inventory.character_list.characters.append(character)
         time.sleep(1)
         intro_scene.start(self.equipped_character, self.game_data.inventory)
         character.weapon = self.game_data.inventory.weapon_list.weapons[0]
         self.game_data.inventory.weapon_list.weapons.pop(0)
 
-    def start(self):
+    def start(self, character_arg):
         if self.game_data.startup_amount < 1:
-            self.start_intro()
+            self.start_intro(character_arg)
 
         self.game_data.startup_amount += 1
         in_game = True

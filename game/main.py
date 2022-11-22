@@ -26,16 +26,27 @@ from IO import Window
 import sys
 import time
 
-# important variables
-args = sys.argv
-debug_mode = False
-if len(args) > 1:
-    debug_mode = False
-else:
-    debug_mode = True
+# external packages
+import argparse
 
+# important variables
 console = Console()  # the console
 Window.clear()  # clear window
+
+parser = argparse.ArgumentParser(
+    prog="Gentry's Quest",
+    description="A game"
+)
+
+parser.add_argument("-u", "--username")
+parser.add_argument("-p", "--password")
+parser.add_argument("-s", "--server")
+parser.add_argument("-c", "--character")
+args = parser.parse_args()
+
+debug_mode = False
+if args.username is None:
+    debug_mode = True
 
 """
 Initializing server connection info.
@@ -49,24 +60,19 @@ if debug_mode:
     TestingHandler().start()
 else:
     console.rule("Gentry's Quest")
-    try:
-        server = Server(args[3])  # make class to store server info
-    except IndexError:
-        WarningText("No argument for server!\n").display()
-        InfoText("Defaulting to https://gdcheerios.com\n").display()
+    WarningText("No argument for server!\n").display()
+    InfoText("Defaulting to https://gdcheerios.com\n").display()
+    if args.server is None:
         server = Server("https://gdcheerios.com")  # default server url
-    try:
-        account_info = AccountInfo(args[1], args[2])  # make class to store account info
+    else:
+        server = Server(args.server)  # make class to store server info
+    if args.username is not None and args.password is not None:
+        account_info = AccountInfo(args.username, args.password)  # make class to store account info
         user = User(account_info.username, 99999, None)  # user class initialization
         user_data = server.API.login(account_info.username, account_info.password)  # game data class initialization
         game_data = GameData(user_data["metadata"]["Gentry's Quest data"])
-    except IndexError:
-        WarningText("No argument for account info!\n").display()
-        InfoText("Program will now exit...")
-        time.sleep(1)
-        exit(1)
-    game = Game(game_data)
-    game.start()
+        game = Game(game_data)
+        game.start(args.character)
 
     server.API.upload_data(game.game_data)
     server.API.token.delete()

@@ -106,7 +106,7 @@ class ValleyHighSchool(Gacha):
                 WillJohnson(),
                 JaredQuitevis(),
                 LukeEllens(),
-                LinLaoShi()
+                LinLaoShi(),
                 LukeEllens(),
                 CarterBallard()
             ],

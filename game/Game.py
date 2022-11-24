@@ -99,7 +99,8 @@ class Game:
                     if choices1 == 1:
                         choices2 = get_int("1. Travel\n"
                                            "2. Gacha\n"
-                                           "3. Inventory")
+                                           "3. Inventory\n"
+                                           "4. Back")
 
                         if choices2 == 1:
                             iowa = Iowa()

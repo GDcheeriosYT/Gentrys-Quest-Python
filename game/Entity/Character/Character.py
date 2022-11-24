@@ -326,7 +326,7 @@ class Character(Entity):
             f"""
 {self.name} {self.star_rating}
 level {self.experience.level}
-xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp {round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value) * 100), 2)}%
+xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp ({round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value) * 100), 2)})%
 health: {self.default_health} {f"+ {self.additional_health} ({self.health})" if self.additional_health > 0 else ""}
 attack: {self.default_attack} {f"+ {self.additional_attack} ({self.attack})" if self.additional_attack > 0 else ""}
 defense: {self.default_defense} {f"+ {self.additional_defense} ({self.defense})" if self.additional_defense > 0 else ""}

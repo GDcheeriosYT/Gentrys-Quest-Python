@@ -44,7 +44,8 @@ class BattleArea(Area):
     difficulty = None
 
     def __init__(self, name, difficulty=0, artifact_families=ItemList(content_type=str),
-                 enemies=ItemList(content_type=Enemy), is_runnable=True, difficulty_scales=True):
+                 enemies=ItemList(content_type=Enemy), is_runnable=True, difficulty_scales=True,
+                 difficulty_scales_after=0, difficulty_setback=0):
         super().__init__(name)
         self.name = Text(name, Style(text_color="red")).raw_output()
         self.difficulty = Difficulty(difficulty)
@@ -52,10 +53,23 @@ class BattleArea(Area):
         self.enemies = enemies
         self.is_runnable = is_runnable
         self.difficulty_scales = difficulty_scales
+        self.difficulty_scales_after = difficulty_scales_after
+        self.difficulty_setback = difficulty_setback
 
     def get_difficulty(self, difficulty):
+        difficulty -= 1
+
+        def check_difficulty(difficulty_to_check):
+            if difficulty_to_check >= 0:
+                return difficulty_to_check
+            else:
+                return 0
+
         if self.difficulty_scales:
-            return difficulty + self.difficulty.value
+            if difficulty > self.difficulty_scales_after:
+                return check_difficulty(difficulty + self.difficulty.value - self.difficulty_setback)
+            else:
+                return check_difficulty(self.difficulty.value - self.difficulty_setback)
         else:
             return self.difficulty.value
 
@@ -63,13 +77,10 @@ class BattleArea(Area):
     def apply_random_level(number):
         def get_min(number, difference):
             while number - difference <= 0:
-                print("poop1: ", number - difference, end="\r")
                 difference -= 1
-
             return difference
 
         def get_max(number, difference):
-            print("poop2: ", number - difference, end="\r")
             while number + difference >= 20:
                 difference -= 1
 
@@ -78,11 +89,7 @@ class BattleArea(Area):
         number_diff = 3
         min = get_min(number, number_diff)
         max = get_max(number, number_diff)
-        if min < max:
-            number_diff = min
-        else:
-            number_diff = max
-        return number + random.randint(-abs(number_diff), number_diff)
+        return number + random.randint(-abs(min), max)
 
     def initialize_enemies(self, character):
         enemies = []
@@ -93,7 +100,7 @@ class BattleArea(Area):
         for i in range(difficulty):
             enemy = copy(random.choice(self.enemies.content))
             level = self.apply_random_level(character.experience.level % 20)
-            enemy.experience.level = (20 * (self.get_difficulty(character.difficulty) - 1)) + level
+            enemy.experience.level = (20 * (self.get_difficulty(character.difficulty))) + level
             enemy.update_stats()
             enemies.append(enemy)
 

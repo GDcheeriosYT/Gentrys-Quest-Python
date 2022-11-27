@@ -153,6 +153,7 @@ class BattleArea(Area):
         raise EndException
 
     def start(self, character, inventory):
+        turn_counter = 0
         try:
             if character is None:
                 WarningText("You do not have a character equipped!").display()
@@ -187,6 +188,7 @@ class BattleArea(Area):
                         print(f"{options.index(option) + 1}. {option}")
 
                     if character.manage_battle_input(get_int(""), enemy, options):
+                        turn_counter += 1
                         if enemy.health <= 0:
                             Text(f"{enemy.name} is dead\n"
                                  f"you received ${enemy.get_money()} and {enemy.get_xp()}xp").display()

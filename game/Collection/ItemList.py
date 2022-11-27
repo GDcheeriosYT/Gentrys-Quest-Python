@@ -30,8 +30,11 @@ class ItemList:
     size = None
     content_type = None
 
-    def __init__(self, size=None, content_type=None, fill=False, output=True):
-        self.content = []
+    def __init__(self, size=None, content_type=None, fill=False, output=True, content=None):
+        if content is None:
+            self.content = []
+        else:
+            self.content = content
         self.size = size
         if fill and size is not None:
             for i in range(size):

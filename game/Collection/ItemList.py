@@ -156,6 +156,9 @@ class ItemList:
                 self.size = amount
                 self.delete_after(self.size)
 
+    def get_length(self):
+        return len(self.content)
+
     def __repr__(self):
         return str({
             "size": self.size,

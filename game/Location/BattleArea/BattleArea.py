@@ -15,6 +15,7 @@ from Collection.ItemList import ItemList
 from Entity.Enemy.Enemy import Enemy
 from Entity.Artifact.Artifact import Artifact
 from Entity.Stats.StarRating import StarRating
+from Entity.Stats.Effect.Effect import Effect
 
 # IO packages
 from IO.Input import get_int, enter_to_continue
@@ -45,7 +46,7 @@ class BattleArea(Area):
 
     def __init__(self, name, difficulty=0, artifact_families=ItemList(content_type=str),
                  enemies=ItemList(content_type=Enemy), is_runnable=True, difficulty_scales=True,
-                 difficulty_scales_after=0, difficulty_setback=0):
+                 difficulty_scales_after=0, difficulty_setback=0, effects=None):
         super().__init__(name)
         self.name = Text(name, Style(text_color="red")).raw_output()
         self.difficulty = Difficulty(difficulty)
@@ -55,6 +56,10 @@ class BattleArea(Area):
         self.difficulty_scales = difficulty_scales
         self.difficulty_scales_after = difficulty_scales_after
         self.difficulty_setback = difficulty_setback
+        if effects is None:
+            self.effects = ItemList(content_type=Effect)
+        else:
+            self.effects = effects
 
     def get_difficulty(self, difficulty):
         difficulty -= 1
@@ -94,15 +99,23 @@ class BattleArea(Area):
     def initialize_enemies(self, character):
         enemies = []
         difficulty = self.get_difficulty(character.difficulty)
-        difficulty = difficulty + random.randint(0, difficulty)
         if difficulty == 0:
             difficulty = 1
-        for i in range(difficulty):
+
+        difficulty_points = difficulty * 10
+        while difficulty_points > 0:
+            points = 0
             enemy = copy(random.choice(self.enemies.content))
+            points += (5 + (enemy.health_points * 2) + (enemy.attack_points * 2) + (enemy.defense_points * 2))
             level = self.apply_random_level(character.experience.level % 20)
             enemy.experience.level = (20 * (self.get_difficulty(character.difficulty))) + level
+            if random.randint(1, 1000 / difficulty) < difficulty * 10:
+                if self.effects.get_length() != 0:
+                    enemy.add_effect(random.choice(self.effects.content))
+                    points *= 2
             enemy.update_stats()
             enemies.append(enemy)
+            difficulty_points -= points
 
         return enemies
 
@@ -159,6 +172,7 @@ class BattleArea(Area):
                 WarningText("You do not have a character equipped!").display()
                 raise EndException
             character.update_stats()
+            character_effects = []
             Text(f"You enter {self.name}!").display()
             enemies = ItemList(content_type=Enemy)
             enemies.content = self.initialize_enemies(character)
@@ -174,6 +188,7 @@ class BattleArea(Area):
                 percentage = int((enemies_killed / len(enemies.content)) * 100)
 
             for enemy in enemies.content:
+                enemy_effects = []
                 calculate_percentage()
                 Text(f"{character.name} encountered a {enemy}").display()
                 enemy.show_stats()
@@ -188,7 +203,6 @@ class BattleArea(Area):
                         print(f"{options.index(option) + 1}. {option}")
 
                     if character.manage_battle_input(get_int(""), enemy, options):
-                        turn_counter += 1
                         if enemy.health <= 0:
                             Text(f"{enemy.name} is dead\n"
                                  f"you received ${enemy.get_money()} and {enemy.get_xp()}xp").display()
@@ -200,12 +214,18 @@ class BattleArea(Area):
                             break
                         else:
                             enemy.attack_character(character)
+                            for effect in enemy.effects.content:
+                                if not effect.variables.target_is_self:
+
+
                             if character.health <= 0:
                                 WarningText(f"{character.name} has died").display()
                                 enter_to_continue()
                                 self.results(percentage, money, xp)
                     else:
                         self.results(percentage, money, xp)
+                    turn_counter += 1
+
 
                 enemies_killed += 1
                 calculate_percentage()

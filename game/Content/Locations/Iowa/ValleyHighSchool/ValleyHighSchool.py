@@ -55,6 +55,7 @@ from Content.Characters.LukeEllens import LukeEllens
 from Content.Characters.LinLaoShi import LinLaoShi
 from Content.Characters.CarterBallard import CarterBallard
 from Content.Characters.PeteMarks import PeteMarks
+from Content.Characters.MJ import MJ
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -148,6 +149,7 @@ class ValleyHighSchool(BattleArea):
         enemies.add(CarterBallard().create_enemy())
         enemies.add(LinLaoShi().create_enemy())
         enemies.add(PeteMarks().create_enemy(RatPoison()))
+        enemies.add(MJ().create_enemy())
         super().__init__(
             "Valley High School",
             0,

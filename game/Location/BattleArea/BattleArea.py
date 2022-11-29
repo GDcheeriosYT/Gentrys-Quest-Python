@@ -12,10 +12,12 @@ from Graphics.Content.Text.WarningText import WarningText
 from Collection.ItemList import ItemList
 
 # entity packages
+from Entity.Entity import Entity
 from Entity.Enemy.Enemy import Enemy
 from Entity.Artifact.Artifact import Artifact
 from Entity.Stats.StarRating import StarRating
 from Entity.Stats.Effect.Effect import Effect
+from Entity.Stats.Effect.LiveEffect import LiveEffect
 
 # IO packages
 from IO.Input import get_int, enter_to_continue
@@ -109,7 +111,7 @@ class BattleArea(Area):
             points += (5 + (enemy.health_points * 2) + (enemy.attack_points * 2) + (enemy.defense_points * 2))
             level = self.apply_random_level(character.experience.level % 20)
             enemy.experience.level = (20 * (self.get_difficulty(character.difficulty))) + level
-            if random.randint(1, 1000 / difficulty) < difficulty * 10:
+            if random.randint(1, int(1000 / difficulty)) < difficulty * 10:
                 if self.effects.get_length() != 0:
                     enemy.add_effect(random.choice(self.effects.content))
                     points *= 2
@@ -203,6 +205,9 @@ class BattleArea(Area):
                         print(f"{options.index(option) + 1}. {option}")
 
                     if character.manage_battle_input(get_int(""), enemy, options):
+                        for effect in character.effects:
+                            if turn_counter % effect.variables.round_cooldown == 0:
+                                enemy_effects.append(turn_counter)
                         if enemy.health <= 0:
                             Text(f"{enemy.name} is dead\n"
                                  f"you received ${enemy.get_money()} and {enemy.get_xp()}xp").display()
@@ -213,19 +218,22 @@ class BattleArea(Area):
                             enter_to_continue()
                             break
                         else:
+                            for effect in enemy_effects:
+                                effect.affect(enemy)
                             enemy.attack_character(character)
-                            for effect in enemy.effects.content:
-                                if not effect.variables.target_is_self:
-
-
+                            for effect in enemy.effects:
+                                if turn_counter % effect.variables.round_cooldown == 0:
+                                    character_effects.append(LiveEffect(effect.details, effect.variables))
                             if character.health <= 0:
                                 WarningText(f"{character.name} has died").display()
                                 enter_to_continue()
                                 self.results(percentage, money, xp)
+
+                            for effect in character_effects:
+                                effect.affect(character)
                     else:
                         self.results(percentage, money, xp)
                     turn_counter += 1
-
 
                 enemies_killed += 1
                 calculate_percentage()

@@ -26,6 +26,9 @@ from IO import Window
 # graphics packages
 from Graphics.Text.Text import Text
 
+# content packages
+from Content.Effects.Burn import Burn
+
 
 class BattleAreaTestInterface:
     def __init__(self):
@@ -45,6 +48,7 @@ class BattleAreaTestInterface:
         for family in families:
             self.battle_area.artifact_families.add(family)
         self.battle_area.enemies.add(Enemy())
+        self.battle_area.effects = ItemList(content=Burn())
         self.settings = [
             StringSetting("name", self.battle_area.name),
             NumberSetting("difficulty", self.battle_area.difficulty.value, 0),

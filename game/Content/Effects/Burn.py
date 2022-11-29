@@ -26,9 +26,7 @@ class Burn(Effect):
             EffectDetails(
                 "Burn",
                 None,
-                f"Every {variables.effect_rate} rounds burns {variables.get_target_string()} for {variables.damage} damage for {variables.lasts} rounds"
+                f"Every {variables.round_cooldown} rounds burns {variables.get_target_string()} for {variables.stat_collection.get(0).amount} damage for {variables.lasts} rounds"
             ),
             variables
         )
-
-    def

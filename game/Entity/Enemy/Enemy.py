@@ -3,6 +3,8 @@
 from ..Entity import Entity
 from ..Weapon.Weapon import Weapon
 from ..Stats.Experience import Experience
+from ..Stats.Stat import Stat
+from ..Stats.StatTypes import StatTypes
 
 # config packages
 from Config.StringSetting import StringSetting
@@ -22,6 +24,7 @@ from Graphics.Text.Text import Text
 
 # built-in packages
 import random
+
 
 class Enemy(Entity):
     """
@@ -51,9 +54,9 @@ class Enemy(Entity):
     def __init__(self, name="enemy", health=0, attack=0, defense=0, weapon=Weapon(), description=None,
                  experience=Experience()):
         super().__init__(name, description, 0, experience)
-        self.health = None
-        self.attack = None
-        self.defense = None
+        self.health = Stat(StatTypes.Health)
+        self.attack = Stat(StatTypes.Attack)
+        self.defense = Stat(StatTypes.Defense)
         self.health_points = health
         self.attack_points = attack
         self.defense_points = defense
@@ -70,19 +73,26 @@ class Enemy(Entity):
         self.update_stats()
 
     def update_stats(self):
-        self.health = int(self.health_points * self.check_minimum(self.experience.level, 3) + (self.check_minimum(self.experience.level) * (self.check_minimum(self.experience.level / 20, 8))) + 20)
-        self.attack = int(self.attack_points * self.check_minimum(self.experience.level, 2) + (self.check_minimum(self.experience.level, 0.5) * (self.check_minimum(self.experience.level / 20, 3))) + 2)
-        self.defense = int(self.defense_points * self.check_minimum(self.experience.level, 1.5) + (self.check_minimum(self.experience.level, 0.3) * (self.check_minimum(self.experience.level / 20, 1.5))) + 1)
+        self.health.default_value = int(self.health_points * self.check_minimum(self.experience.level, 3) + (self.check_minimum(self.experience.level) * (self.check_minimum(self.experience.level / 20, 8))) + 20)
+        self.attack.default_value = int(self.attack_points * self.check_minimum(self.experience.level, 2) + (self.check_minimum(self.experience.level, 0.5) * (self.check_minimum(self.experience.level / 20, 3))) + 2)
+        self.defense.default_value = int(self.defense_points * self.check_minimum(self.experience.level, 1.5) + (self.check_minimum(self.experience.level, 0.3) * (self.check_minimum(self.experience.level / 20, 1.5))) + 1)
 
     def attack_character(self, character):
         is_crit = determine_crit(20)
-        damage = int(self.attack + ((self.attack * 0.25) if is_crit else 0) - random.randint(0, character.defense))
+        damage = int(self.attack.total_value + ((self.attack.total_value * 0.25) if is_crit else 0) - random.randint(0, character.defense.total_value))
         Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()
         if damage <= 0:
             Text(f"{character.name} has dodged").display()
         else:
-            character.health -= damage
+            character.health.total_value -= damage
         enter_to_continue()
+
+    def get_stats(self):
+        return [
+            self.health,
+            self.attack,
+            self.defense
+        ]
 
     def get_money(self):
         money = 0
@@ -116,9 +126,13 @@ class Enemy(Entity):
         return self
 
     def show_stats(self):
-        Text(f"health: {self.health}\n"
-             f"attack: {self.attack}\n"
-             f"defense {self.defense}\n"
+        effect_string = ""
+        for effect in self.effects:
+            effect_string += f"\n{effect}\n"
+        Text(f"{self.health}\n"
+             f"{self.attack}\n"
+             f"{self.defense}\n"
+             f"effects: {effect_string}"
              f"{self.description}\n").display()
 
     def __repr__(self):

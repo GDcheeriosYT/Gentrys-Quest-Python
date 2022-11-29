@@ -10,6 +10,5 @@ class StatCollection:
         self.value_type = value_type
         self.amount = amount
 
-
     def __repr__(self):
         return f"<{self.stat}> {self.amount} [{self.value_type}]"

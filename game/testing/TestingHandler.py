@@ -36,15 +36,19 @@ class TestingHandler:
                               "5. quit\n")
             if choices == 1:
                 entity_interface.__repr__()
+                Window.clear()
 
             elif choices == 2:
                 inventory_interface.__repr__()
+                Window.clear()
 
             elif choices == 3:
                 location_interface.__repr__()
+                Window.clear()
 
             elif choices == 4:
                 game_interface.start()
+                Window.clear()
 
             else:
                 break

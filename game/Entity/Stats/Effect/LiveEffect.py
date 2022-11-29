@@ -6,6 +6,9 @@ from Entity.Entity import Entity
 from Entity.Character.Character import Character
 from Entity.Enemy.Enemy import Enemy
 from Entity.Stats.StatTypes import StatTypes
+from Entity.Stats.StatCollection import StatCollection
+from Entity.Stats.StatValueTypes import StatValueTypes
+
 
 class LiveEffect:
     def __init__(self, details: EffectDetails, variables: EffectVariables):
@@ -13,18 +16,17 @@ class LiveEffect:
         self.details = details
         self.variables = variables
 
-
-    def effect(self, turn: int, entity: Entity):
-        if turn % self.variables.round_cooldown:
-            self.counter += self.variables.lasts
+    def affect(self, entity: Entity):
+        stat_list = []
+        if issubclass(entity, Enemy):
+            stat_list = entity.get_stats()
+        elif issubclass(entity, Character):
+            stat_list = entity.get_stats()
 
         if self.counter > 0:
             for stat_collection in self.variables.stat_collection.content:
-                try:
-                    if stat_collection.stat == "StatTypes.Health":
+                for stat in stat_list:
+                    if stat.type == stat_collection.stat:
+                        stat.total_value += stat_collection.value
 
-                    if stat_collection.stat == "StatTypes.Health":
-                    if stat_collection.stat == "StatTypes.Health":
-                    if stat_collection.stat == "StatTypes.Health":
-                    if stat_collection.stat == "StatTypes.Health":
-
+        return stat_list

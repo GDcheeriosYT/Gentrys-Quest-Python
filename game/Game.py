@@ -134,7 +134,10 @@ class Game:
 
                 elif choices == 2:
                     Window.clear()
-                    self.game_data.settings = SettingsInterface(self.game_data).visit()
+                    try:
+                        self.game_data.settings = SettingsInterface(self.game_data).visit()
+                    except TypeError:
+                        Window.clear()
 
                 else:
                     in_game = False

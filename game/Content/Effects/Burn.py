@@ -10,6 +10,9 @@ from Entity.Stats.StatValueTypes import StatValueTypes
 # collection packages
 from Collection.ItemList import ItemList
 
+# graphics packages
+from Graphics.TextAnimation.TextAnimation import TextAnimation
+
 
 class Burn(Effect):
     def __init__(self):
@@ -25,7 +28,7 @@ class Burn(Effect):
         super().__init__(
             EffectDetails(
                 "Burn",
-                None,
+                TextAnimation(),
                 f"Every {variables.round_cooldown} rounds burns {variables.get_target_string()} for {variables.stat_collection.get(0).amount} damage for {variables.lasts} rounds"
             ),
             variables

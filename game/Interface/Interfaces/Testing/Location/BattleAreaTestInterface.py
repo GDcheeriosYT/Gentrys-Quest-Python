@@ -48,7 +48,7 @@ class BattleAreaTestInterface:
         for family in families:
             self.battle_area.artifact_families.add(family)
         self.battle_area.enemies.add(Enemy())
-        self.battle_area.effects = ItemList(content=Burn())
+        self.battle_area.effects = ItemList(content=[Burn()])
         self.settings = [
             StringSetting("name", self.battle_area.name),
             NumberSetting("difficulty", self.battle_area.difficulty.value, 0),

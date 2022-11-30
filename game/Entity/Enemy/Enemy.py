@@ -126,14 +126,21 @@ class Enemy(Entity):
         return self
 
     def show_stats(self):
-        effect_string = ""
-        for effect in self.effects:
-            effect_string += f"\n{effect}\n"
         Text(f"{self.health}\n"
              f"{self.attack}\n"
              f"{self.defense}\n"
-             f"effects: {effect_string}"
              f"{self.description}\n").display()
+        if self.effects.get_length() != 0:
+            print("poop1")
+            for effect in self.effects.content:
+                print("poop2")
+                print(effect)
+                print(effect.details)
+                effect.details.show_details()
+                print("poop3")
+            print("poop4")
+        print("poop5")
+
 
     def __repr__(self):
         return f"{self.name} level {self.experience.level}"

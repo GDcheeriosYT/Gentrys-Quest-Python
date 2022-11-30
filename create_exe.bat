@@ -1,0 +1,1 @@
+python3.9 -m PyInstaller game/main.py -n "Gentrys Quest" --onefile -c --clean -p "game" --hidden-import "ArtifactContentManager"

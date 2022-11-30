@@ -46,6 +46,7 @@ from Content.Characters.LinLaoShi import LinLaoShi
 from Content.Characters.CarterBallard import CarterBallard
 from Content.Characters.PeteMarks import PeteMarks
 from Content.Characters.MJ import MJ
+from Content.Characters.ZachSmith import ZachSmith
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -113,7 +114,8 @@ class ValleyHighSchool(Gacha):
                 LukeEllens(),
                 CarterBallard(),
                 PeteMarks(),
-                MJ()
+                MJ(),
+                ZachSmith()
             ],
             [
                 AlecsRock(),

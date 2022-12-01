@@ -11,4 +11,4 @@ class EffectDetails:
         self.description = Text(description)
 
     def show_details(self):
-        Text(f"{self.name.content}\n{self.description}").display()
+        Text(f"{self.name.content}\n{self.description.content}").display()

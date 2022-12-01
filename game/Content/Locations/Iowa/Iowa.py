@@ -10,7 +10,7 @@ from .DownTown.DownTown import DownTown
 from .Target.Target import Target
 from .ClimbIowa.ClimbIowa import ClimbIowa
 from .ValleyHighSchool.ValleyHighSchool import ValleyHighSchool
-
+from .HyVee.HyVee import HyVee
 
 class Iowa(Location):
     def __init__(self):
@@ -23,6 +23,7 @@ class Iowa(Location):
                 DownTown(),
                 Target(),
                 ValleyHighSchool(),
-                ClimbIowa()
+                ClimbIowa(),
+                HyVee()
             ]
         )

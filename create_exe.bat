@@ -1,1 +1,1 @@
-python3.9 -m PyInstaller "game/main.py" --onefile -n "Gentrys Quest" -c --hidden-import game.Content.Artifacts --clean -p "game"
+python3.9 -m PyInstaller "game/main.py" --onefile -n "Gentrys Quest" -c --hidden-import Content.Artifacts --additional-hooks-dir "game/Content/Artifacts" --clean -p "game"

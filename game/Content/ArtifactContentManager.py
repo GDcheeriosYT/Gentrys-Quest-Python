@@ -21,12 +21,15 @@ class ArtifactContentManager:
     def __init__(self):
         families = []
 
+    print(os.getcwd())
+
     @staticmethod
     def load_content():
         families = []
         for family in os.listdir("Content/Artifacts"):
             family = family[:-3]  # removing the ".py" so it can be treated as an actual package for import
             if family[0] != "_":
+                print(f".{family}", f"Content.Artifacts")
                 family_class = importlib.import_module(f".{family}", f"Content.Artifacts")
                 new_family = None
                 for thing in inspect.getmembers(family_class):

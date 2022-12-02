@@ -5,7 +5,7 @@ __main__.run([
     '--onefile',
     '-n Gentrys Quest',
     '-c',
+    '--hidden-import Content.Artifacts',
     '--clean',
     '-p ../game',
-    '--fullscreen'
 ])

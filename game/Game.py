@@ -139,7 +139,7 @@ class Game:
                     except TypeError:
                         Window.clear()
 
-                else:
+                elif choices == 4:
                     in_game = False
             except ValueError:
                 WarningText("Number please...").display()

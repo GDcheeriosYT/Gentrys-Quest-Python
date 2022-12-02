@@ -59,6 +59,8 @@ class CharacterList:
                 )
             except KeyError:
                 weapon = None
+            except TypeError:
+                weapon = None
             new_character = Character(
                 character["name"],
                 character["description"],

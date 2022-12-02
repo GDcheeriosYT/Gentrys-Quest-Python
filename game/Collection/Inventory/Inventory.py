@@ -148,6 +148,8 @@ class Inventory:
 
     def manage_weapon(self, weapon):
         while True:
+            if weapon is None:
+                break
             Text(weapon).display()
             choice = get_int("1. level up\n"
                              "2. back\n")

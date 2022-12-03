@@ -104,6 +104,7 @@ class ValleyHighSchool(BattleArea):
         artifact_families.add("Nathan Tenney")
         artifact_families.add("Nolan Anderson")
         artifact_families.add("Spencer George")
+        artifact_families.add("Mr.Gentry")
         enemies = ItemList(content_type=Enemy)
         enemies.add(FeralLunchLady())
         enemies.add(FlyingPencil())

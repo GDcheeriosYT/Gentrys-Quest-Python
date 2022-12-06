@@ -166,23 +166,26 @@ class Character(Entity):
         return f"{self.name} {self.star_rating}\n{self.description} {perks}"
 
     def attack_enemy(self, enemy, is_skill=False):
-        damage = self.attack + self.weapon.attack
-        is_crit = determine_crit(self.critRate)
-        damage += self.critDamage if is_crit else 0
-        damage -= random.randint(0, enemy.defense)
+        damage = self.attack.total_value + self.weapon.attack
+        is_crit = determine_crit(self.critRate.total_value)
+        damage += self.critDamage.total_value if is_crit else 0
+        damage -= random.randint(int(enemy.defense.total_value / 2), enemy.defense.total_value)
         damage = int(damage)
         Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {enemy.name} for {damage} damage").display()
         if damage <= 0:
             WarningText(f"{enemy.name} has dodged").display()
         else:
-            enemy.health -= damage
+            enemy.health.total_value -= damage
         enter_to_continue()
 
     def manage_battle_input(self, choice, enemy, choices):
-        if choices[choice - 1] == "attack":
-            self.attack_enemy(enemy)
-            return True
-        else:
+        try:
+            if choices[choice - 1] == "attack":
+                self.attack_enemy(enemy)
+                return True
+            else:
+                return False
+        except IndexError:
             return False
 
     def update_stats(self):

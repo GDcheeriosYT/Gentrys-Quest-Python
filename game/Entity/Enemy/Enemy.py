@@ -73,14 +73,22 @@ class Enemy(Entity):
         self.update_stats()
 
     def update_stats(self):
-        self.health.default_value = int(self.health_points * self.check_minimum(self.experience.level, 3) + (self.check_minimum(self.experience.level) * (self.check_minimum(self.experience.level / 20, 8))) + 20)
-        self.attack.default_value = int(self.attack_points * self.check_minimum(self.experience.level, 2) + (self.check_minimum(self.experience.level, 0.5) * (self.check_minimum(self.experience.level / 20, 3))) + 2)
-        self.defense.default_value = int(self.defense_points * self.check_minimum(self.experience.level, 1.5) + (self.check_minimum(self.experience.level, 0.3) * (self.check_minimum(self.experience.level / 20, 1.5))) + 1)
+        self.health.set_default(int(self.health_points * self.check_minimum(self.experience.level, 3) + (
+                    self.check_minimum(self.experience.level) * (
+                self.check_minimum(self.experience.level / 20, 8))) + 20))
+        self.attack.set_default(int(self.attack_points * self.check_minimum(self.experience.level, 2) + (
+                    self.check_minimum(self.experience.level, 0.5) * (
+                self.check_minimum(self.experience.level / 20, 3))) + 2))
+        self.defense.set_default(int(self.defense_points * self.check_minimum(self.experience.level, 1.5) + (
+                    self.check_minimum(self.experience.level, 0.3) * (
+                self.check_minimum(self.experience.level / 20, 1.5))) + 1))
 
     def attack_character(self, character):
         is_crit = determine_crit(20)
-        damage = int(self.attack.total_value + ((self.attack.total_value * 0.25) if is_crit else 0) - random.randint(0, character.defense.total_value))
-        Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()
+        damage = int(self.attack.total_value + ((self.attack.total_value * 0.25) if is_crit else 0) - random.randint(int(character.defense.total_value / 2),
+                                                                                                                     character.defense.total_value))
+        Text(
+            f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()
         if damage <= 0:
             Text(f"{character.name} has dodged").display()
         else:
@@ -131,16 +139,9 @@ class Enemy(Entity):
              f"{self.defense}\n"
              f"{self.description}\n").display()
         if self.effects.get_length() != 0:
-            print("poop1")
+            print("effects:")
             for effect in self.effects.content:
-                print("poop2")
-                print(effect)
-                print(effect.details)
                 effect.details.show_details()
-                print("poop3")
-            print("poop4")
-        print("poop5")
-
 
     def __repr__(self):
         return f"{self.name} level {self.experience.level}"

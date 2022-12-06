@@ -107,14 +107,22 @@ class BattleArea(Area):
         difficulty_points = difficulty * 10
         while difficulty_points > 0:
             points = 0
-            enemy = copy(random.choice(self.enemies.content))
+            enemy = random.choice(self.enemies.content)
             points += (5 + (enemy.health_points * 2) + (enemy.attack_points * 2) + (enemy.defense_points * 2))
             level = self.apply_random_level(character.experience.level % 20)
             enemy.experience.level = (20 * (self.get_difficulty(character.difficulty))) + level
-            if random.randint(1, int(1000 / difficulty)) < difficulty * 10:
-                if self.effects.get_length() != 0:
-                    enemy.add_effect(random.choice(self.effects.content))
-                    points *= 2
+            if (random.randint(1, 80) < difficulty * 10) and (self.effects.get_length() != 0):
+                effect = random.choice(self.effects.content)
+                effect = effect()
+                if enemy.effects.get_length() == 0:
+                    enemy.effects.add(effect)
+                for effect1 in enemy.effects.content:
+                    if effect1.details.name.content == effect.details.name.content:
+                        enemy.effects.content[enemy.effects.content.index(effect1)].level_up()
+                    else:
+                        enemy.add_effect(effect)
+
+                points *= 2
             enemy.update_stats()
             enemies.append(enemy)
             difficulty_points -= points
@@ -195,8 +203,8 @@ class BattleArea(Area):
                 Text(f"{character.name} encountered a {enemy}").display()
                 enemy.show_stats()
                 while True:
-                    Text(f"{enemy.name} {enemy.health}\n"
-                         f"{character.name} {character.health}\n").display()
+                    Text(f"\n{enemy.name if turn_counter != 0 else ''} {enemy.health if turn_counter != 0 else ''}\n"
+                         f"{character.name} {character.health.total_value}\n").display()
                     options = character.get_battle_options()
                     if self.is_runnable:
                         options.append("run")
@@ -205,10 +213,10 @@ class BattleArea(Area):
                         print(f"{options.index(option) + 1}. {option}")
 
                     if character.manage_battle_input(get_int(""), enemy, options):
-                        for effect in character.effects:
+                        for effect in character.effects.content:
                             if turn_counter % effect.variables.round_cooldown == 0:
-                                enemy_effects.append(turn_counter)
-                        if enemy.health <= 0:
+                                enemy_effects.append(LiveEffect(effect.details, effect.variables))
+                        if enemy.health.total_value <= 0:
                             Text(f"{enemy.name} is dead\n"
                                  f"you received ${enemy.get_money()} and {enemy.get_xp()}xp").display()
                             xp += enemy.get_xp()
@@ -221,10 +229,10 @@ class BattleArea(Area):
                             for effect in enemy_effects:
                                 effect.affect(enemy)
                             enemy.attack_character(character)
-                            for effect in enemy.effects:
+                            for effect in enemy.effects.content:
                                 if turn_counter % effect.variables.round_cooldown == 0:
                                     character_effects.append(LiveEffect(effect.details, effect.variables))
-                            if character.health <= 0:
+                            if character.health.total_value <= 0:
                                 WarningText(f"{character.name} has died").display()
                                 enter_to_continue()
                                 self.results(percentage, money, xp)

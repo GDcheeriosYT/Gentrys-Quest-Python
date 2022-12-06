@@ -17,16 +17,18 @@ class LiveEffect:
         self.variables = variables
 
     def affect(self, entity: Entity):
-        stat_list = []
-        if issubclass(entity, Enemy):
-            stat_list = entity.get_stats()
-        elif issubclass(entity, Character):
-            stat_list = entity.get_stats()
+        try:
+            stat_list = []
+            if isinstance(entity, Enemy):
+                stat_list = entity.get_stats()
+            elif isinstance(entity, Character):
+                stat_list = entity.get_stats()
 
-        if self.counter > 0:
-            for stat_collection in self.variables.stat_collection.content:
-                for stat in stat_list:
-                    if stat.type == stat_collection.stat:
-                        stat.total_value += stat_collection.value
+            if self.counter > 0:
+                for stat_collection in self.variables.stat_collection.content:
+                    for stat in stat_list:
+                        if stat.type == stat_collection.stat:
+                            stat.total_value += stat_collection.value
 
-        return stat_list
+        except Exception as e:
+            print(e)

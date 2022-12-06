@@ -51,4 +51,4 @@ class Stat:
             self.total_value = self.default_value + self.additional_value
 
     def __repr__(self):
-        return f"{self.type.name}: {self.default_value} {f'+ {self.additional_value} ({self.total_value})' if self.additional_value > 0 else ''}"
+        return f"{self.type.name}: {self.default_value if self.additional_value > 0 else self.total_value} {f'+ {self.additional_value} ({self.total_value})' if self.additional_value > 0 else ''}"

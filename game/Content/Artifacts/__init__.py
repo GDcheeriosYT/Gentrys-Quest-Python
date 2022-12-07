@@ -1,3 +1,26 @@
 import os
 
-__all__ = ["BraydenMesserschmidt", "CarterBallard", "ConnorFogarty"]
+__all__ = ["AlecFerchen",
+           "BraydenMesserschmidt",
+           "BrodyKrysa",
+           "BryceAnderson",
+           "CalebJalan",
+           "CarterBallard",
+           "ConnorFogarty",
+           "DanMesserschmidt",
+           "DavidNapier",
+           "DownTown",
+           "GavinKnudsen",
+           "GMoney",
+           "GrantWiseman",
+           "Hyvee",
+           "KellyKrysa",
+           "LethalWeapon",
+           "LucasSmidt",
+           "ManClan",
+           "MasonJames",
+           "MaxShrum",
+           "NathanTenney",
+           "NolanAnderson",
+           "SpencerGeorge"
+]

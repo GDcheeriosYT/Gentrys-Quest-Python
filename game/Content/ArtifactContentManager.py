@@ -3,6 +3,9 @@
 from Entity.Artifact.Artifact import Artifact
 from Entity.Stats.StarRating import StarRating
 
+# content packages
+import Content.Artifacts
+
 # built-in packages
 import importlib
 import inspect
@@ -13,38 +16,31 @@ class Family:
     def __init__(self, name):
         self.name = name
         self.artifacts = []
+        self.buff = None
 
 
 class ArtifactContentManager:
-    families = None
-
     def __init__(self):
-        families = []
+        self.families = []
 
-    print(os.getcwd())
+    def load_content(self):
+        family_string = ""
+        for module in vars(Content.Artifacts):
+            family = None
+            for hopefully_a_class in inspect.getmembers(module):
+                #print(hopefully_a_class)
+                if inspect.isclass(hopefully_a_class[1]):
+                    if issubclass(hopefully_a_class[1], Artifact):
+                        if family is None:
+                            family = Family(hopefully_a_class[1]().family)
 
-    @staticmethod
-    def load_content():
-        families = []
-        for family in os.listdir("Content/Artifacts"):
-            family = family[:-3]  # removing the ".py" so it can be treated as an actual package for import
-            if family[0] != "_":
-                print(f".{family}", f"Content.Artifacts")
-                family_class = importlib.import_module(f".{family}", f"Content.Artifacts")
-                new_family = None
-                for thing in inspect.getmembers(family_class):
-                    thing = thing[1]
-                    if inspect.isclass(thing):
-                        if issubclass(thing, Artifact):
-                            try:
-                                thing_for_family = thing(StarRating(0))
-                                if thing_for_family.family is not None:
-                                    if new_family is None:
-                                        new_family = Family(thing_for_family.family)
-                                    new_family.artifacts.append(thing)
-                            except TypeError as e:
-                                print(f"uh oh...\n{e}")
-                if new_family is not None:
-                    families.append(new_family)
+                        new_artifact = hopefully_a_class[1]()
+                        family.artifacts.append(new_artifact)
 
-        return families
+            if family is not None:
+                self.families.append(family)
+
+        print(self.families)
+
+    def get_families(self):
+        return self.families

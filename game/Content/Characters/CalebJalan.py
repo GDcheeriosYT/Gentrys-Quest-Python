@@ -4,7 +4,7 @@ from Entity.Character.Character import Character
 from Entity.Stats.StarRating import StarRating
 
 
-class CalabJalan(Character):
+class CalebJalan(Character):
     def __init__(self):
         super().__init__(
             "Caleb Jalan",

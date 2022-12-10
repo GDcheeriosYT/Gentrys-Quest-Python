@@ -58,6 +58,7 @@ class Game:
 
             if self.equipped_character is None:
                 WarningText("We couldn't find this character...").display()
+                exit(1)
 
         else:
             name = get_string("What is this protagonists name?\n")
@@ -93,56 +94,36 @@ class Game:
                                   "3. Quit")
 
                 if choices == 1:
-                    choices1 = get_int("1. Singleplayer\n"
-                                       "2. Multiplayer\n"
-                                       "3. Back")
-                    if choices1 == 1:
-                        choices2 = get_int("1. Travel\n"
-                                           "2. Gacha\n"
-                                           "3. Inventory\n"
-                                           "4. Back")
+                    while True:
+                        choices1 = get_int("1. Singleplayer\n"
+                                           "2. Back")
+                        if choices1 == 1:
+                            while True:
+                                choices2 = get_int("1. Travel\n"
+                                                   "2. Gacha\n"
+                                                   "3. Inventory\n"
+                                                   "4. Back")
 
-                        if choices2 == 1:
-                            locations = self.game_data.content.locations
-                            for location in locations:
-                                Text(f"{locations.index(location) + 1}. {location}").display()
-                            choices3 = get_int(f"{len(locations) + 1}. back")
+                                if choices2 == 1:
+                                    while True:
+                                        locations = self.game_data.content.locations
+                                        for location in locations:
+                                            Text(f"{locations.index(location) + 1}. {location}").display()
+                                        choices3 = get_int(f"{len(locations) + 1}. back")
 
-                            if choices3 != len(locations) + 1:
-                                location = locations[choices3 - 1]
-                                location.list_areas()
-                                location.select_area(self.equipped_character, self.game_data.inventory, self.game_data.content)
+                                        if choices3 != len(locations) + 1:
+                                            try:
+                                                location = locations[choices3 - 1]
+                                                location.list_areas()
+                                                location.select_area(self.equipped_character, self.game_data.inventory,
+                                                                     self.game_data.content)
+                                            except IndexError:
+                                                pass
 
+                                        else:
+                                            break
 
-                        elif choices2 == 2:
-                            valley_high_school = ValleyHighSchool()
-                            base_gacha = BaseGacha()
-                            Text(f"1. {valley_high_school.name.raw_output()}\n"
-                                 f"2. {base_gacha.name.raw_output()}").display()
-                            choices3 = get_int("3. back")
-
-                    if choices1 == 1:
-                        while True:
-                            choices2 = get_int("1. Travel\n"
-                                               "2. Gacha\n"
-                                               "3. Inventory\n"
-                                               "4. Back")
-
-                            if choices2 == 1:
-                                iowa = Iowa()
-                                while True:
-                                    choices3 = get_int("1. Iowa\n"
-                                                       "2. back")
-
-                                    if choices3 == 1:
-                                        iowa.list_areas()
-                                        iowa.select_area(self.equipped_character, self.game_data.inventory)
-
-                                    else:
-                                        break
-
-                            elif choices2 == 2:
-                                while True:
+                                elif choices2 == 2:
                                     valley_high_school = ValleyHighSchool()
                                     base_gacha = BaseGacha()
                                     Text(f"1. {valley_high_school.name.raw_output()}\n"
@@ -155,16 +136,16 @@ class Game:
                                     elif choices3 == 2:
                                         base_gacha.manage_input(self.game_data.inventory)
 
-                                    else:
-                                        break
+                                elif choices2 == 3:
+                                    inventory_results = self.game_data.inventory.manage_input(self.equipped_character)
+                                    if inventory_results is not None:
+                                        self.equipped_character = inventory_results
 
-                            elif choices2 == 3:
-                                inventory_results = self.game_data.inventory.manage_input(self.equipped_character)
-                                if inventory_results is not None:
-                                    self.equipped_character = inventory_results
+                                else:
+                                    break
 
-                            else:
-                                break
+                        else:
+                            break
 
                 elif choices == 2:
                     Window.clear()

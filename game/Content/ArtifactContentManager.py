@@ -3,45 +3,48 @@
 from Entity.Artifact.Artifact import Artifact
 from Entity.Stats.StarRating import StarRating
 
+# content packages
+from Content.Artifacts import *
+
+# graphics packages
+from Graphics.Status import Status
+
 # built-in packages
-import importlib
 import inspect
-import os
 
 
 class Family:
     def __init__(self, name):
         self.name = name
         self.artifacts = []
+        self.buff = None
 
 
 class ArtifactContentManager:
-    families = None
-
     def __init__(self):
-        families = []
+        self.families = []
 
-    @staticmethod
-    def load_content():
-        families = []
-        for family in os.listdir("Content/Artifacts"):
-            family = family[:-3]  # removing the ".py" so it can be treated as an actual package for import
-            if family[0] != "_":
-                family_class = importlib.import_module(f".{family}", f"Content.Artifacts")
-                new_family = None
-                for thing in inspect.getmembers(family_class):
-                    thing = thing[1]
-                    if inspect.isclass(thing):
-                        if issubclass(thing, Artifact):
-                            try:
-                                thing_for_family = thing(StarRating(0))
-                                if thing_for_family.family is not None:
-                                    if new_family is None:
-                                        new_family = Family(thing_for_family.family)
-                                    new_family.artifacts.append(thing)
-                            except TypeError as e:
-                                print(f"uh oh...\n{e}")
-                if new_family is not None:
-                    families.append(new_family)
+    def load_content(self):
+        load_status = Status("Loading Game Artifacts...")
+        family_string = ""
+        load_status.start()
+        for module in globals().values():
+            family = None
+            if inspect.ismodule(module):
+                if module.__name__.startswith("Content.Artifacts."):
+                    for hopefully_a_class in vars(module).values():
+                        if inspect.isclass(hopefully_a_class):
+                            if (issubclass(hopefully_a_class, Artifact)) and not (hopefully_a_class.__name__ == "Artifact"):
+                                if family is None:
+                                    family = Family(hopefully_a_class(StarRating()).family)
 
-        return families
+                                new_artifact = hopefully_a_class
+                                family.artifacts.append(new_artifact)
+
+                    if family is not None:
+                        self.families.append(family)
+
+        load_status.stop()
+
+    def get_families(self):
+        return self.families

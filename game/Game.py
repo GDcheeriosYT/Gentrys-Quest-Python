@@ -41,7 +41,7 @@ class Game:
     def start_intro(self, character_name):
         intro_scene = Intro()
         Window.clear()
-        characters = CharacterContentManager.get_content()
+        characters = self.game_data.content.characters
         self.equipped_character = None
         if character_name is not None:
             for character in characters:
@@ -75,7 +75,7 @@ class Game:
         self.equipped_character.weapon = Weapon()
         self.game_data.inventory.character_list.characters.append(character)
         time.sleep(1)
-        intro_scene.start(self.equipped_character, self.game_data.inventory)
+        intro_scene.start(self.equipped_character, self.game_data.inventory, self.game_data.content)
         character.weapon = self.game_data.inventory.weapon_list.weapons[0]
         self.game_data.inventory.weapon_list.weapons.pop(0)
 
@@ -94,7 +94,32 @@ class Game:
 
                 if choices == 1:
                     choices1 = get_int("1. Singleplayer\n"
-                                       "2. Back")
+                                       "2. Multiplayer\n"
+                                       "3. Back")
+                    if choices1 == 1:
+                        choices2 = get_int("1. Travel\n"
+                                           "2. Gacha\n"
+                                           "3. Inventory\n"
+                                           "4. Back")
+
+                        if choices2 == 1:
+                            locations = self.game_data.content.locations
+                            for location in locations:
+                                Text(f"{locations.index(location) + 1}. {location}").display()
+                            choices3 = get_int(f"{len(locations) + 1}. back")
+
+                            if choices3 != len(locations) + 1:
+                                location = locations[choices3 - 1]
+                                location.list_areas()
+                                location.select_area(self.equipped_character, self.game_data.inventory, self.game_data.content)
+
+
+                        elif choices2 == 2:
+                            valley_high_school = ValleyHighSchool()
+                            base_gacha = BaseGacha()
+                            Text(f"1. {valley_high_school.name.raw_output()}\n"
+                                 f"2. {base_gacha.name.raw_output()}").display()
+                            choices3 = get_int("3. back")
 
                     if choices1 == 1:
                         while True:

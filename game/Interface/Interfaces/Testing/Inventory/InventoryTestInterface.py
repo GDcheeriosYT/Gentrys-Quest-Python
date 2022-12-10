@@ -22,9 +22,12 @@ from IO import Window
 from Random.Functions import get_random_name
 
 # content packages
-from Content.ArtifactContentManager import ArtifactContentManager
+from Content.ContentManager import ContentManager
+
+families = ContentManager().families
+
 artifacts = []
-for family in ArtifactContentManager().load_content():
+for family in families:
     for artifact in family.artifacts:
         artifacts.append(artifact)
 

@@ -23,7 +23,7 @@ class TestGameInterface:
                              "3. quit")
 
             if choice == 1:
-                self.game.start()
+                self.game.start(None)
 
             elif choice == 2:
                 test_inventory_interface = InventoryTestInterface()

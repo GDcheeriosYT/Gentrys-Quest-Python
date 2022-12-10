@@ -41,7 +41,7 @@ class Game:
     def start_intro(self, character_name):
         intro_scene = Intro()
         Window.clear()
-        characters = CharacterContentManager.get_content()
+        characters = self.game_data.content.characters
         self.equipped_character = None
         if character_name is not None:
             for character in characters:
@@ -75,7 +75,7 @@ class Game:
         self.equipped_character.weapon = Weapon()
         self.game_data.inventory.character_list.characters.append(character)
         time.sleep(1)
-        intro_scene.start(self.equipped_character, self.game_data.inventory)
+        intro_scene.start(self.equipped_character, self.game_data.inventory, self.game_data.content)
         character.weapon = self.game_data.inventory.weapon_list.weapons[0]
         self.game_data.inventory.weapon_list.weapons.pop(0)
 
@@ -103,13 +103,16 @@ class Game:
                                            "4. Back")
 
                         if choices2 == 1:
-                            iowa = Iowa()
-                            choices3 = get_int("1. Iowa\n"
-                                               "2. back")
+                            locations = self.game_data.content.locations
+                            for location in locations:
+                                Text(f"{locations.index(location) + 1}. {location}").display()
+                            choices3 = get_int(f"{len(locations) + 1}. back")
 
-                            if choices3 == 1:
-                                iowa.list_areas()
-                                iowa.select_area(self.equipped_character, self.game_data.inventory)
+                            if choices3 != len(locations) + 1:
+                                location = locations[choices3 - 1]
+                                location.list_areas()
+                                location.select_area(self.equipped_character, self.game_data.inventory, self.game_data.content)
+
 
                         elif choices2 == 2:
                             valley_high_school = ValleyHighSchool()

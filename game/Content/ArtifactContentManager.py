@@ -4,12 +4,13 @@ from Entity.Artifact.Artifact import Artifact
 from Entity.Stats.StarRating import StarRating
 
 # content packages
-import Content.Artifacts
+from Content.Artifacts import *
+
+# graphics packages
+from Graphics.Status import Status
 
 # built-in packages
-import importlib
 import inspect
-import os
 
 
 class Family:
@@ -24,23 +25,26 @@ class ArtifactContentManager:
         self.families = []
 
     def load_content(self):
+        load_status = Status("Loading Game Artifacts...")
         family_string = ""
-        for module in vars(Content.Artifacts):
+        load_status.start()
+        for module in globals().values():
             family = None
-            for hopefully_a_class in inspect.getmembers(module):
-                #print(hopefully_a_class)
-                if inspect.isclass(hopefully_a_class[1]):
-                    if issubclass(hopefully_a_class[1], Artifact):
-                        if family is None:
-                            family = Family(hopefully_a_class[1]().family)
+            if inspect.ismodule(module):
+                if module.__name__.startswith("Content.Artifacts."):
+                    for hopefully_a_class in vars(module).values():
+                        if inspect.isclass(hopefully_a_class):
+                            if (issubclass(hopefully_a_class, Artifact)) and not (hopefully_a_class.__name__ == "Artifact"):
+                                if family is None:
+                                    family = Family(hopefully_a_class(StarRating()).family)
 
-                        new_artifact = hopefully_a_class[1]()
-                        family.artifacts.append(new_artifact)
+                                new_artifact = hopefully_a_class
+                                family.artifacts.append(new_artifact)
 
-            if family is not None:
-                self.families.append(family)
+                    if family is not None:
+                        self.families.append(family)
 
-        print(self.families)
+        load_status.stop()
 
     def get_families(self):
         return self.families

@@ -54,6 +54,9 @@ from Content.Characters.WillJohnson import WillJohnson
 from Content.Characters.LukeEllens import LukeEllens
 from Content.Characters.LinLaoShi import LinLaoShi
 from Content.Characters.CarterBallard import CarterBallard
+from Content.Characters.PeteMarks import PeteMarks
+from Content.Characters.MJ import MJ
+from Content.Characters.ZachSmith import ZachSmith
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -75,6 +78,7 @@ from Content.Weapons.CypireanScythe import CypireanScythe
 from Content.Weapons.Ichimonji import Ichimonji
 from Content.Weapons.MasonKiller import MasonKiller
 from Content.Weapons.SharpThrowingCards import SharpThrowingCards
+from Content.Weapons.RatPoison import RatPoison
 
 # built-in packages
 import random
@@ -100,6 +104,7 @@ class ValleyHighSchool(BattleArea):
         artifact_families.add("Nathan Tenney")
         artifact_families.add("Nolan Anderson")
         artifact_families.add("Spencer George")
+        artifact_families.add("Mr.Gentry")
         enemies = ItemList(content_type=Enemy)
         enemies.add(FeralLunchLady())
         enemies.add(FlyingPencil())
@@ -145,6 +150,9 @@ class ValleyHighSchool(BattleArea):
         enemies.add(LukeEllens().create_enemy())
         enemies.add(CarterBallard().create_enemy())
         enemies.add(LinLaoShi().create_enemy())
+        enemies.add(PeteMarks().create_enemy(RatPoison()))
+        enemies.add(MJ().create_enemy())
+        enemies.add(ZachSmith().create_enemy())
         super().__init__(
             "Valley High School",
             0,

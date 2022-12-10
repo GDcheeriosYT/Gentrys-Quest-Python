@@ -8,8 +8,9 @@ from .CartersHouse.CartersHouse import CartersHouse
 from .UnifinishedConstructionSite.UnfinishedConstructionSite import UnfinishedConstructionSite
 from .DownTown.DownTown import DownTown
 from .Target.Target import Target
+from .ClimbIowa.ClimbIowa import ClimbIowa
 from .ValleyHighSchool.ValleyHighSchool import ValleyHighSchool
-
+from .HyVee.HyVee import HyVee
 
 class Iowa(Location):
     def __init__(self):
@@ -21,6 +22,8 @@ class Iowa(Location):
                 UnfinishedConstructionSite(),
                 DownTown(),
                 Target(),
-                ValleyHighSchool()
+                ValleyHighSchool(),
+                ClimbIowa(),
+                HyVee()
             ]
         )

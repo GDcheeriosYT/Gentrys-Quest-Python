@@ -44,6 +44,9 @@ from Content.Characters.JaredQuitevis import JaredQuitevis
 from Content.Characters.LukeEllens import LukeEllens
 from Content.Characters.LinLaoShi import LinLaoShi
 from Content.Characters.CarterBallard import CarterBallard
+from Content.Characters.PeteMarks import PeteMarks
+from Content.Characters.MJ import MJ
+from Content.Characters.ZachSmith import ZachSmith
 
 # weapons
 from Content.Weapons.AlecsRock import AlecsRock
@@ -65,6 +68,7 @@ from Content.Weapons.QuandaleDingle import QuandaleDingle
 from Content.Weapons.SharpThrowingCards import SharpThrowingCards
 from Content.Weapons.ShitLauncherSupreem import ShitLauncherSupreem
 from Content.Weapons.SirFarQuad import SirFarQuad
+from Content.Weapons.RatPoison import RatPoison
 
 
 class ValleyHighSchool(Gacha):
@@ -108,7 +112,10 @@ class ValleyHighSchool(Gacha):
                 LukeEllens(),
                 LinLaoShi(),
                 LukeEllens(),
-                CarterBallard()
+                CarterBallard(),
+                PeteMarks(),
+                MJ(),
+                ZachSmith()
             ],
             [
                 AlecsRock(),
@@ -129,7 +136,8 @@ class ValleyHighSchool(Gacha):
                 QuandaleDingle(),
                 SharpThrowingCards(),
                 ShitLauncherSupreem(),
-                SirFarQuad()
+                SirFarQuad(),
+                RatPoison()
             ],
             1000
         )

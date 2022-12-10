@@ -12,3 +12,4 @@ class Effect:
         self.details = details
         self.variables = variables
         self.experience = Experience()
+

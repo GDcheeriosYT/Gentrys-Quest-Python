@@ -18,7 +18,7 @@ from Graphics.Text.Text import Text
 class Burn(Effect):
     def __init__(self):
         stat_collection = ItemList(content=[
-            StatCollection(StatTypes.Attack, StatValueTypes.Flat, 5)
+            StatCollection(StatTypes.Attack, StatValueTypes.Flat, True, 5)
         ])
         variables = EffectVariables(
             False,

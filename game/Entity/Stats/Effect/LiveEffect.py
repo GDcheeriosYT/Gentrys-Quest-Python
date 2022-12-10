@@ -28,6 +28,7 @@ class LiveEffect:
                 for stat_collection in self.variables.stat_collection.content:
                     for stat in stat_list:
                         if stat.type == stat_collection.stat:
+                            print(stat.type.name, f"{'-' if stat_collection.is_deductible else '+'} {stat_collection.amount}")
                             stat.total_value += stat_collection.value
 
         except Exception as e:

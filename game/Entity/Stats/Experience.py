@@ -22,7 +22,7 @@ class Experience:
 
     def display_xp(self):
         if self.level != self.limit:
-            return f"{self.xp}xp"
+            return f"{self.xp} xp"
         else:
             return ""
 

@@ -90,7 +90,7 @@ class Entity:
             xp(amount)
 
     def list_view(self):
-        return f"{self.name} {self.star_rating} {self.experience.display_level()}"
+        return f"{self.name} {self.star_rating}"
 
     def gacha_info_view(self):
         return f"{self.name} {self.star_rating}"

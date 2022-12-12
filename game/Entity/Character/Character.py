@@ -15,6 +15,7 @@ from Collection.ItemList import ItemList
 # graphics packages
 from Graphics.Text.Text import Text
 from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Content.Text.DescriptionText import DescriptionText
 
 # IO packages
 from IO import Window
@@ -328,7 +329,7 @@ class Character(Entity):
             f"""
 {self.name} {self.star_rating}
 level {self.experience.level}
-xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp ({round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value) * 100), 2)})%
+xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)} ({round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value) * 100), 2)})%
 {self.health}
 {self.attack}
 {self.defense}
@@ -352,7 +353,7 @@ xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.val
 {self.artifacts.get(4)}
 
 ====================
-{self.description}
+{DescriptionText(self.description).raw_output()}
 ====================
 """
         )

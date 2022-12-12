@@ -16,6 +16,7 @@ from Config.SettingManager import SettingManager
 
 # Graphics packages
 from Graphics.Text.Text import Text
+from Graphics.Content.Text.DescriptionText import DescriptionText
 
 # IO packages
 from IO import Window
@@ -116,12 +117,12 @@ class Weapon(Entity):
 
     def __repr__(self):
         return (
-            f"""{self.name} {self.star_rating} {self.experience}
+            f"""{self.name} {self.star_rating} {self.experience.display_level()}
 type: {self.weapon_type}
 base attack: {self.attack}
 attribute: {self.buff}
 ##################
-{self.description}
+{DescriptionText(self.description).raw_output()}
 ##################
 """
         )

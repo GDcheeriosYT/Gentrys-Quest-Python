@@ -2,18 +2,23 @@
 # graphics packages
 from Graphics.Text.Text import Text
 from Graphics.Text.Style import Style
+from Graphics.Content.Text.InfoText import InfoText
 
 # IO packages
 from IO.Input import enter_to_continue
 from IO import Window
 
 # change log groupings
-gameplay = []
+gameplay = [
+    InfoText("Added Changelog!")
+]
 graphics = []
 content = []
 online = []
 code_structure = []
-testing = []
+testing = [
+    InfoText("Added Changelog View Testing")
+]
 
 
 def display_changelog():

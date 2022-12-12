@@ -1,4 +1,6 @@
 # game packages
+from Changelog import display_changelog
+
 # collection packages
 from Collection.ItemList import ItemList
 
@@ -91,7 +93,8 @@ class Game:
                 choices = get_int("Main Menu\n"
                                   "1. Play\n"
                                   "2. Settings\n"
-                                  "3. Quit")
+                                  "3. Changelog\n"
+                                  "4. Quit")
 
                 if choices == 1:
                     while True:
@@ -155,6 +158,9 @@ class Game:
                         Window.clear()
 
                 elif choices == 3:
+                    display_changelog()
+
+                elif choices == 4:
                     in_game = False
             except ValueError:
                 WarningText("Number please...").display()

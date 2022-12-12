@@ -13,7 +13,9 @@ gameplay = [
     InfoText("Added Changelog! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link]")
 ]
 graphics = []
-content = []
+content = [
+    InfoText("Added Karl Goldsmith character!(Valley Character)")
+]
 online = []
 code_structure = []
 testing = [

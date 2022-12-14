@@ -191,7 +191,7 @@ class Character(Entity):
 
     def update_stats(self):
         self.difficulty = int(1 + (self.experience.level / 20))
-        self.health.set_default(int((((((self.star_rating.value - 1) * 3.5) + (((self.experience.level - 1) * 2.5) + ((self.star_rating.value - 1) * (self.experience.level * 0.5)))) * self.check_minimum(self.default_health_points, 1.12)) * self.check_minimum(self.difficulty - 1, 1.60)) + 20))
+        self.health.set_default(int((self.difficulty * ((self.experience.level * (self.star_rating.value + self.check_minimum(self.default_health_points, 1.5))) + (self.experience.level + self.check_minimum(self.default_health_points, 1.5)))) + 100))
         self.attack.set_default(int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.80) + (self.check_minimum(self.default_attack_points, 1, True) * (self.experience.level / 4))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2)
         self.defense.set_default(int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.5) + (self.check_minimum(self.default_defense_points, 1, True)) * (self.experience.level / 8)) * self.check_minimum(self.difficulty - 1, 1.60)) + 1)
         self.critRate.set_default(float(self.check_minimum(self.default_crit_rate_points, 3) + self.check_minimum(self.star_rating.value, 0.5) + self.check_minimum(self.experience.level, 0.15) + 3))

@@ -15,7 +15,7 @@ class ImpostersKnife(Weapon):
             "Knife",
             0,
             Buff(),
-            Verbs("sliced (imposter noises play)", "cut (imposter noises play)"),
+            Verbs("sliced *imposter noises play*", "cut *imposter noises play*"),
             StarRating(4),
             Experience()
         )

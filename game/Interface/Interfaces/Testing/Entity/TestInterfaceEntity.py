@@ -26,7 +26,8 @@ class TestInterfaceEntity(Interface):
             while True:
                 try:
                     test_interface.__repr__()
-                except TypeError:
+                except TypeError as e:
+                    print(e)
                     break
         elif action == 2:
             test_interface = TestInterfaceEnemy()

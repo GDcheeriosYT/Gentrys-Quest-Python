@@ -16,6 +16,7 @@ from Config.StringSetting import StringSetting
 from Config.NumberSetting import NumberSetting
 from Config.ToggleSetting import ToggleSetting
 
+
 class GameData:
     """
     returns a GameData object with the given json string

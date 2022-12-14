@@ -169,7 +169,8 @@ class Character(Entity):
     def attack_enemy(self, enemy, is_skill=False):
         damage = self.attack.total_value + self.weapon.attack
         is_crit = determine_crit(self.critRate.total_value)
-        damage += self.critDamage.total_value if is_crit else 0
+        print(is_crit)
+        damage += self.attack.total_value * (self.critDamage.total_value / 100) if is_crit else 0
         damage -= random.randint(int(enemy.defense.total_value / 2), enemy.defense.total_value)
         damage = int(damage)
         Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {enemy.name} for {damage} damage").display()
@@ -190,12 +191,15 @@ class Character(Entity):
             return False
 
     def update_stats(self):
+        def calculate(variable, multiplier=1):
+            return variable * multiplier
+
         self.difficulty = int(1 + (self.experience.level / 20))
-        self.health.set_default(int((self.difficulty * ((self.experience.level * (self.star_rating.value + self.check_minimum(self.default_health_points, 1.5))) + (self.experience.level + self.check_minimum(self.default_health_points, 1.5)))) + 100))
-        self.attack.set_default(int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.80) + (self.check_minimum(self.default_attack_points, 1, True) * (self.experience.level / 4))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2)
-        self.defense.set_default(int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.5) + (self.check_minimum(self.default_defense_points, 1, True)) * (self.experience.level / 8)) * self.check_minimum(self.difficulty - 1, 1.60)) + 1)
-        self.critRate.set_default(float(self.check_minimum(self.default_crit_rate_points, 3) + self.check_minimum(self.star_rating.value, 0.5) + self.check_minimum(self.experience.level, 0.15) + 3))
-        self.critDamage.set_default(int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.28)), 0.15) + (self.check_minimum(self.default_crit_damage_points, 1, True) * (self.experience.level / 2.5))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2)
+        self.health.set_default(int((calculate(self.experience.level, 57) + calculate(self.experience.level, calculate(self.star_rating.value, 2)) + calculate(self.experience.level, calculate(self.check_minimum(self.default_health_points, 4)))) + calculate(self.difficulty, 1000) + calculate(self.default_health_points, 10) + calculate(self.star_rating.value, 5)))
+        self.attack.set_default(int((calculate(self.experience.level, 1.25) + calculate(self.star_rating.value, 1.50) + calculate(self.star_rating.value, calculate(self.check_minimum(self.default_attack_points))) + calculate(self.difficulty - 1, 20)) + 45 + calculate(self.check_minimum(self.default_attack_points, 3)) + calculate(self.star_rating.value, 3)))
+        self.defense.set_default(int((calculate(self.experience.level, 2.25) + calculate(self.star_rating.value, 2.50) + calculate(self.star_rating.value, calculate(self.check_minimum(self.default_defense_points)))) + calculate(50, self.difficulty) + calculate(self.check_minimum(self.default_defense_points, 3)) + calculate(self.star_rating.value, 3)))
+        self.critRate.set_default(float(self.star_rating.value + calculate(self.default_crit_rate_points, 2)))
+        self.critDamage.set_default(float(50 + calculate(self.default_crit_damage_points, 5)))
         self.get_buff_values()
 
     def get_buff_values(self):

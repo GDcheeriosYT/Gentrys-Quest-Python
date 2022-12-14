@@ -53,7 +53,7 @@ class Buff:
             self.experience = experience
 
         self.is_percent = random.choice([True, False])
-        if attribute_type == StatTypes.CritRate:
+        if attribute_type == StatTypes.CritRate or attribute_type == StatTypes.CritDamage:
             self.is_percent = False
 
         stats = []

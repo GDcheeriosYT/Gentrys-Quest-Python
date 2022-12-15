@@ -1,4 +1,6 @@
 # game packages
+from Changelog import display_changelog
+
 # graphics packages
 from Graphics.Content.Text.QuestionText import QuestionText
 
@@ -33,7 +35,8 @@ class TestingHandler:
                               "2. Inventory\n"
                               "3. Location\n"
                               "4. Game\n"
-                              "5. quit\n")
+                              "5. Changelog\n"
+                              "6. quit\n")
             if choices == 1:
                 entity_interface.__repr__()
 
@@ -45,6 +48,9 @@ class TestingHandler:
 
             elif choices == 4:
                 game_interface.start()
+
+            elif choices == 5:
+                display_changelog()
 
             else:
                 break

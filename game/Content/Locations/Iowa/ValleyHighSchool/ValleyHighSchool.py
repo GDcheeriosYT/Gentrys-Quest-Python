@@ -22,7 +22,7 @@ from Content.Characters.Benji import Benji
 from Content.Characters.BraydenMesserschmidt import BraydenMesserschmidt
 from Content.Characters.BrianHightower import BrianHightower
 from Content.Characters.BrodyKrysa import BrodyKrysa
-from Content.Characters.CalebJalan import CalabJalan
+from Content.Characters.CalebJalan import CalebJalan
 from Content.Characters.CharlieEddie import CharlieEddie
 from Content.Characters.ConnorFogarty import ConnorFogarty
 from Content.Characters.ConnorMoya import ConnorMoya
@@ -118,7 +118,7 @@ class ValleyHighSchool(BattleArea):
         enemies.add(BraydenMesserschmidt().create_enemy(BraydensOsuPen()))
         enemies.add(BrianHightower().create_enemy())
         enemies.add(BrodyKrysa().create_enemy(BrodysBroadsword()))
-        enemies.add(CalabJalan().create_enemy())
+        enemies.add(CalebJalan().create_enemy())
         enemies.add(CharlieEddie().create_enemy())
         enemies.add(ConnorFogarty().create_enemy(Bone()))
         enemies.add(ConnorMoya().create_enemy())

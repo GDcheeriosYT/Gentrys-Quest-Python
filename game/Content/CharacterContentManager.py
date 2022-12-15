@@ -7,24 +7,31 @@ import importlib
 import inspect
 import os
 
+# graphics packages
+from Graphics.Status import Status
+
+from Content.Characters import *
+
 
 class CharacterContentManager:
-    families = None
+    characters = None
 
     def __init__(self):
-        families = []
+        self.characters = []
 
-    @staticmethod
-    def get_content():
-        characters = []
-        for character_file in os.listdir("Content/Characters"):
-            character_file = character_file[:-3]  # removing the ".py" so it can be treated as an actual package for import
-            if character_file[0] != "_":
-                character_class = importlib.import_module(f".{character_file}", f"Content.Characters")
-                for thing in inspect.getmembers(character_class):
-                    thing = thing[1]
-                    if inspect.isclass(thing):
-                        if issubclass(thing, Character):
-                            characters.append(thing)
+    def load_content(self):
+        load_status = Status("Loading Game Characters...")
+        load_status.start()
+        for module in globals().values():
+            if inspect.ismodule(module):
+                if module.__name__.startswith("Content.Characters."):
+                    for hopefully_a_class in vars(module).values():
+                        if inspect.isclass(hopefully_a_class):
+                            if (issubclass(hopefully_a_class, Character)) and not (
+                                    hopefully_a_class.__name__ == "Character"):
+                                self.characters.append(hopefully_a_class)
 
-        return characters
+        load_status.stop()
+
+    def get_characters(self):
+        return self.characters

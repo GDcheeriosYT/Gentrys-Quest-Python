@@ -26,12 +26,12 @@ class Status:
         self.style = style
         self.console = Console()
         self.status = self.console.status(text, spinner=style)
-        time.sleep(0.2)
 
     def start(self):
         self.status.start()
 
     def stop(self):
+        time.sleep(0.5)
         self.status.stop()
 
     def modify_status(self, text="doing something", style="dots"):

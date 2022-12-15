@@ -20,9 +20,6 @@ from Entity.Stats.StarRating import StarRating
 from IO.Input import get_int, enter_to_continue
 from IO import Window
 
-# content packages
-from Content.ArtifactContentManager import ArtifactContentManager
-
 # random packages
 from Random.Functions import generate_artifact_star_rating
 
@@ -99,9 +96,8 @@ class BattleArea(Area):
 
         return enemies
 
-    def initialize_artifacts(self, difficulty):
+    def initialize_artifacts(self, difficulty, families):
         points = self.get_difficulty(difficulty) * 50
-        families = ArtifactContentManager().load_content()
         artifacts = []
         artifacts_to_choose_from = []
         for family in self.artifact_families.content:
@@ -145,7 +141,7 @@ class BattleArea(Area):
         enter_to_continue()
         raise EndException
 
-    def start(self, character, inventory):
+    def start(self, character, inventory, content):
         try:
             if character is None:
                 WarningText("You do not have a character equipped!").display()
@@ -155,7 +151,7 @@ class BattleArea(Area):
             enemies = ItemList(content_type=Enemy)
             enemies.content = self.initialize_enemies(character)
             artifacts = ItemList(content_type=Artifact)
-            artifacts.content = self.initialize_artifacts(character.difficulty)
+            artifacts.content = self.initialize_artifacts(character.difficulty, content.families)
             enemies_killed = 0
             money = 0
             xp = 0

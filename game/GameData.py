@@ -10,6 +10,7 @@ from Graphics.Status import Status
 
 # content packages
 from Content.Settings.GameSettings import GameSettings
+from Content.ContentManager import ContentManager
 
 # config packages
 from Config.StringSetting import StringSetting
@@ -29,9 +30,11 @@ class GameData:
     inventory = None
     startup_amount = None
     settings = None
+    content = None
 
     def __init__(self, json_data):
         game_settings = GameSettings().settings
+        self.content = ContentManager()
         if json_data == None:
             data = {
                 "startupamount": 0,

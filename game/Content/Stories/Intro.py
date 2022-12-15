@@ -34,9 +34,9 @@ class Intro(Story):
         enemies = ItemList(content_type=Enemy)
         angry_pedestrian = Enemy(
             "Angry Pedestrian",
-            0,
+            2,
             25,
-            0,
+            1,
             Weapon(
                 "Knife",
                 "Slices things...",

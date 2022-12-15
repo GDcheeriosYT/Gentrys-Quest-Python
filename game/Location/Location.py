@@ -29,12 +29,12 @@ class Location:
 
         Text(f"{len(self.areas) + 1}. back").display()
 
-    def select_area(self, character, inventory):
+    def select_area(self, character, inventory, content):
         choice = get_int("Select an area") - 1
         try:
-            self.areas[choice].start(character, inventory)
+            self.areas[choice].start(character, inventory, content)
         except IndexError:
             pass
 
     def __repr__(self):
-        return ""
+        return f"{self.name.raw_output()} {len(self.areas)} battle areas"

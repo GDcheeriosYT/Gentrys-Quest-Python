@@ -20,7 +20,7 @@ from Content.Characters.DylanTopic import DylanTopic
 from Content.Characters.DyllonForney import DyllonForney
 from Content.Characters.HannaHardy import HannaHardy
 from Content.Characters.GMoney import GMoney
-from Content.Characters.CalebJalan import CalabJalan
+from Content.Characters.CalebJalan import CalebJalan
 from Content.Characters.Benji import Benji
 from Content.Characters.BrianHightower import BrianHightower
 from Content.Characters.BrodyKrysa import BrodyKrysa
@@ -88,7 +88,7 @@ class ValleyHighSchool(Gacha):
                 DyllonForney(),
                 HannaHardy(),
                 GMoney(),
-                CalabJalan(),
+                CalebJalan(),
                 Benji(),
                 BrianHightower(),
                 BrodyKrysa(),

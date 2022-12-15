@@ -67,10 +67,8 @@ class Buff:
         self.value = 0
 
     def handle_value(self, star_rating):
-        calculation = ((self.experience.level * 1.75) + (star_rating * 1.25))
-        non_crit_calculation = (round(calculation / 2, 2) if self.is_percent else int(calculation))
-        crit_calculation = round(calculation / 3, 2)
-        self.value = non_crit_calculation if self.attribute_type != StatTypes.CritRate else crit_calculation
+        calculation = ((self.experience.level * 1.75) + (star_rating * 1.25) + (star_rating * int(self.experience.level / star_rating)))
+        self.value = int(calculation) if not self.is_percent else float(calculation)
 
     def __repr__(self):
         return f"{self.attribute_type.name} {self.value}{'%' if self.is_percent else ''}"

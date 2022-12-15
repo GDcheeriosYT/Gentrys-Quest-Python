@@ -34,7 +34,7 @@ class ArtifactContentManager:
                     if inspect.isclass(thing):
                         if issubclass(thing, Artifact):
                             try:
-                                thing_for_family = thing(StarRating(0))
+                                thing_for_family = thing(StarRating())
                                 if thing_for_family.family is not None:
                                     if new_family is None:
                                         new_family = Family(thing_for_family.family)

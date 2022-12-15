@@ -14,7 +14,8 @@ gameplay = [
 ]
 graphics = []
 content = [
-    InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link]")
+    InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link]"),
+    InfoText("Added Ohio location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/42]PR\[#42][/link]")
 ]
 online = []
 code_structure = []

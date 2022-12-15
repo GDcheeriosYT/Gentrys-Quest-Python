@@ -15,7 +15,7 @@ class BlueMeth(Weapon):
             "Bad Medicine",
             0,
             Buff(),
-            Verbs("threw"),
+            Verbs("threw", "farted on"),
             StarRating(3),
             Experience()
         )

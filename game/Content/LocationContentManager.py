@@ -1,6 +1,7 @@
 # game packages
 # content packages
 from .Locations.Iowa.Iowa import Iowa
+from .Locations.Nigeria.Nigeria import Nigeria
 
 # graphics packages
 from Graphics.Status import Status
@@ -24,9 +25,12 @@ class LocationContentManager:
         self.locations = []
 
     def load_content(self):
-        load_status = Status("Loading Game Locations")
+        load_status = Status("Loading Game Locations...")
         load_status.start()
-        self.locations = [Iowa()]
+        self.locations = [
+            Iowa(),
+            Nigeria()
+        ]
         load_status.stop()
 
     def get_locations(self):

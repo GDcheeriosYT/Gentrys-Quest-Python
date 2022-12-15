@@ -3,7 +3,7 @@
 from Location.Location import Location
 
 # content packages
-
+from .PureTabooSet.PureTabooSet import PureTabooSet
 
 
 class Nigeria(Location):
@@ -11,6 +11,6 @@ class Nigeria(Location):
         super().__init__(
             "Nigeria",
             [
-
+                PureTabooSet()
             ]
         )

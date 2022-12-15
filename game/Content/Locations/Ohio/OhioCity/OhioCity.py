@@ -9,20 +9,26 @@ from Collection.ItemList import ItemList
 from Entity.Enemy.Enemy import Enemy
 
 # content packages
-from .Enemies.HarambesCousin import HarambesCousin
+from .Enemies.AmongUsCrewmate import AmongUsCrewmate
+from .Enemies.AmongUsImposter import AmongUsImposter
+from .Enemies.LiverKing import LiverKing
+from .Enemies.WalterWhiteIncarnate import WalterWhiteIncarnate
 
 
-class OhioZooAndAquarium(BattleArea):
+class OhioCity(BattleArea):
     def __init__(self):
         artifact_families = ItemList(content_type=str)
         artifact_families.add("Ohio's Zoo & Aquarium")
         enemies = ItemList(content_type=Enemy)
-        enemies.add(HarambesCousin())
+        enemies.add(AmongUsCrewmate())
+        enemies.add(AmongUsImposter())
+        enemies.add(LiverKing())
+        enemies.add(WalterWhiteIncarnate())
         super().__init__(
-            "Ohio's Zoo & Aquarium",
+            "Ohio City",
             0,
             artifact_families,
             enemies,
-            True,
+            False,
             True
         )

@@ -14,7 +14,7 @@ class BabyDragon(Enemy):
             3,
             2,
             1,
-            FlameBreath(),
+            FireBreath(),
             "The Baby Dragon from Clash of Clans is pissed as it is somehow in real life.",
             Experience()
         )

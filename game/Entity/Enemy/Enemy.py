@@ -73,9 +73,13 @@ class Enemy(Entity):
         self.update_stats()
 
     def update_stats(self):
-        self.health.set_default(int(self.health_points * self.check_minimum(self.experience.level, 3) + (self.check_minimum(self.experience.level) * (self.check_minimum(self.experience.level / 20, 8))) + 20))
-        self.attack.set_default(int(self.attack_points * self.check_minimum(self.experience.level, 2) + (self.check_minimum(self.experience.level, 0.5) * (self.check_minimum(self.experience.level / 20, 3))) + 2))
-        self.defense.set_default(int(self.defense_points * self.check_minimum(self.experience.level, 1.5) + (self.check_minimum(self.experience.level, 0.3) * (self.check_minimum(self.experience.level / 20, 1.5))) + 1))
+        def calculate(variable, multiplier=1):
+            return variable * multiplier
+
+        #  follow this for stat help https://genshin-impact.fandom.com/wiki/Level_Scaling/Enemy#:~:text=For%20enemies%2C%20their%20HP%2C%20ATK,are%201%20for%20all%20levels.
+        self.health.set_default(int(calculate(self.experience.level, (5 + calculate(self.experience.level, 1.38)) + calculate(self.health_points, 80))))
+        self.attack.set_default(int(calculate(self.experience.level, (calculate(self.experience.level, 0.08) * 2)) + calculate(self.attack_points, 60)))
+        self.defense.set_default(int(calculate(self.defense_points, 50) + (1 + calculate(self.experience.level, 0.01))))
 
     def attack_character(self, character):
         is_crit = determine_crit(20)

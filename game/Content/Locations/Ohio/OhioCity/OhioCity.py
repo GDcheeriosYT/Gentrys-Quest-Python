@@ -18,7 +18,7 @@ from .Enemies.WalterWhiteIncarnate import WalterWhiteIncarnate
 class OhioCity(BattleArea):
     def __init__(self):
         artifact_families = ItemList(content_type=str)
-        artifact_families.add("Ohio's Zoo & Aquarium")
+        artifact_families.add("Brayden Messerschmidt")
         enemies = ItemList(content_type=Enemy)
         enemies.add(AmongUsCrewmate())
         enemies.add(AmongUsImposter())

@@ -76,14 +76,15 @@ class Enemy(Entity):
         def calculate(variable, multiplier=1):
             return variable * multiplier
 
-        #  follow this for stat help https://genshin-impact.fandom.com/wiki/Level_Scaling/Enemy#:~:text=For%20enemies%2C%20their%20HP%2C%20ATK,are%201%20for%20all%20levels.
-        self.health.set_default(int(calculate(self.experience.level, (5 + calculate(self.experience.level, 1.38)) + calculate(self.health_points, 80))))
-        self.attack.set_default(int(calculate(self.experience.level, (calculate(self.experience.level, 0.08) * 2)) + calculate(self.attack_points, 60)))
-        self.defense.set_default(int(calculate(self.defense_points, 50) + (1 + calculate(self.experience.level, 0.01))))
+        #  follow this for stat help https://genshin-impact.fandom.com/wiki/Level_Scaling/Enemy#:~:text=For%20enemies%2C%20their%20HP%2C%20ATK,are%201%20for%20all%20levels
+        difficulty = 1 + (self.experience.level / 20)
+        self.health.set_default(int(calculate(500, difficulty) + calculate(self.experience.level, (5 + calculate(self.experience.level, 0.48 + calculate(difficulty, 0.2))) + calculate(self.health_points, 80))))
+        self.attack.set_default(int(calculate(30, difficulty) + calculate(self.experience.level, (calculate(self.experience.level, 0.08 + calculate(difficulty, 0.012)))) + calculate(self.attack_points, 30)))
+        self.defense.set_default(int(calculate(35, difficulty) + calculate(self.experience.level, (1.2 + calculate(self.experience.level, 0.16 + calculate(difficulty, 0.018)))) + calculate(self.attack_points, 35)))
 
     def attack_character(self, character):
         is_crit = determine_crit(20)
-        damage = int(self.attack.total_value + ((self.attack.total_value * 0.25) if is_crit else 0) - random.randint(int(character.defense.total_value / 2),
+        damage = int(self.attack.total_value + ((self.attack.total_value * 0.50) if is_crit else 0) - random.randint(int(character.defense.total_value / 2),
                                                                                                                      character.defense.total_value))
         Text(
             f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()

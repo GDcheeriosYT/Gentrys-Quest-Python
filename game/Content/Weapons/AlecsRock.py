@@ -13,7 +13,7 @@ class AlecsRock(Weapon):
             "Alec's Rock",
             "A small rock.",
             "Stone",
-            12,
+            28,
             Buff(StatTypes.Attack),
             Verbs("hit", "immensely bashed"),
             StarRating(2)

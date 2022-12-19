@@ -3,6 +3,8 @@
 from ..Entity import Entity
 from ..Weapon.Weapon import Weapon
 from ..Stats.Experience import Experience
+from ..Stats.Stat import Stat
+from ..Stats.StatTypes import StatTypes
 
 # config packages
 from Config.StringSetting import StringSetting
@@ -22,6 +24,7 @@ from Graphics.Text.Text import Text
 
 # built-in packages
 import random
+
 
 class Enemy(Entity):
     """
@@ -51,9 +54,9 @@ class Enemy(Entity):
     def __init__(self, name="enemy", health=0, attack=0, defense=0, weapon=Weapon(), description=None,
                  experience=Experience()):
         super().__init__(name, description, 0, experience)
-        self.health = None
-        self.attack = None
-        self.defense = None
+        self.health = Stat(StatTypes.Health)
+        self.attack = Stat(StatTypes.Attack)
+        self.defense = Stat(StatTypes.Defense)
         self.health_points = health
         self.attack_points = attack
         self.defense_points = defense
@@ -70,34 +73,48 @@ class Enemy(Entity):
         self.update_stats()
 
     def update_stats(self):
-        self.health = int(self.health_points * self.check_minimum(self.experience.level, 3) + (self.check_minimum(self.experience.level) * (self.check_minimum(self.experience.level / 20, 8))) + 20)
-        self.attack = int(self.attack_points * self.check_minimum(self.experience.level, 2) + (self.check_minimum(self.experience.level, 0.5) * (self.check_minimum(self.experience.level / 20, 3))) + 2)
-        self.defense = int(self.defense_points * self.check_minimum(self.experience.level, 1.5) + (self.check_minimum(self.experience.level, 0.3) * (self.check_minimum(self.experience.level / 20, 1.5))) + 1)
+        def calculate(variable, multiplier=1):
+            return variable * multiplier
+
+        #  follow this for stat help https://genshin-impact.fandom.com/wiki/Level_Scaling/Enemy#:~:text=For%20enemies%2C%20their%20HP%2C%20ATK,are%201%20for%20all%20levels
+        difficulty = 1 + (self.experience.level / 20)
+        self.health.set_default(int(calculate(500, difficulty) + calculate(self.experience.level, (5 + calculate(self.experience.level, 0.18 + calculate(difficulty, 0.09))) + calculate(self.health_points, 5))))
+        self.attack.set_default(int(calculate(30, difficulty) + calculate(self.experience.level, (calculate(self.experience.level, 0.04 + calculate(difficulty, 0.007))) + calculate(self.attack_points, 2))))
+        self.defense.set_default(int(calculate(35, difficulty) + calculate(self.experience.level, (calculate(self.experience.level, 0.03 + calculate(difficulty, 0.006))) + calculate(self.defense_points, 2))))
 
     def attack_character(self, character):
         is_crit = determine_crit(20)
-        damage = int(self.attack + ((self.attack * 0.25) if is_crit else 0) - random.randint(0, character.defense))
-        Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()
+        damage = int(self.attack.total_value + ((self.attack.total_value * 0.50) if is_crit else 0) - random.randint(int(character.defense.total_value / 2),
+                                                                                                                     character.defense.total_value))
+        Text(
+            f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {character.name} for {damage} damage").display()
         if damage <= 0:
             Text(f"{character.name} has dodged").display()
         else:
-            character.health -= damage
+            character.health.total_value -= damage
         enter_to_continue()
+
+    def get_stats(self):
+        return [
+            self.health,
+            self.attack,
+            self.defense
+        ]
 
     def get_money(self):
         money = 0
         money += self.defense_points * 1.5
-        money += self.attack_points * 3
+        money += self.attack_points * 2.5
         money += self.health_points * 2
         money += self.experience.level
         return int(money)
 
     def get_xp(self):
         xp = 0
-        xp += self.defense_points * 1.5
-        xp += self.attack_points * 3
-        xp += self.health_points * 2
-        xp += self.experience.level * 10
+        xp += self.defense_points * 0.5
+        xp += self.attack_points * 1.5
+        xp += self.health_points * 1
+        xp += self.experience.level * 5
         return int(xp)
 
     def test(self):
@@ -116,10 +133,14 @@ class Enemy(Entity):
         return self
 
     def show_stats(self):
-        Text(f"health: {self.health}\n"
-             f"attack: {self.attack}\n"
-             f"defense {self.defense}\n"
+        Text(f"{self.health}\n"
+             f"{self.attack}\n"
+             f"{self.defense}\n"
              f"{self.description}\n").display()
+        if self.effects.get_length() != 0:
+            print("effects:")
+            for effect in self.effects.content:
+                effect.details.show_details()
 
     def __repr__(self):
         return f"{self.name} level {self.experience.level}"

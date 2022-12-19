@@ -84,7 +84,7 @@ class CharacterList:
             try:
                 x = 1
                 for character in self.characters:
-                    Text(f"{x}. {character.name} {character.star_rating} {character.experience}").display()
+                    Text(f"{x}. {character.name} {character.star_rating} {character.experience.display_level()}").display()
                     x += 1
 
                 Text(f"{x}. back").display()

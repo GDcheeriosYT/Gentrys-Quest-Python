@@ -12,7 +12,7 @@ class Bow(Weapon):
             "Bow",
             "Just a bow.",
             "Bow",
-            3,
+            20,
             Buff(),
             Verbs("shot", "hit the bullseye of"),
             StarRating(1)

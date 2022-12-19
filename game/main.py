@@ -25,6 +25,7 @@ from IO import Window
 # built-in packages
 import sys
 import time
+import os
 
 # external packages
 import argparse
@@ -67,7 +68,7 @@ else:
     if args.server is None:
         server = Server("https://gdcheerios.com")  # default server url
     else:
-        server = Server(args.server)  # make class to store server info
+        server = Server(args.server)  # make cl ass to store server info
     if args.username is not None and args.password is not None:
         account_info = AccountInfo(args.username, args.password)  # make class to store account info
         user = User(account_info.username, 99999, None)  # user class initialization

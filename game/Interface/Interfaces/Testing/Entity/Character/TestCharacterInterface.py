@@ -24,7 +24,7 @@ class TestCharacterInterface:
 
     def __init__(self):
         name = get_random_name()
-        self.character = Character(name)
+        self.character = Character(name, weapon=Weapon())
         self.settings = [
             StringSetting("name", self.character.name),
             NumberSetting("health points", 0, 0, 4),

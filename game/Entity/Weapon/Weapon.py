@@ -16,6 +16,7 @@ from Config.SettingManager import SettingManager
 
 # Graphics packages
 from Graphics.Text.Text import Text
+from Graphics.Content.Text.DescriptionText import DescriptionText
 
 # IO packages
 from IO import Window
@@ -86,14 +87,13 @@ class Weapon(Entity):
     def gacha_info_view(self):
         return f"{self.name} {self.star_rating}\n{self.description}\n\t{self.base_attack} base attack"
 
-
     def update_stats(self):
-        self.attack = int(self.base_attack + (self.check_minimum(self.experience.level, 1.2, True) + self.check_minimum(self.star_rating.value, self.experience.level)))
+        self.attack = int(self.base_attack + (self.experience.level * self.star_rating.value))
         self.buff.experience.level = self.experience.level
         self.buff.handle_value(self.star_rating.value)
 
     def jsonify(self):
-        return{
+        return {
             "weapon type": self.weapon_type,
             "stats": {
                 "attack": self.base_attack,
@@ -106,7 +106,7 @@ class Weapon(Entity):
                 "critical": self.verbs.critical
             },
             "experience": {
-                "xp required": self.experience.get_xp_required(self.star_rating.value, False),
+                "xp required": self.experience.get_xp_required(self.star_rating.value),
                 "level": self.experience.level,
                 "xp": self.experience.xp,
                 "previous xp required": 0
@@ -116,12 +116,12 @@ class Weapon(Entity):
 
     def __repr__(self):
         return (
-            f"""{self.name} {self.star_rating} {self.experience}
+            f"""{self.name} {self.star_rating} {self.experience.display_level()}
 type: {self.weapon_type}
 base attack: {self.attack}
 attribute: {self.buff}
 ##################
-{self.description}
+{DescriptionText(self.description).raw_output()}
 ##################
 """
         )

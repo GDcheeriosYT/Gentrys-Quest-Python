@@ -2,9 +2,13 @@
 # entity packages
 from .Stats.StarRating import StarRating
 from .Stats.Experience import Experience
+from .Stats.Effect.Effect import Effect
 
 # graphics packages
 from Graphics.Content.Text.WarningText import WarningText
+
+# collections packages
+from Collection.ItemList import ItemList
 
 
 # external packages
@@ -41,6 +45,7 @@ class Entity:
             self.experience = Experience()
         else:
             self.experience = experience
+        self.effects = ItemList(content_type=Effect)
 
     def level_up(self, amount):
         def level():
@@ -63,7 +68,9 @@ class Entity:
     def get_money_required(self):
         experience_required = self.experience.get_xp_required(self.star_rating.value)
         current_experience = self.experience.xp
-        return int((experience_required - current_experience) / 10) + (1 if int(str(experience_required - current_experience)[len(str(experience_required - current_experience)) - 1]) > 0 else 0)
+        return int((experience_required - current_experience) / 10) + (1 if int(
+            str(experience_required - current_experience)[
+                len(str(experience_required - current_experience)) - 1]) > 0 else 0)
 
     def add_xp(self, amount):
         def xp(amount):
@@ -83,7 +90,7 @@ class Entity:
             xp(amount)
 
     def list_view(self):
-        return f"{self.name} {self.star_rating} {self.experience.display_level()}"
+        return f"{self.name} {self.star_rating}"
 
     def gacha_info_view(self):
         return f"{self.name} {self.star_rating}"
@@ -97,3 +104,6 @@ class Entity:
             return 1 if not subtract_one_true else 0
         else:
             return variable * multiplier
+
+    def add_effect(self, effect):
+        self.effects.add(effect)

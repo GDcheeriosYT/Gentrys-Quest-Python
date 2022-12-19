@@ -51,6 +51,13 @@ class NumberSetting(Setting):
                     else:
                         WarningText("Too small!").display()
 
+                else:
+                    if self.max_value >= num >= self.min_value:
+                        self.value = num
+                        break
+                    else:
+                        WarningText("Number not within range!").display()
+
             except ValueError:
                 WarningText("Bro, that's not even a number...").display()
 

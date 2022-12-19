@@ -29,7 +29,7 @@ class Text:
     style = None
     text_animation = None
 
-    def __init__(self, content="text", style=Style("black", "white")):
+    def __init__(self, content="text", style=Style("", "white")):
         self.content = content
         self.style = style
 
@@ -39,4 +39,4 @@ class Text:
             enter_to_continue()
 
     def raw_output(self):
-        return f"{self.style}{self.content}"
+        return f"{self.style}{self.content}[white on black]"

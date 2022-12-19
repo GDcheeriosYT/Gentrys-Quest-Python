@@ -13,7 +13,7 @@ class BraydensOsuPen(Weapon):
             "Brayden's osu pen",
             "Brayden's osu pen.",
             "Pen",
-            36,
+            46,
             Buff(StatTypes.CritRate),
             Verbs("hit a circle on", "fc'ed the pattern on"),
             StarRating(5)

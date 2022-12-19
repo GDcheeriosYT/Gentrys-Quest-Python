@@ -30,11 +30,8 @@ class Experience:
         return f"{self.display_level()} {self.display_xp()}"
 
     # Gives you the amount of xp required to level up given the star rating
-    def get_xp_required(self, star_rating, is_artifact=False):
+    def get_xp_required(self, star_rating):
         if self.level != self.limit:
-            if is_artifact:
-                return int(star_rating * (self.level * 50))
-            else:
-                return int(((self.level * 75) + ((star_rating * (self.level * 0.25)) * 25)) * ((self.level / 20) + 1))
+            return int((((self.level * 2) * 75) + ((star_rating * (self.level * 0.25)) * 25)) * ((self.level / 20) + 1))
         else:
             return self.xp

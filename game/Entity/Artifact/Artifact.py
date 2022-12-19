@@ -115,7 +115,7 @@ class Artifact(Entity):
 
     def __repr__(self):
         try:
-            percentage = round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value, True)) * 100, 2)
+            percentage = round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value)) * 100, 2)
         except ZeroDivisionError:
             percentage = 0
         return (
@@ -156,7 +156,7 @@ apart of the {self.family} family
             "name": self.name,
             "family": self.family,
             "experience": {
-                "xp required": self.experience.get_xp_required(self.star_rating.value, True),
+                "xp required": self.experience.get_xp_required(self.star_rating.value),
                 "level": self.experience.level,
                 "xp": self.experience.xp,
                 "previous xp required": 0

@@ -101,7 +101,7 @@ class Inventory:
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
         self.artifact_list.artifacts.remove(artifact)
-        return int((star_rating * 10) + (star_rating * (level * 25)))
+        return int((level * star_rating) * 100)
 
     def manage_artifact(self, artifact, is_equipped=False):
         while True:

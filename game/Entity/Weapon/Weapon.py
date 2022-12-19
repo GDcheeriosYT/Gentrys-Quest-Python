@@ -106,7 +106,7 @@ class Weapon(Entity):
                 "critical": self.verbs.critical
             },
             "experience": {
-                "xp required": self.experience.get_xp_required(self.star_rating.value, False),
+                "xp required": self.experience.get_xp_required(self.star_rating.value),
                 "level": self.experience.level,
                 "xp": self.experience.xp,
                 "previous xp required": 0

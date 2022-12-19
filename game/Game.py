@@ -35,8 +35,9 @@ import time
 
 
 class Game:
-    def __init__(self, game_data):
+    def __init__(self, game_data, version):
         self.game_data = game_data
+        self.version = version
         self.equipped_character = None
         self.locations = ItemList(content_type=Location)
 
@@ -158,7 +159,7 @@ class Game:
                         Window.clear()
 
                 elif choices == 3:
-                    display_changelog()
+                    display_changelog(self.version)
 
                 elif choices == 4:
                     in_game = False

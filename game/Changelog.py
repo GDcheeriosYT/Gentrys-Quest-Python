@@ -10,7 +10,8 @@ from IO import Window
 
 # change log groupings
 gameplay = [
-    InfoText("Added Changelog! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link]")
+    InfoText("Added Changelog! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link]"),
+    InfoText("Reworked scaling [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/44]PR\[#44][/link]")
 ]
 graphics = []
 content = [
@@ -24,8 +25,9 @@ testing = [
 ]
 
 
-def display_changelog():
+def display_changelog(version: str):
     Window.clear()
+    Window.place_rule(f"Changelog {version}")
     if len(gameplay) > 0:
         #Window.place_rule("Gameplay")
         for gameplay_change in gameplay:

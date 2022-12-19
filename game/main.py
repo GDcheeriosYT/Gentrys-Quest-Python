@@ -33,6 +33,8 @@ import argparse
 console = Console()  # the console
 Window.clear()  # clear window
 
+version = "V2.0.0-Beta"
+
 parser = argparse.ArgumentParser(
     prog="Gentry's Quest",
     description="A game"
@@ -71,8 +73,8 @@ else:
         user = User(account_info.username, 99999, None)  # user class initialization
         user_data = server.API.login(account_info.username, account_info.password)  # game data class initialization
         game_data = GameData(user_data["metadata"]["Gentry's Quest data"])
-        game = Game(game_data)
+        game = Game(game_data, version)
         game.start(args.character)
 
-    server.API.upload_data(game.game_data)
-    server.API.token.delete()
+        server.API.upload_data(game.game_data)
+        server.API.token.delete()

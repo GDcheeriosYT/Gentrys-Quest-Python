@@ -34,6 +34,7 @@ class StizzyCart(Artifact):
             Buff(StatTypes.CritDamage, is_percent=True)
         )
 
+
 class TrinityForce(Artifact):
     def __init__(self, star_rating):
         super().__init__(

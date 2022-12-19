@@ -13,6 +13,10 @@ from .Enemies.VoiceFromBraydensHead import VoiceFromBraydensHead
 from .Enemies.DemonFromUnderBraydensBed import DemonFromUnderBraydensBed
 from .Enemies.Chinchilla import Chinchilla
 from .Enemies.GuineaPig import GuineaPig
+from Content.Characters.BraydenMesserschmidt import BraydenMesserschmidt
+from Content.Characters.OliviaMesserschmidt import OliviaMesserschmidt
+from Content.Characters.DanMesserschmidt import DanMesserschmidt
+from Content.Weapons.BraydensOsuPen import BraydensOsuPen
 
 
 class BraydensHouse(BattleArea):
@@ -25,6 +29,9 @@ class BraydensHouse(BattleArea):
         enemies.add(DemonFromUnderBraydensBed())
         enemies.add(Chinchilla())
         enemies.add(GuineaPig())
+        enemies.add(BraydenMesserschmidt().create_enemy(BraydensOsuPen()))
+        enemies.add(OliviaMesserschmidt().create_enemy())
+        enemies.add(DanMesserschmidt().create_enemy())
         super().__init__(
             "Brayden's House",
             0,

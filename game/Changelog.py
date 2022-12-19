@@ -14,7 +14,8 @@ gameplay = [
 ]
 graphics = []
 content = [
-    InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link]")
+    InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link]"),
+    InfoText("Added content to Brayden's House")
 ]
 online = []
 code_structure = []

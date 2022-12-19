@@ -78,7 +78,7 @@ class Enemy(Entity):
 
         #  follow this for stat help https://genshin-impact.fandom.com/wiki/Level_Scaling/Enemy#:~:text=For%20enemies%2C%20their%20HP%2C%20ATK,are%201%20for%20all%20levels
         difficulty = 1 + (self.experience.level / 20)
-        self.health.set_default(int(calculate(500, difficulty) + calculate(self.experience.level, (5 + calculate(self.experience.level, 0.38 + calculate(difficulty, 0.15))) + calculate(self.health_points, 5))))
+        self.health.set_default(int(calculate(500, difficulty) + calculate(self.experience.level, (5 + calculate(self.experience.level, 0.18 + calculate(difficulty, 0.09))) + calculate(self.health_points, 5))))
         self.attack.set_default(int(calculate(30, difficulty) + calculate(self.experience.level, (calculate(self.experience.level, 0.04 + calculate(difficulty, 0.007))) + calculate(self.attack_points, 2))))
         self.defense.set_default(int(calculate(35, difficulty) + calculate(self.experience.level, (calculate(self.experience.level, 0.03 + calculate(difficulty, 0.006))) + calculate(self.defense_points, 2))))
 

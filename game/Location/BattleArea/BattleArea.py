@@ -108,7 +108,7 @@ class BattleArea(Area):
         while difficulty_points > 0:
             points = 0
             enemy = random.choice(self.enemies.content)
-            points += (5 + (enemy.health_points * 2) + (enemy.attack_points * 2) + (enemy.defense_points * 2))
+            points += (5 + (enemy.health_points * 2) + (enemy.attack_points * 2.5) + (enemy.defense_points * 1.5))
             level = self.apply_random_level(character.experience.level % 20)
             enemy.experience.level = (20 * (self.get_difficulty(character.difficulty))) + level
             if (random.randint(1, 80) < difficulty * 10) and (self.effects.get_length() != 0):
@@ -130,7 +130,7 @@ class BattleArea(Area):
         return enemies
 
     def initialize_artifacts(self, difficulty):
-        points = self.get_difficulty(difficulty) * 50
+        points = (self.get_difficulty(difficulty) + 1) * 50
         families = ArtifactContentManager().load_content()
         artifacts = []
         artifacts_to_choose_from = []
@@ -142,7 +142,7 @@ class BattleArea(Area):
 
         while points > 0:
             artifact = random.choice(artifacts_to_choose_from)
-            star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty))
+            star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty) + 1)
             artifact = artifact(StarRating(star_rating))
             artifacts.append(artifact)
             if star_rating == 1:
@@ -184,10 +184,8 @@ class BattleArea(Area):
             character.update_stats()
             character_effects = []
             Text(f"You enter {self.name}!").display()
-            enemies = ItemList(content_type=Enemy)
-            enemies.content = self.initialize_enemies(character)
-            artifacts = ItemList(content_type=Artifact)
-            artifacts.content = self.initialize_artifacts(character.difficulty)
+            enemies = ItemList(content_type=Enemy, content=self.initialize_enemies(character))
+            artifacts = ItemList(content_type=Artifact, content=self.initialize_artifacts(character.difficulty))
             enemies_killed = 0
             money = 0
             xp = 0

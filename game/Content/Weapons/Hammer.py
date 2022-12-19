@@ -12,7 +12,7 @@ class Hammer(Weapon):
             "Hammer",
             "Just a hammer.",
             "Hammer",
-            8,
+            25,
             Buff(),
             Verbs("smashed", "slammed"),
             StarRating(1)

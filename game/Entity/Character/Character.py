@@ -169,7 +169,6 @@ class Character(Entity):
     def attack_enemy(self, enemy, is_skill=False):
         damage = self.attack.total_value + self.weapon.attack
         is_crit = determine_crit(self.critRate.total_value)
-        print(is_crit)
         damage += self.attack.total_value * (self.critDamage.total_value / 100) if is_crit else 0
         damage -= random.randint(int(enemy.defense.total_value / 2), enemy.defense.total_value)
         damage = int(damage)

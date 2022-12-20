@@ -129,9 +129,8 @@ class BattleArea(Area):
 
         return enemies
 
-    def initialize_artifacts(self, difficulty):
+    def initialize_artifacts(self, difficulty, families):
         points = (self.get_difficulty(difficulty) + 1) * 50
-        families = ArtifactContentManager().load_content()
         artifacts = []
         artifacts_to_choose_from = []
         for family in self.artifact_families.content:
@@ -175,7 +174,7 @@ class BattleArea(Area):
         enter_to_continue()
         raise EndException
 
-    def start(self, character, inventory):
+    def start(self, character, inventory, content):
         turn_counter = 0
         try:
             if character is None:
@@ -185,7 +184,7 @@ class BattleArea(Area):
             character_effects = []
             Text(f"You enter {self.name}!").display()
             enemies = ItemList(content_type=Enemy, content=self.initialize_enemies(character))
-            artifacts = ItemList(content_type=Artifact, content=self.initialize_artifacts(character.difficulty))
+            artifacts = ItemList(content_type=Artifact, content=self.initialize_artifacts(character.difficulty, content.families))
             enemies_killed = 0
             money = 0
             xp = 0

@@ -119,8 +119,7 @@ class Game:
                                             try:
                                                 location = locations[choices3 - 1]
                                                 location.list_areas()
-                                                location.select_area(self.equipped_character, self.game_data.inventory,
-                                                                     self.game_data.content)
+                                                location.select_area(self.equipped_character, self.game_data.inventory, self.game_data.content)
                                             except IndexError:
                                                 pass
 

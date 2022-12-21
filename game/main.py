@@ -25,6 +25,7 @@ from IO import Window
 # built-in packages
 import sys
 import time
+import os
 
 # external packages
 import argparse
@@ -32,6 +33,8 @@ import argparse
 # important variables
 console = Console()  # the console
 Window.clear()  # clear window
+
+version = "V2.0.0-Beta"
 
 parser = argparse.ArgumentParser(
     prog="Gentry's Quest",
@@ -65,14 +68,14 @@ else:
     if args.server is None:
         server = Server("https://gdcheerios.com")  # default server url
     else:
-        server = Server(args.server)  # make class to store server info
+        server = Server(args.server)  # make cl ass to store server info
     if args.username is not None and args.password is not None:
         account_info = AccountInfo(args.username, args.password)  # make class to store account info
         user = User(account_info.username, 99999, None)  # user class initialization
         user_data = server.API.login(account_info.username, account_info.password)  # game data class initialization
         game_data = GameData(user_data["metadata"]["Gentry's Quest data"])
-        game = Game(game_data)
+        game = Game(game_data, version)
         game.start(args.character)
 
-    server.API.upload_data(game.game_data)
-    server.API.token.delete()
+        server.API.upload_data(game.game_data)
+        server.API.token.delete()

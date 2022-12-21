@@ -13,7 +13,7 @@ class BrodysBroadsword(Weapon):
             "Brody's Broadsword",
             "Brody the mighty warrior's broadsword.\nThe weapon was wielded for centuries by Brody himself, but was lost when the great calamity struck and he lost his life to the invading Waifu's.",
             "Broadsword",
-            10,
+            24,
             Buff(StatTypes.Attack),
             Verbs("swung at", "whacked"),
             StarRating(1)

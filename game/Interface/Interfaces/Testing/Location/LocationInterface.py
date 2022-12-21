@@ -18,5 +18,6 @@ class LocationInterface(Interface):
             while True:
                 try:
                     test_interface.__repr__()
-                except TypeError:
+                except TypeError as e:
+                    print(e)
                     break

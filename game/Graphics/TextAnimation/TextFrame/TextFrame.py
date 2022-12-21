@@ -14,6 +14,7 @@ from Config.SettingManager import SettingManager
 # IO packages
 from IO import Window
 
+
 class TextFrame:
     """
     Makes a frame to be used in a TextAnimation

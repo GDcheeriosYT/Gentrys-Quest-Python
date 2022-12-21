@@ -13,7 +13,7 @@ class AnubisBlade(Weapon):
             "Anubis Blade",
             "Fried chicken muncher :).",
             "Sword",
-            30,
+            36,
             Buff(StatTypes.Attack),
             Verbs("quandavious bingleton smashed", "placed a goblin giant on the field and it smacked the poop out of"),
             StarRating(4)

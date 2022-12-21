@@ -26,6 +26,9 @@ from IO import Window
 # graphics packages
 from Graphics.Text.Text import Text
 
+# content packages
+from Content.Effects.Burn import Burn
+
 
 class BattleAreaTestInterface:
     def __init__(self):
@@ -45,11 +48,14 @@ class BattleAreaTestInterface:
         for family in families:
             self.battle_area.artifact_families.add(family)
         self.battle_area.enemies.add(Enemy())
+        self.battle_area.effects = ItemList(content=[Burn])
         self.settings = [
             StringSetting("name", self.battle_area.name),
             NumberSetting("difficulty", self.battle_area.difficulty.value, 0),
             ToggleSetting("can run", self.battle_area.is_runnable),
             ToggleSetting("difficulty scales", self.battle_area.difficulty_scales),
+            NumberSetting("difficulty scales after", self.battle_area.difficulty_scales_after, 0),
+            NumberSetting("difficulty setback", self.battle_area.difficulty_setback),
             ClassSetting("artifact families", self.battle_area.artifact_families),
             ClassSetting("enemies", self.battle_area.enemies),
             ClassSetting("character", self.character)
@@ -75,9 +81,11 @@ class BattleAreaTestInterface:
                     self.battle_area.difficulty.value = self.settings[1].value
                     self.battle_area.is_runnable = self.settings[2].toggled
                     self.battle_area.difficulty_scales = self.settings[3].toggled
-                    self.battle_area.artifact_families = self.settings[4].instance_class
-                    self.battle_area.enemies = self.settings[5].instance_class
-                    self.character = self.settings[6].instance_class
+                    self.battle_area.difficulty_scales_after = self.settings[4].value
+                    self.battle_area.difficulty_setback = self.settings[5].value
+                    self.battle_area.artifact_families = self.settings[6].instance_class
+                    self.battle_area.enemies = self.settings[7].instance_class
+                    self.character = self.settings[8].instance_class
                 except TypeError:
                     Window.clear()
                     break

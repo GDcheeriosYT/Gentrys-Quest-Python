@@ -7,6 +7,7 @@ from ..Stats.StarRating import StarRating
 from ..Stats.Experience import Experience
 from ..Artifact.Artifact import Artifact
 from ..Enemy.Enemy import Enemy
+from ..Stats.Stat import Stat
 
 # collection packages
 from Collection.ItemList import ItemList
@@ -14,6 +15,7 @@ from Collection.ItemList import ItemList
 # graphics packages
 from Graphics.Text.Text import Text
 from Graphics.Content.Text.WarningText import WarningText
+from Graphics.Content.Text.DescriptionText import DescriptionText
 
 # IO packages
 from IO import Window
@@ -88,16 +90,6 @@ class Character(Entity):
     defense = None
     critRate = None
     critDamage = None
-    default_health = None
-    default_attack = None
-    default_defense = None
-    default_crit_rate = None
-    default_crit_damage = None
-    additional_health = None
-    additional_attack = None
-    additional_defense = None
-    additional_critRate = None
-    additional_critDamage = None
     difficulty = None
 
     def __init__(self, name, description="description", star_rating=StarRating(1), experience=None, weapon=None,
@@ -110,6 +102,11 @@ class Character(Entity):
         self.default_crit_rate_points = default_crit_rate_points
         self.default_defense_points = default_defense_points
         self.default_crit_damage_points = default_crit_damage_points
+        self.health = Stat(StatTypes.Health)
+        self.attack = Stat(StatTypes.Attack)
+        self.defense = Stat(StatTypes.Defense)
+        self.critRate = Stat(StatTypes.CritRate, 100)
+        self.critDamage = Stat(StatTypes.CritDamage)
         self.weapon = weapon
         self.artifacts = artifacts
         self.update_stats()
@@ -170,39 +167,39 @@ class Character(Entity):
         return f"{self.name} {self.star_rating}\n{self.description} {perks}"
 
     def attack_enemy(self, enemy, is_skill=False):
-        damage = self.attack + self.weapon.attack
-        is_crit = determine_crit(self.critRate)
-        damage += self.critDamage if is_crit else 0
-        damage -= random.randint(0, enemy.defense)
+        damage = self.attack.total_value + self.weapon.attack
+        is_crit = determine_crit(self.critRate.total_value)
+        damage += self.attack.total_value * (self.critDamage.total_value / 100) if is_crit else 0
+        damage -= random.randint(int(enemy.defense.total_value / 2), enemy.defense.total_value)
         damage = int(damage)
         Text(f"{self.name} {self.weapon.verbs.critical if is_crit else self.weapon.verbs.normal} {enemy.name} for {damage} damage").display()
         if damage <= 0:
             WarningText(f"{enemy.name} has dodged").display()
         else:
-            enemy.health -= damage
+            enemy.health.total_value -= damage
         enter_to_continue()
 
     def manage_battle_input(self, choice, enemy, choices):
-        if choices[choice - 1] == "attack":
-            self.attack_enemy(enemy)
-            return True
-        else:
+        try:
+            if choices[choice - 1] == "attack":
+                self.attack_enemy(enemy)
+                return True
+            else:
+                return False
+        except IndexError:
             return False
 
     def update_stats(self):
+        def calculate(variable, multiplier=1):
+            return variable * multiplier
+
         self.difficulty = int(1 + (self.experience.level / 20))
-        self.default_health = int((((((self.star_rating.value - 1) * 3.5) + (((self.experience.level - 1) * 2.5) + ((self.star_rating.value - 1) * (self.experience.level * 0.5)))) * self.check_minimum(self.default_health_points, 1.12)) * self.check_minimum(self.difficulty - 1, 1.60)) + 20)
-        self.default_attack = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.80) + (self.check_minimum(self.default_attack_points, 1, True) * (self.experience.level / 4))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
-        self.default_defense = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.32)), 0.5) + (self.check_minimum(self.default_defense_points, 1, True)) * (self.experience.level / 8)) * self.check_minimum(self.difficulty - 1, 1.60)) + 1
-        default_crit_rate = float(self.check_minimum(self.default_crit_rate_points, 3) + self.check_minimum(self.star_rating.value, 0.5) + self.check_minimum(self.experience.level, 0.15) + 3)
-        self.default_crit_rate = 100 if default_crit_rate >= 100 else default_crit_rate
-        self.default_crit_damage = int((self.check_minimum(self.star_rating.value * (self.check_minimum(self.experience.level * 0.28)), 0.15) + (self.check_minimum(self.default_crit_damage_points, 1, True) * (self.experience.level / 2.5))) * self.check_minimum(self.difficulty - 1, 1.60)) + 2
+        self.health.set_default(int((calculate(self.experience.level, 57) + calculate(self.experience.level, calculate(self.star_rating.value, 2)) + calculate(self.experience.level, calculate(self.check_minimum(self.default_health_points, 4)))) + calculate(self.difficulty, 1000) + calculate(self.default_health_points, 10) + calculate(self.star_rating.value, 5)))
+        self.attack.set_default(int((calculate(self.experience.level, 1.25) + calculate(self.star_rating.value, 1.50) + calculate(self.star_rating.value, calculate(self.check_minimum(self.default_attack_points))) + calculate(self.difficulty - 1, 20)) + 45 + calculate(self.check_minimum(self.default_attack_points, 3)) + calculate(self.star_rating.value, 3)))
+        self.defense.set_default(int((calculate(self.experience.level, 2.25) + calculate(self.star_rating.value, 2.50) + calculate(self.star_rating.value, calculate(self.check_minimum(self.default_defense_points)))) + calculate(50, self.difficulty) + calculate(self.check_minimum(self.default_defense_points, 3)) + calculate(self.star_rating.value, 3)))
+        self.critRate.set_default(float(self.star_rating.value + calculate(self.default_crit_rate_points, 2)))
+        self.critDamage.set_default(float(50 + calculate(self.default_crit_damage_points, 5)))
         self.get_buff_values()
-        self.health = self.default_health + self.additional_health
-        self.attack = self.default_attack + self.additional_attack
-        self.defense = self.default_defense + self.additional_defense
-        self.critRate = self.default_crit_rate + self.additional_critRate
-        self.critDamage = self.default_crit_damage + self.additional_critDamage
 
     def get_buff_values(self):
         buffs = self.create_buff_groups()
@@ -219,25 +216,25 @@ class Character(Entity):
                 return buff.value
 
         for buff in buffs["health"]:
-            health += determine_value(self.default_health, buff)
+            health += determine_value(self.health.default_value, buff)
 
         for buff in buffs["attack"]:
-            attack += determine_value(self.default_attack, buff)
+            attack += determine_value(self.attack.default_value, buff)
 
         for buff in buffs["defense"]:
-            defense += determine_value(self.default_defense, buff)
+            defense += determine_value(self.defense.default_value, buff)
 
         for buff in buffs["critRate"]:
-            critRate += determine_value(self.default_crit_rate, buff)
+            critRate += determine_value(self.critRate.default_value, buff)
 
         for buff in buffs["critDamage"]:
-            critDamage += determine_value(self.default_crit_damage, buff)
+            critDamage += determine_value(self.critDamage.default_value, buff)
 
-        self.additional_health = health
-        self.additional_attack = attack
-        self.additional_defense = defense
-        self.additional_critRate = critRate
-        self.additional_critDamage = critDamage
+        self.health.set_additional(health)
+        self.attack.set_additional(attack)
+        self.defense.set_additional(defense)
+        self.critRate.set_additional(critRate)
+        self.critDamage.set_additional(critDamage)
 
     def create_buff_groups(self):
         health = []
@@ -274,6 +271,15 @@ class Character(Entity):
             "critRate": critRate,
             "critDamage": critDamage,
         }
+
+    def get_stats(self):
+        return [
+            self.health,
+            self.attack,
+            self.defense,
+            self.critRate,
+            self.critDamage
+        ]
 
     def get_option(self):
         Text(self.__repr__()).display()
@@ -326,12 +332,12 @@ class Character(Entity):
             f"""
 {self.name} {self.star_rating}
 level {self.experience.level}
-xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)}xp ({round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value) * 100), 2)})%
-health: {self.default_health} {f"+ {self.additional_health} ({self.health})" if self.additional_health > 0 else ""}
-attack: {self.default_attack} {f"+ {self.additional_attack} ({self.attack})" if self.additional_attack > 0 else ""}
-defense: {self.default_defense} {f"+ {self.additional_defense} ({self.defense})" if self.additional_defense > 0 else ""}
-crit rate: {self.default_crit_rate}% {f"+ {self.additional_critRate}% ({'100%' if self.critRate > 100 else self.critRate})" if self.additional_critRate > 0 else ""}
-crit damage: {self.default_crit_damage} {f"+ {self.additional_critDamage} ({self.critDamage})" if self.additional_critDamage > 0 else ""}
+xp: {self.experience.xp} / {self.experience.get_xp_required(self.star_rating.value)} ({round((self.experience.xp / self.experience.get_xp_required(self.star_rating.value) * 100), 2)})%
+{self.health}
+{self.attack}
+{self.defense}
+{self.critRate}
+{self.critDamage}
 --------weapon--------
 {self.weapon}
 ^^^^^^^^artifact^^^^^^^^
@@ -350,7 +356,7 @@ crit damage: {self.default_crit_damage} {f"+ {self.additional_critDamage} ({self
 {self.artifacts.get(4)}
 
 ====================
-{self.description}
+{DescriptionText(self.description).raw_output()}
 ====================
 """
         )

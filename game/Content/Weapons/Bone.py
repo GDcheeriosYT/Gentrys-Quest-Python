@@ -13,7 +13,7 @@ class Bone(Weapon):
             "Bone",
             "4 foot long dog bone",
             "Sword",
-            3,
+            26,
             Buff(),
             Verbs("clobbered", "smushed"),
             StarRating(2)

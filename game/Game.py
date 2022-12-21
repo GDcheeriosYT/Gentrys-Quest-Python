@@ -35,8 +35,9 @@ import time
 
 
 class Game:
-    def __init__(self, game_data):
+    def __init__(self, game_data, version):
         self.game_data = game_data
+        self.version = version
         self.equipped_character = None
         self.locations = ItemList(content_type=Location)
 
@@ -118,8 +119,7 @@ class Game:
                                             try:
                                                 location = locations[choices3 - 1]
                                                 location.list_areas()
-                                                location.select_area(self.equipped_character, self.game_data.inventory,
-                                                                     self.game_data.content)
+                                                location.select_area(self.equipped_character, self.game_data.inventory, self.game_data.content)
                                             except IndexError:
                                                 pass
 
@@ -158,7 +158,7 @@ class Game:
                         Window.clear()
 
                 elif choices == 3:
-                    display_changelog()
+                    display_changelog(self.version)
 
                 elif choices == 4:
                     in_game = False

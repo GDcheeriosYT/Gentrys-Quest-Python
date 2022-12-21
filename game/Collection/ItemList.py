@@ -30,8 +30,11 @@ class ItemList:
     size = None
     content_type = None
 
-    def __init__(self, size=None, content_type=None, fill=False, output=True):
-        self.content = []
+    def __init__(self, size: int = None, content_type=None, fill: bool = False, output: bool = True, content: list = None):
+        if content is None:
+            self.content = []
+        else:
+            self.content = content
         self.size = size
         if fill and size is not None:
             for i in range(size):
@@ -147,11 +150,15 @@ class ItemList:
     def change_limit(self, amount):
         Window.clear()
         if amount < self.size:
-            WarningText("You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
+            WarningText(
+                "You are lowering the size.\nThis could permanently delete stuff.\nAre you sure you want to continue?\n").display()
             num = get_int("1. yes\n2. no")
             if num == 1:
                 self.size = amount
                 self.delete_after(self.size)
+
+    def get_length(self):
+        return len(self.content)
 
     def __repr__(self):
         return str({

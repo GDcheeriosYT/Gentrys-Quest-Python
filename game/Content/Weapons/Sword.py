@@ -12,7 +12,7 @@ class Sword(Weapon):
             "Sword",
             "Just a sword.",
             "Sword",
-            5,
+            22,
             Buff(),
             Verbs("swung at", "sliced up"),
             StarRating(1)

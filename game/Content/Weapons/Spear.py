@@ -12,7 +12,7 @@ class Spear(Weapon):
             "Spear",
             "Just a spear.",
             "Spear",
-            6,
+            23,
             Buff(),
             Verbs("stabbed", "combo'd"),
             StarRating(1)

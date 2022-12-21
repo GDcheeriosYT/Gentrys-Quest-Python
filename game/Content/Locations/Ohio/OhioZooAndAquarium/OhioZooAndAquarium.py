@@ -12,6 +12,8 @@ from Entity.Enemy.Enemy import Enemy
 from .Enemies.HarambesCousin import HarambesCousin
 from .Enemies.FishNamedBryan import FishNamedBryan
 from .Enemies.BabyDragon import BabyDragon
+from .Enemies.WinstonOW import WinstonOW
+from .Enemies.RacoonWith45 import RacoonWith45
 
 
 class OhioZooAndAquarium(BattleArea):
@@ -22,6 +24,8 @@ class OhioZooAndAquarium(BattleArea):
         enemies.add(HarambesCousin())
         enemies.add(FishNamedBryan())
         enemies.add(BabyDragon())
+        enemies.add(WinstonOW())
+        enemies.add(RacoonWith45())
         super().__init__(
             "Ohio's Zoo & Aquarium",
             0,

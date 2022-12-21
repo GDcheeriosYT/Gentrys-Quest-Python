@@ -31,7 +31,7 @@ from Random.Functions import generate_artifact_star_rating
 
 # built-in packages
 import random
-from copy import copy
+from copy import deepcopy
 
 
 class EndException(Exception):
@@ -107,7 +107,7 @@ class BattleArea(Area):
         difficulty_points = difficulty * 10
         while difficulty_points > 0:
             points = 0
-            enemy = random.choice(self.enemies.content)
+            enemy = deepcopy(random.choice(self.enemies.content))
             points += (5 + (enemy.health_points * 2) + (enemy.attack_points * 2.5) + (enemy.defense_points * 1.5))
             level = self.apply_random_level(character.experience.level % 20)
             enemy.experience.level = (20 * (self.get_difficulty(character.difficulty))) + level

@@ -140,24 +140,27 @@ class BattleArea(Area):
                         artifacts_to_choose_from.append(artifact)
 
         while points > 0:
-            artifact = random.choice(artifacts_to_choose_from)
-            star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty) + 1)
-            artifact = artifact(StarRating(star_rating))
-            artifacts.append(artifact)
-            if star_rating == 1:
-                points -= 25
+            try:
+                artifact = random.choice(artifacts_to_choose_from)
+                star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty) + 1)
+                artifact = artifact(StarRating(star_rating))
+                artifacts.append(artifact)
+                if star_rating == 1:
+                    points -= 25
 
-            elif star_rating == 2:
-                points -= 45
+                elif star_rating == 2:
+                    points -= 45
 
-            elif star_rating == 3:
-                points -= 65
+                elif star_rating == 3:
+                    points -= 65
 
-            elif star_rating == 4:
-                points -= 75
+                elif star_rating == 4:
+                    points -= 75
 
-            else:
-                points -= 100
+                else:
+                    points -= 100
+            except IndexError:
+                return [Artifact("Broken Artifact", StarRating(1))]
 
         return artifacts
 

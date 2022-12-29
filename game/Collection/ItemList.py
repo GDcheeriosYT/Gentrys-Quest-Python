@@ -5,7 +5,7 @@ from Graphics.Text.Text import Text
 
 # IO packages
 from IO import Window
-from IO.Input import get_int
+from IO.Input import get_int, get_range_or_int
 
 # external packages
 from rich.console import Console
@@ -143,9 +143,12 @@ class ItemList:
             self.content[x].pop()
             x -= 1
 
-    def list_content(self):
+    def list_content(self, display_number: bool = False):
         for item in self.content:
-            Text(item).display()
+            if display_number:
+                Text(f"{self.content.index(item)}. {item}").display()
+            else:
+                Text(f"{item}").display()
 
     def change_limit(self, amount):
         Window.clear()
@@ -159,6 +162,11 @@ class ItemList:
 
     def get_length(self):
         return len(self.content)
+
+    def select(self):
+        self.list_content(True)
+        get_range_or_int("provide number or range")
+
 
     def __repr__(self):
         return str({

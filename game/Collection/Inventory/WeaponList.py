@@ -7,6 +7,7 @@ from Entity.Stats.StarRating import StarRating
 # collection packages
 from ..Handlers.BuffArrayHandler import BuffArrayHandler
 from ..Handlers.ExperienceObjectHandler import ExperienceObjectHandler
+from ..ItemList import ItemList
 
 # graphics packages
 from Graphics.Status import Status
@@ -53,23 +54,5 @@ class WeaponList:
             # time.sleep(0.1)
         load_data_status.stop()
 
-    def list_weapons(self):
-        while True:
-            try:
-                x = 1
-                for weapon in self.weapons:
-                    Text(f"{x}. {weapon.name} {weapon.star_rating} {weapon.experience}").display()
-                    x += 1
-
-                Text(f"{x}. back").display()
-                num = get_int("select a weapon\n")
-                return self.weapons[num - 1]
-            except IndexError:
-                break
-
-    def give_weapon_json_list(self):
-        data = []
-        for weapon in self.weapons:
-            data.append(weapon.jsonify())
-
-        return data
+    def give_item_list(self):
+        return ItemList(content_type=Weapon, content=self.weapons)

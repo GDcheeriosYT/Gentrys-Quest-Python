@@ -2,9 +2,6 @@
 # IO packages
 from . import Window
 
-# graphics packages
-from Graphics.Content.Text.WarningText import WarningText
-
 # collection packages
 from Collection.RangeGroup import RangeGroup
 
@@ -55,9 +52,9 @@ def get_range(text: str, pre_input=None):
                     index += 2
                 return ranges
             else:
-                WarningText(f"Provide input like so:\n{random.randint(1, 25)}-{random.randint(26, 50)}").display()
+                print(f"Provide input like so:\n{random.randint(1, 25)}-{random.randint(26, 50)}")
         except TypeError:
-            WarningText(f"Provide input like so:\n{random.randint(1, 25)}-{random.randint(26, 50)}").display()
+            print(f"Provide input like so:\n{random.randint(1, 25)}-{random.randint(26, 50)}")
 
 
 def get_range_or_int(text: str):
@@ -67,8 +64,11 @@ def get_range_or_int(text: str):
         inp = int(inp)
         return get_int(pre_input=inp)
     except ValueError:
-        return get_range(pre_input=inp)
-
+        if "-" in inp:
+            return get_range(pre_input=inp)
+        else:
+            if inp == "done":
+                return "done"
 
 def enter_to_continue():
     input("press enter to continue...\n")

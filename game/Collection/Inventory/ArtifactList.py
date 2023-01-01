@@ -5,10 +5,14 @@ from Entity.Weapon.Verbs import Verbs
 
 # collection packages
 from ..Handlers.ArtifactObjectHandler import ArtifactObjectHandler
+from ..ItemList import ItemList
 
 # graphics packages
 from Graphics.Status import Status
 from Graphics.Text.Text import Text
+
+# entity packages
+from Entity.Artifact.Artifact import Artifact
 
 # IO packages
 from IO.Input import get_int
@@ -38,23 +42,5 @@ class ArtifactList:
 
         load_data_status.stop()
 
-    def list_artifacts(self):
-        while True:
-            try:
-                x = 1
-                for artifact in self.artifacts:
-                    Text(f"{x}. {artifact.name} {artifact.star_rating} {artifact.experience}").display()
-                    x += 1
-
-                Text(f"{x}. back").display()
-                num = get_int("select an artifact\n")
-                return self.artifacts[num - 1]
-            except IndexError:
-                return ""
-
-    def give_artifact_json_list(self):
-        data = []
-        for artifact in self.artifacts:
-            data.append(artifact.jsonify())
-
-        return data
+    def give_item_list(self):
+        return ItemList(content_type=Artifact, content=self.artifacts)

@@ -185,6 +185,7 @@ class ItemList:
     def select(self, single: bool = True, remove: bool = True, list_content: bool = True):
         if list_content:
             self.list_content(True)
+
         if single:
             index = get_int("pick one\n") - 1
             if index < 0:
@@ -193,19 +194,30 @@ class ItemList:
             if remove:
                 self.content.pop(index)
             return item
+
         else:
             selection = get_range_or_int("provide number or range")
             if isinstance(selection, int):
-                self.selections.append(selection - 1)
                 if selection == 0:
                     self.selections = []
                     return None
+
+                if selection - 1 in self.selections:
+                    self.selections.remove(selection - 1)
+                else:
+                    self.selections.append(selection - 1)
+
             elif isinstance(selection, list):
                 for range_group in selection:
                     x = range_group.start_index  # x might be a number too high... we'll see...
                     while x <= range_group.end_index:
-                        self.selections.append(x)
+                        if x in self.selections:
+                            self.selections.remove(x)
+                        else:
+                            self.selections.append(x)
+
                         x += 1
+
             else:
                 selection_copy = self.selections
                 self.selections = []

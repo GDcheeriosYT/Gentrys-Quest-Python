@@ -9,7 +9,7 @@ from Collection.RangeGroup import RangeGroup
 import random
 
 
-def get_int(text: str, pre_input=None):
+def get_int(text: str = "text", pre_input=None):
     while True:
         try:
             if pre_input is None:
@@ -22,7 +22,7 @@ def get_int(text: str, pre_input=None):
             Window.clear()
 
 
-def get_string(text: str, pre_input=None):
+def get_string(text: str = "text", pre_input=None):
     Window.clear()
     if pre_input is None:
         string = input(text + "\n")
@@ -32,7 +32,7 @@ def get_string(text: str, pre_input=None):
     return string
 
 
-def get_range(text: str, pre_input=None):
+def get_range(text: str = "text", pre_input=None):
     Window.clear()
     while True:
         try:
@@ -57,8 +57,7 @@ def get_range(text: str, pre_input=None):
             print(f"Provide input like so:\n{random.randint(1, 25)}-{random.randint(26, 50)}")
 
 
-def get_range_or_int(text: str):
-    Window.clear()
+def get_range_or_int(text: str = "text"):
     inp = input(text + ": ")
     try:
         inp = int(inp)

@@ -104,7 +104,7 @@ class Inventory:
     def exchange_artifact(self, artifact):
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
-        self.artifact_list.artifacts.remove(artifact)
+        self.artifact_list.remove(artifact)
         return int((level * star_rating) * 100)
 
     def manage_artifact(self, artifact: Artifact, is_equipped=False):
@@ -135,11 +135,14 @@ class Inventory:
                         InfoText("\n\nartifact after level up:\n\n").display()
                         artifact_copy = artifact
 
+                        print(self.artifact_list.selections)
+
                         for item in self.artifact_list.get_selections():
+                            print("hello")
                             artifact_copy.add_xp(self.exchange_artifact(item))
 
                         Text(artifact_copy).display()
-                        inp = self.artifact_list.select(list_content=False)
+                        inp = self.artifact_list.select(False, list_content=False)
                         if inp is None:
                             break
 
@@ -149,7 +152,8 @@ class Inventory:
                                 self.artifact_list.content.remove(item)
 
                     if not is_equipped:
-                        self.artifact_list.artifacts.add(artifact)  # adds the artifact back
+                        self.artifact_list.add(artifact)  # adds the artifact back
+
                 else:
                     WarningText("Artifact is max level!").display()
             else:

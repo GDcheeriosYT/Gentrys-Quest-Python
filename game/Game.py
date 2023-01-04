@@ -77,11 +77,11 @@ class Game:
             self.equipped_character = character
 
         self.equipped_character.weapon = Weapon()
-        self.game_data.inventory.character_list.characters.append(character)
+        self.game_data.inventory.character_list.add(character)
         time.sleep(1)
         intro_scene.start(self.equipped_character, self.game_data.inventory, self.game_data.content)
-        character.weapon = self.game_data.inventory.weapon_list.weapons[0]
-        self.game_data.inventory.weapon_list.weapons.pop(0)
+        character.weapon = self.game_data.inventory.weapon_list.content[0]
+        self.game_data.inventory.weapon_list.content.pop(0)
 
     def start(self, character_arg):
         if self.game_data.startup_amount < 1:

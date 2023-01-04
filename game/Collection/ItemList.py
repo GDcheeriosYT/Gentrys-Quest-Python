@@ -187,6 +187,8 @@ class ItemList:
             self.list_content(True)
         if single:
             index = get_int("pick one\n") - 1
+            if index < 0:
+                return ""
             item = self.content[index]
             if remove:
                 self.content.pop(index)

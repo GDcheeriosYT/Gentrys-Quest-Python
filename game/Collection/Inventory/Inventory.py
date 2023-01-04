@@ -130,14 +130,6 @@ class Inventory:
                     return None
             elif choice == 3:
                 if artifact.experience.level != artifact.experience.limit:
-                    if not is_equipped:
-                        try:
-                            print(1)
-                            print(2)
-                            self.artifact_list.content.remove(artifact)  # removes the artifact from the list so it can't be exchanged by itself
-                            print(3)
-                        except Exception as e:
-                            print(e)
                     while True:
                         self.artifact_list.list_content()
                         InfoText("\n\nartifact after level up:\n\n").display()
@@ -156,9 +148,8 @@ class Inventory:
                                 artifact.add_xp(self.exchange_artifact(item))
                                 self.artifact_list.content.remove(item)
 
-
                     if not is_equipped:
-                        self.artifact_list.artifacts.insert(artifact_index, artifact)  # adds the artifact back
+                        self.artifact_list.artifacts.add(artifact)  # adds the artifact back
                 else:
                     WarningText("Artifact is max level!").display()
             else:

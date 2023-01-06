@@ -39,17 +39,20 @@ def get_range(text: str = "text", pre_input=None):
             if pre_input is None:
                 range_input = input(text + "\n").split("-")
             else:
-                range_input = pre_input
+                range_input = pre_input.split("-")
+
             if len(range_input) % 2 == 0:
                 ranges = []
                 index = 0
-                for i in range(len(range_input)):
-                    range_input[i] = int(range_input[i])
+                range_input = [eval(i) for i in range_input]
 
                 while index < len(range_input):
-                    range = RangeGroup(index, index+1)
+                    pos1 = range_input[index]
+                    pos2 = range_input[index + 1]
+                    range = RangeGroup(pos1 - 1, pos2 - 1)
                     ranges.append(range)
                     index += 2
+
                 return ranges
             else:
                 print(f"Provide input like so:\n{random.randint(1, 25)}-{random.randint(26, 50)}")

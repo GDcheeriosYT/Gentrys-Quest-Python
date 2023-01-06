@@ -15,6 +15,8 @@ from IO.Input import get_int
 # entity packages
 from Entity.Artifact.Artifact import Artifact
 
+# built-in packages
+from copy import deepcopy
 
 class Inventory:
     """
@@ -63,17 +65,15 @@ class Inventory:
                 num = get_int(self.__repr__())
                 if num == 1:
                     if is_not_empty(self.character_list.content, "character"):
-                        equipped_character = self.manage_character(self.character_list.select())
+                        equipped_character = self.manage_character(self.character_list.select(remove=False))
                 elif num == 2:
                     if is_not_empty(self.weapon_list.content, "weapon"):
-                        self.manage_weapon(self.weapon_list.select())
+                        self.manage_weapon(self.weapon_list.select(remove=False))
                 elif num == 3:
                     if is_not_empty(self.artifact_list.content, "artifact"):
-                        self.manage_artifact(self.artifact_list.select())
+                        self.manage_artifact(self.artifact_list.select(remove=False))
                 else:
                     break
-            except ValueError:
-                WarningText("That's not exactly a number... Bro")
             except IndexError:
                 break
 
@@ -101,10 +101,11 @@ class Inventory:
                 self.money -= money
                 entity.add_xp(money * 10)
 
-    def exchange_artifact(self, artifact):
+    def exchange_artifact(self, artifact, remove: bool = True):
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
-        self.artifact_list.remove(artifact)
+        if remove:
+            self.artifact_list.content.remove(artifact)
         return int((level * star_rating) * 100)
 
     def manage_artifact(self, artifact: Artifact, is_equipped=False):
@@ -133,13 +134,11 @@ class Inventory:
                     while True:
                         self.artifact_list.list_content()
                         InfoText("\n\nartifact after level up:\n\n").display()
-                        artifact_copy = artifact
-
-                        print(self.artifact_list.selections)
+                        artifact_copy = deepcopy(artifact)
+                        artifact_copy.display_info = False
 
                         for item in self.artifact_list.get_selections():
-                            print("hello")
-                            artifact_copy.add_xp(self.exchange_artifact(item))
+                            artifact_copy.add_xp(self.exchange_artifact(item, False))
 
                         Text(artifact_copy).display()
                         inp = self.artifact_list.select(False, list_content=False)
@@ -147,9 +146,12 @@ class Inventory:
                             break
 
                         elif isinstance(inp, list):
-                            for item in self.artifact_list.get_selections():
-                                artifact.add_xp(self.exchange_artifact(item))
-                                self.artifact_list.content.remove(item)
+                            print(inp)
+                            for selection in inp:
+                                print(self.artifact_list.get(selection))
+                                artifact.add_xp(self.exchange_artifact(self.artifact_list.get(selection)))
+
+                            break
 
                     if not is_equipped:
                         self.artifact_list.add(artifact)  # adds the artifact back

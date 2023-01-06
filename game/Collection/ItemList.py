@@ -196,20 +196,22 @@ class ItemList:
             return item
 
         else:
-            selection = get_range_or_int("provide number or range")
+            selection = get_range_or_int("provide number or range or type done")
             if isinstance(selection, int):
                 if selection == 0:
                     self.selections = []
                     return None
-
-                if selection - 1 in self.selections:
-                    self.selections.remove(selection - 1)
                 else:
-                    self.selections.append(selection - 1)
+                    if selection - 1 in self.selections:
+                        self.selections.remove(selection - 1)
+                    else:
+                        self.selections.append(selection - 1)
+
+                    return ""
 
             elif isinstance(selection, list):
                 for range_group in selection:
-                    x = range_group.start_index  # x might be a number too high... we'll see...
+                    x = range_group.start_index
                     while x <= range_group.end_index:
                         if x in self.selections:
                             self.selections.remove(x)
@@ -217,6 +219,8 @@ class ItemList:
                             self.selections.append(x)
 
                         x += 1
+
+                return ""
 
             else:
                 selection_copy = self.selections

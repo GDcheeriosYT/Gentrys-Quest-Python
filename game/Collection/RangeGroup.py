@@ -9,3 +9,6 @@ class RangeGroup:
             self.exceptions.remove(index)
         else:
             self.exceptions.append(index)
+
+    def __repr__(self):
+        return f"{self.start_index} to {self.end_index}"

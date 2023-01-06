@@ -18,6 +18,7 @@ from Entity.Artifact.Artifact import Artifact
 # built-in packages
 from copy import deepcopy
 
+
 class Inventory:
     """
     Holds all the users owned items
@@ -131,6 +132,9 @@ class Inventory:
                     return None
             elif choice == 3:
                 if artifact.experience.level != artifact.experience.limit:
+                    if not is_equipped:
+                        self.artifact_list.content.remove(artifact)
+
                     while True:
                         self.artifact_list.list_content()
                         InfoText("\n\nartifact after level up:\n\n").display()
@@ -140,16 +144,19 @@ class Inventory:
                         for item in self.artifact_list.get_selections():
                             artifact_copy.add_xp(self.exchange_artifact(item, False))
 
-                        Text(artifact_copy).display()
+                        Text(artifact_copy.name_and_star_rating()).display()
+                        Text(f"{artifact_copy.experience.display_level()} {artifact_copy.experience.display_xp()}/{artifact_copy.experience.get_xp_required(artifact_copy.star_rating.value)} xp").display()
+                        Text(f"+{int((artifact_copy.experience.level/4) - len(artifact_copy.attributes))} attributes").display()
+
                         inp = self.artifact_list.select(False, list_content=False)
                         if inp is None:
                             break
 
                         elif isinstance(inp, list):
-                            print(inp)
                             for selection in inp:
-                                print(self.artifact_list.get(selection))
-                                artifact.add_xp(self.exchange_artifact(self.artifact_list.get(selection)))
+                                artifact.add_xp(self.exchange_artifact(self.artifact_list.get(0)))
+                                if artifact.experience.level == artifact.experience.limit:
+                                    break
 
                             break
 

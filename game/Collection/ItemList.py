@@ -197,6 +197,7 @@ class ItemList:
 
         else:
             selection = get_range_or_int("provide a number or range to select items \n type \"done\" when done with selecting items")
+            Window.clear()
             if isinstance(selection, int):
                 if selection == 0:
                     self.selections = []
@@ -223,9 +224,10 @@ class ItemList:
                 return ""
 
             else:
-                selection_copy = self.selections
-                self.selections = []
-                return selection_copy
+                if selection == "done":
+                    selection_copy = self.selections
+                    self.selections = []
+                    return selection_copy
 
     def jsonify(self):
 

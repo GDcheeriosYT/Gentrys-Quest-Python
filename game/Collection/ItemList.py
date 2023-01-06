@@ -196,7 +196,7 @@ class ItemList:
             return item
 
         else:
-            selection = get_range_or_int("provide number or range or type done")
+            selection = get_range_or_int("provide a number or range to select items \n type \"done\" when done with selecting items")
             if isinstance(selection, int):
                 if selection == 0:
                     self.selections = []

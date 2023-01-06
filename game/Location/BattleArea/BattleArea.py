@@ -204,8 +204,10 @@ class BattleArea(Area):
                 Text(f"{character.name} encountered a {enemy}").display()
                 enemy.show_stats()
                 while True:
-                    Text(f"\n{enemy.name if turn_counter != 0 else ''} {enemy.health if turn_counter != 0 else ''}\n"
-                         f"{character.name} {character.health}\n").display()
+                    Text(f"\n{enemy.name if turn_counter != 0 else ''}").display()
+                    if turn_counter != 0: enemy.show_stats()
+                    else: print("")
+                    Text(f"{character.name} {character.health}\n").display()
                     options = character.get_battle_options()
                     if self.is_runnable:
                         options.append("run")

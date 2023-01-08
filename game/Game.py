@@ -29,6 +29,7 @@ from Interface.Interfaces.Settings import SettingsInterface
 from Graphics.Content.Text.InfoText import InfoText
 from Graphics.Content.Text.WarningText import WarningText
 from Graphics.Text.Text import Text
+from Graphics.Text.Style import Style
 
 # built-in packages
 import time
@@ -94,8 +95,9 @@ class Game:
                 choices = get_int("Main Menu\n"
                                   "1. Play\n"
                                   "2. Settings\n"
-                                  "3. Changelog\n"
-                                  "4. Quit")
+                                  "3. Credits\n"
+                                  "4. Changelog\n"
+                                  "5. Quit")
 
                 if choices == 1:
                     while True:
@@ -158,9 +160,65 @@ class Game:
                         Window.clear()
 
                 elif choices == 3:
-                    display_changelog(self.version)
+                    Window.place_rule("Game Developers")
+                    Text("Brayden", Style(text_color="green")).display()
+                    Text("Carter").display()
+                    print("\n")
+
+                    Window.place_rule("Special Thanks")
+                    Text("Dylan").display()
+                    Text("Brody").display()
+                    Text("Nolan").display()
+                    Text("Bryce").display()
+                    Text("Jared").display()
+                    Text("Zach").display()
+                    Text("Luke").display()
+                    Text("Kelly").display()
+                    Text("Asher").display()
+                    Text("Alec").display()
+                    Text("Spencer").display()
+                    Text("David").display()
+                    Text("Nathan").display()
+                    Text("Joe").display()
+                    Text("Grant").display()
+                    Text("Gavin").display()
+                    Text("Pete").display()
+                    Text("MJ").display()
+                    Text("Mr.Lin(林老师)").display()
+                    Text("Mr.Gentry").display()
+                    Text("Mr.Goldsmith").display()
+                    Text("Cody").display()
+                    Text("Mason").display()
+                    Text("Max").display()
+                    Text("Greg").display()
+                    Text("Hanna").display()
+                    Text("Caleb").display()
+                    Text("Benji").display()
+                    Text("Derek").display()
+                    Text("Charlie").display()
+                    Text("other Grant").display()
+                    Text("Dyllon").display()
+                    Text("Jack").display()
+                    Text("Jaycee").display()
+                    Text("Luke").display()
+                    Text("Kolin").display()
+                    Text("Mak").display()
+                    Text("Matheu").display()
+                    Text("Ryan").display()
+                    Text("Sean").display()
+                    Text("Connor").display()
+                    Text("Seth").display()
+                    Text("Will").display()
+                    Text("Seth").display()
+                    Text("Oliver").display()
+                    Text("Toby").display()
+
+                    enter_to_continue()
 
                 elif choices == 4:
+                    display_changelog(self.version)
+
+                elif choices == 5:
                     in_game = False
             except ValueError:
                 WarningText("Number please...").display()

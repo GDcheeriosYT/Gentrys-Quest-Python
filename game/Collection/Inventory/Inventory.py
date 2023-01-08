@@ -14,6 +14,7 @@ from IO.Input import get_int
 
 # entity packages
 from Entity.Artifact.Artifact import Artifact
+from Entity.Weapon.Weapon import Weapon
 
 # built-in packages
 from copy import deepcopy
@@ -102,11 +103,18 @@ class Inventory:
                 self.money -= money
                 entity.add_xp(money * 10)
 
-    def exchange_artifact(self, artifact, remove: bool = True):
+    def exchange_artifact(self, artifact: Artifact, remove: bool = True):
         star_rating = artifact.star_rating.value
         level = artifact.experience.level
         if remove:
             self.artifact_list.content.remove(artifact)
+        return int((level * star_rating) * 100)
+
+    def exchange_weapon(self, weapon: Weapon, remove: bool = True):
+        star_rating = weapon.star_rating.value
+        level = weapon.experience.level
+        if remove:
+            self.weapon_list.content.remove(weapon)
         return int((level * star_rating) * 100)
 
     def manage_artifact(self, artifact: Artifact, is_equipped=False):
@@ -138,7 +146,7 @@ class Inventory:
                     while True:
                         self.artifact_list.list_content()
                         InfoText("\n\nartifact after level up:\n\n").display()
-                        artifact_copy = deepcopy(artifact)
+                        artifact_copy: Artifact = deepcopy(artifact)
                         artifact_copy.display_info = False
 
                         for item in self.artifact_list.get_selections():
@@ -170,6 +178,45 @@ class Inventory:
 
         return artifact
 
+    def upgrade_weapon(self, weapon):
+        is_equipped = not weapon in self.weapon_list.content
+        choice2 = get_int("1. with money\n"
+                          "2. with weapons\n"
+                          "3. back\n")
+        if choice2 == 1:
+            self.level_up_prompt(weapon)
+
+        elif choice2 == 2:
+            if not is_equipped:
+                self.weapon_list.content.remove(weapon)
+
+            while True:
+                self.weapon_list.list_content()
+                InfoText("\n\nweapon after level up:\n\n").display()
+                weapon_copy: Weapon = deepcopy(weapon)
+                weapon_copy.display_info = False
+
+                for item in self.weapon_list.get_selections():
+                    weapon_copy.add_xp(self.exchange_weapon(item, False))
+
+                Text(weapon_copy.name_and_star_rating()).display()
+                Text(f"attack: {weapon_copy.attack}").display()
+                Text(f"{weapon_copy.experience.display_level()} {weapon_copy.experience.display_xp()}/{weapon_copy.experience.get_xp_required(weapon_copy.star_rating.value)} xp").display()
+                print("\n")
+
+                inp = self.weapon_list.select(False, list_content=False)
+                if inp is None:
+                    break
+
+                elif isinstance(inp, list):
+                    for selection in inp:
+                        weapon.add_xp(self.exchange_weapon(self.weapon_list.get(0)))
+
+                    break
+
+            if not is_equipped:
+                self.weapon_list.add(weapon)  # adds the weapon back
+
     def manage_weapon(self, weapon):
         while True:
             if weapon is None:
@@ -179,7 +226,7 @@ class Inventory:
                              "2. back\n")
 
             if choice == 1:
-                self.level_up_prompt(weapon)
+                self.upgrade_weapon(weapon)
 
             else:
                 break
@@ -205,7 +252,7 @@ class Inventory:
                                      "4. back\n")
 
                     if choice == 1:
-                        self.level_up_prompt(character.weapon)
+                        self.upgrade_weapon()
 
                     elif choice == 2:
                         self.swap_weapon(character)

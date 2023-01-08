@@ -146,7 +146,7 @@ class Inventory:
 
                         Text(artifact_copy.name_and_star_rating()).display()
                         Text(f"{artifact_copy.experience.display_level()} {artifact_copy.experience.display_xp()}/{artifact_copy.experience.get_xp_required(artifact_copy.star_rating.value)} xp").display()
-                        Text(f"+{int((artifact_copy.experience.level/4) - len(artifact_copy.attributes))} attributes").display()
+                        Text(f"+{int(int(artifact_copy.experience.level/4) - int(artifact.experience.level/4))} attributes").display()
 
                         inp = self.artifact_list.select(False, list_content=False)
                         if inp is None:

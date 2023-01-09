@@ -138,43 +138,41 @@ class BattleArea(Area):
                 if family == family1.name:
                     for artifact in family1.artifacts:
                         artifacts_to_choose_from.append(artifact)
-            if len(artifacts_to_choose_from) > 0:
-                for i in range((self.get_difficulty(difficulty) + 1) / 2):
-                    artifact = random.choice(artifacts_to_choose_from)
+
+        if len(artifacts_to_choose_from) > 0:
+            for i in range(int((self.get_difficulty(difficulty) + 1))):
+                artifact = random.choice(artifacts_to_choose_from)
+                star_rating = 1
+                if points >= 25:
                     star_rating = 1
-                    if points >= 25:
-                        star_rating = 1
-                        points -= 25
+                    points -= 25
 
-                    elif points >= 50:
-                        star_rating = 2
-                        points -= 50
+                elif points >= 50:
+                    star_rating = 2
+                    points -= 50
 
-                    elif points >= 100:
-                        star_rating = 3
-                        points -= 100
+                elif points >= 100:
+                    star_rating = 3
+                    points -= 100
 
-                    elif points >= 150:
-                        star_rating = 4
-                        points -= 150
+                elif points >= 150:
+                    star_rating = 4
+                    points -= 150
 
-                    elif points >= 200:
-                        star_rating = 5
-                        points -= 200
+                elif points >= 200:
+                    star_rating = 5
+                    points -= 200
 
-                    artifact = artifact(StarRating(star_rating))
-                    artifacts.append(artifact)
+                artifact = artifact(StarRating(star_rating))
+                artifacts.append(artifact)
 
-                for i in range((self.get_difficulty(difficulty) + 1) / 2):
-                    artifact = random.choice(artifacts_to_choose_from)
-                    star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty) + 1)
-                    artifact = artifact(StarRating(star_rating))
-                    artifacts.append(artifact)
+            for i in range(int((self.get_difficulty(difficulty) + 1))):
+                artifact = random.choice(artifacts_to_choose_from)
+                star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty) + 1)
+                artifact = artifact(StarRating(star_rating))
+                artifacts.append(artifact)
 
-            else:
-                pass
-
-        return artifacts
+            return artifacts
 
     @staticmethod
     def results(percentage, money=0, xp=0, artifacts=None):

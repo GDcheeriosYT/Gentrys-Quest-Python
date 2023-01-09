@@ -153,7 +153,7 @@ class ItemList:
 
         return selections
 
-    def list_content(self, display_number: bool = True, ):
+    def list_content(self, display_number: bool = True):
         for item in self.content:
             if hasattr(item, "list_view"):
                 item_string = item.list_view()
@@ -164,7 +164,9 @@ class ItemList:
                 Text(f"{color}{self.content.index(item) + 1}. {item_string}").display()
             else:
                 Text(f"{color}{item_string}").display()
-        print("0. back")
+
+        if display_number:
+            print("0. back")
 
     def change_limit(self, amount):
         Window.clear()
@@ -189,7 +191,7 @@ class ItemList:
         if single:
             index = get_int("pick one\n") - 1
             if index < 0:
-                return ""
+                return None
             item = self.content[index]
             if remove:
                 self.content.pop(index)

@@ -140,7 +140,7 @@ class BattleArea(Area):
                         artifacts_to_choose_from.append(artifact)
 
         while points > 0:
-            if len(artifacts_to_choose_from) < 0:
+            if len(artifacts_to_choose_from) > 0:
                 artifact = random.choice(artifacts_to_choose_from)
                 star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty) + 1)
                 artifact = artifact(StarRating(star_rating))
@@ -174,7 +174,9 @@ class BattleArea(Area):
              f"{xp}xp\n").display()
         if artifacts is not None:
             print("\tartifacts")
-            Text(artifacts.list_content()).display()
+            for artifact in artifacts.content:
+                Text(artifact).display()
+
         enter_to_continue()
         raise EndException
 
@@ -248,7 +250,7 @@ class BattleArea(Area):
                 calculate_percentage()
 
             for artifact in artifacts.content:
-                inventory.artifact_list.artifacts.append(artifact)
+                inventory.artifact_list.add(artifact)
 
             self.results(percentage, money, xp, artifacts)
         except EndException:

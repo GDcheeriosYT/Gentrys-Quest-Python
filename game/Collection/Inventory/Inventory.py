@@ -252,14 +252,14 @@ class Inventory:
                                      "4. back\n")
 
                     if choice == 1:
-                        self.upgrade_weapon()
+                        self.upgrade_weapon(character.weapon)
 
                     elif choice == 2:
                         self.swap_weapon(character)
                         character.update_stats()
 
                     elif choice == 3:
-                        self.weapon_list.weapons.append(character.weapon)
+                        self.weapon_list.add(character.weapon)
                         character.weapon = None
 
                     else:
@@ -296,7 +296,8 @@ class Inventory:
         if character_weapon is not None:
             self.weapon_list.add(character_weapon)
 
-        Text(f"You have equipped {character.weapon.name}").display()
+        if character.weapon is not None:
+            Text(f"You have equipped {character.weapon.name}").display()
 
     def jsonify(self):
         return {

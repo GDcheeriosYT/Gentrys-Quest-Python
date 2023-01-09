@@ -24,7 +24,9 @@ content = [
     InfoText("Added content to Brayden's House! by GDcheerios")
 ]
 online = []
-code_structure = []
+code_structure = [
+    InfoText("Changed enemy initialization in battle area to use deepcopy()")
+]
 testing = [
     InfoText("Added Changelog View Testing! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link] by GDcheerios")
 ]

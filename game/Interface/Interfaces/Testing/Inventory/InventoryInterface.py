@@ -1,5 +1,7 @@
 # game packages
 # interface packages
+import traceback
+
 from Interface.Interface import Interface
 from Interface.InterfaceContent import InterfaceContent
 from .InventoryTestInterface import InventoryTestInterface
@@ -19,4 +21,5 @@ class InventoryInterface(Interface):
                 try:
                     test_interface.__repr__()
                 except TypeError:
+                    traceback.print_exc()
                     break

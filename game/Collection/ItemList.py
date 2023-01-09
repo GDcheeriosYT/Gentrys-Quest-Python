@@ -5,11 +5,13 @@ from Graphics.Text.Text import Text
 
 # IO packages
 from IO import Window
-from IO.Input import get_int
+from IO.Input import get_int, get_range_or_int
 
 # external packages
 from rich.console import Console
 
+# Collection packages
+from .RangeGroup import RangeGroup
 
 class ItemList:
     """
@@ -41,6 +43,7 @@ class ItemList:
                 self.content.append(None)
         self.content_type = content_type
         self.output = output
+        self.selections = []
 
     def add(self, item):
         if isinstance(item, self.content_type):
@@ -143,9 +146,25 @@ class ItemList:
             self.content[x].pop()
             x -= 1
 
-    def list_content(self):
+    def get_selections(self):
+        selections = []
+        for index in self.selections:
+            selections.append(self.content[index])
+
+        return selections
+
+    def list_content(self, display_number: bool = True, ):
         for item in self.content:
-            Text(item).display()
+            if hasattr(item, "list_view"):
+                item_string = item.list_view()
+            else:
+                item_string = item
+            color = "[green on black]" if self.content.index(item) in self.selections else "[white on black]"
+            if display_number:
+                Text(f"{color}{self.content.index(item) + 1}. {item_string}").display()
+            else:
+                Text(f"{color}{item_string}").display()
+        print("0. back")
 
     def change_limit(self, amount):
         Window.clear()
@@ -159,6 +178,69 @@ class ItemList:
 
     def get_length(self):
         return len(self.content)
+
+    def get_index(self, item):
+        return self.content.index(item)
+
+    def select(self, single: bool = True, remove: bool = True, list_content: bool = True):
+        if list_content:
+            self.list_content(True)
+
+        if single:
+            index = get_int("pick one\n") - 1
+            if index < 0:
+                return ""
+            item = self.content[index]
+            if remove:
+                self.content.pop(index)
+            return item
+
+        else:
+            selection = get_range_or_int("provide a number or range to select items \n type \"done\" when done with selecting items")
+            Window.clear()
+            if isinstance(selection, int):
+                if selection == 0:
+                    self.selections = []
+                    return None
+                else:
+                    if selection - 1 in self.selections:
+                        self.selections.remove(selection - 1)
+                    else:
+                        self.selections.append(selection - 1)
+
+                    return ""
+
+            elif isinstance(selection, list):
+                for range_group in selection:
+                    x = range_group.start_index
+                    while x <= range_group.end_index:
+                        if x in self.selections:
+                            self.selections.remove(x)
+                        else:
+                            self.selections.append(x)
+
+                        x += 1
+
+                return ""
+
+            else:
+                if selection == "done":
+                    selection_copy = self.selections
+                    self.selections = []
+                    return selection_copy
+
+    def jsonify(self):
+
+        """
+        assuming all the items in the list have a jsonify method it will return:
+
+        :return:
+        jsonified item data
+        """
+
+        data = []
+        for item in self.content:
+            data.append(item.jsonify())
 
     def __repr__(self):
         return str({

@@ -42,15 +42,14 @@ class InventoryTestInterface:
         self.inventory.money = money.value
 
     def add_character(self):
-        self.inventory.character_list.characters.append(Character("Test Character", "just a test character.", experience=Experience()))
+        self.inventory.character_list.add(Character("Test Character", "just a test character.", experience=Experience()))
 
     def add_artifact(self):
-        star_rating = random.randint(1, 5)
         artifact = random.choice(artifacts)
-        self.inventory.artifact_list.artifacts.append(artifact(StarRating(random.randint(1, 5))))
+        self.inventory.artifact_list.add(artifact(StarRating(random.randint(1, 5))))
 
     def add_weapon(self):
-        self.inventory.weapon_list.weapons.append((Weapon("Test Weapon", "just a test weapon.", experience=Experience())))
+        self.inventory.weapon_list.add((Weapon("Test Weapon", "just a test weapon.", experience=Experience())))
 
     def __repr__(self):
         while True:

@@ -9,6 +9,7 @@ from rich.console import Console
 # built-in packages
 import time
 
+
 def login(username, password, server_url):
     log_in_status = Status("Logging in", "dots")
     url = f"{server_url}/api/account/login/{username}+{password}"

@@ -243,7 +243,11 @@ class BattleArea(Area):
                             for effect in character_effects:
                                 effect.affect(character)
                     else:
-                        self.results(percentage, money, xp)
+                        if self.is_runnable:
+                            self.results(percentage, money, xp)
+                        else:
+                            WarningText("Not a valid option!").display()
+
                     turn_counter += 1
 
                 enemies_killed += 1

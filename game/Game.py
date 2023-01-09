@@ -14,6 +14,9 @@ from Content.Gachas.ValleyHighSchool import ValleyHighSchool
 from Content.Gachas.BaseGacha import BaseGacha
 from Content.CharacterContentManager import CharacterContentManager
 
+# collection packages
+from Collection.ItemList import ItemList
+
 # IO packages
 from IO.Input import get_int, get_string, enter_to_continue
 from IO import Window
@@ -30,15 +33,20 @@ from Graphics.Content.Text.InfoText import InfoText
 from Graphics.Content.Text.WarningText import WarningText
 from Graphics.Text.Text import Text
 from Graphics.Text.Style import Style
+from Graphics.Status import Status
+
+# online packages
+from Online.Server import Server
 
 # built-in packages
 import time
 
 
 class Game:
-    def __init__(self, game_data, version):
+    def __init__(self, game_data, version, server):
         self.game_data = game_data
         self.version = version
+        self.server: Server = server
         self.equipped_character = None
         self.locations = ItemList(content_type=Location)
 
@@ -96,8 +104,9 @@ class Game:
                                   "1. Play\n"
                                   "2. Settings\n"
                                   "3. Credits\n"
-                                  "4. Changelog\n"
-                                  "5. Quit")
+                                  "4. Online Players\n"
+                                  "5. Changelog\n"
+                                  "6. Quit")
 
                 if choices == 1:
                     while True:
@@ -216,9 +225,18 @@ class Game:
                     enter_to_continue()
 
                 elif choices == 4:
-                    display_changelog(self.version)
+                    online_status = Status("fetching online users...")
+                    Window.place_rule("Online Users")
+                    online_status.start()
+                    players = ItemList(content=self.server.API.get_online_players())
+                    online_status.stop()
+                    players.list_content(False)
+                    enter_to_continue()
 
                 elif choices == 5:
+                    display_changelog(self.version)
+
+                elif choices == 6:
                     in_game = False
             except ValueError:
                 WarningText("Number please...").display()

@@ -1,6 +1,8 @@
 # online game packages
 from .Login import login
 from .UploadData import upload_data
+from .GetPowerLevel import get_power_level
+from ..User.User import User
 
 # graphics game packages
 from Graphics.Content.Text.WarningText import WarningText
@@ -8,7 +10,7 @@ from Graphics.Content.Text.InfoText import InfoText
 
 # external packages
 import time
-
+import requests
 
 class API:
     """
@@ -37,7 +39,29 @@ class API:
             exit(0)
         else:
             self.id = login_result["id"]
+            requests.post(f"{self.url}/api/gq/check-in/{self.id}")
             return login_result
 
     def upload_data(self, data):
         upload_data(self.url, self.id, data, self.token.token)
+
+    def get_power_level(self):
+        return get_power_level(self.id, self.url)
+
+    def get_online_players(self):
+        player_list: dict = requests.get(f"{self.url}/api/gq/get-online-players").json()
+        online_players = []
+        for id in player_list.keys():
+            user = User(int(id), player_list[id]["username"], player_list[id]["power level"])
+            user.ranking = player_list[id]["ranking"]
+            online_players.append(user)
+
+        def sort_thing(user: User):
+            return user.ranking
+
+        online_players.sort(key=sort_thing)
+        return online_players
+
+    def check_out(self):
+        requests.post(f"{self.url}/api/gq/check-out/{self.id}")
+

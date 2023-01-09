@@ -26,6 +26,7 @@ from IO import Window
 import sys
 import time
 import os
+import atexit
 
 # external packages
 import argparse
@@ -71,11 +72,14 @@ else:
         server = Server(args.server)  # make cl ass to store server info
     if args.username is not None and args.password is not None:
         account_info = AccountInfo(args.username, args.password)  # make class to store account info
-        user = User(account_info.username, 99999, None)  # user class initialization
         user_data = server.API.login(account_info.username, account_info.password)  # game data class initialization
+        user = User(user_data["id"], account_info.username, server.API.get_power_level())  # user class initialization
         game_data = GameData(user_data["metadata"]["Gentry's Quest data"])
-        game = Game(game_data, version)
-        game.start(args.character)
+        game = Game(game_data, version, server)
+        def byebye():
+            server.API.upload_data(game.game_data)
+            server.API.check_out()
+            server.API.token.delete()
 
-        server.API.upload_data(game.game_data)
-        server.API.token.delete()
+        atexit.register(byebye)
+        game.start(args.character)

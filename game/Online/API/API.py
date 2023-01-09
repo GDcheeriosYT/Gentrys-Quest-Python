@@ -56,6 +56,10 @@ class API:
             user.ranking = player_list[id]["ranking"]
             online_players.append(user)
 
+        def sort_thing(user: User):
+            return user.ranking
+
+        online_players.sort(key=sort_thing)
         return online_players
 
     def check_out(self):

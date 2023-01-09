@@ -33,6 +33,7 @@ from Graphics.Content.Text.InfoText import InfoText
 from Graphics.Content.Text.WarningText import WarningText
 from Graphics.Text.Text import Text
 from Graphics.Text.Style import Style
+from Graphics.Status import Status
 
 # online packages
 from Online.Server import Server
@@ -224,8 +225,11 @@ class Game:
                     enter_to_continue()
 
                 elif choices == 4:
+                    online_status = Status("fetching online users...")
                     Window.place_rule("Online Users")
+                    online_status.start()
                     players = ItemList(content=self.server.API.get_online_players())
+                    online_status.stop()
                     players.list_content(False)
                     enter_to_continue()
 

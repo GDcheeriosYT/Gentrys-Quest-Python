@@ -23,9 +23,11 @@ content = [
     InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link] by GDcheerios"),
     InfoText("Added content to Brayden's House! by GDcheerios")
 ]
-online = []
+online = [
+    InfoText("Added online features! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/49]PR\[#49][/link] by GDcheerios")
+]
 code_structure = [
-    InfoText("Changed enemy initialization in battle area to use deepcopy()")
+    InfoText("Changed enemy initialization in battle area to use deepcopy()!")
 ]
 testing = [
     InfoText("Added Changelog View Testing! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link] by GDcheerios")

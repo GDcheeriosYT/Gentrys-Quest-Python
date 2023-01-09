@@ -238,12 +238,9 @@ class ItemList:
         """
 
         data = []
-        print("hello")
         for item in self.content:
-            print(item)
             data.append(item.jsonify())
 
-        print(data)
         return data
 
     def __repr__(self):

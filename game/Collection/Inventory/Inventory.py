@@ -301,9 +301,9 @@ class Inventory:
 
     def jsonify(self):
         return {
-            "artifacts": self.jsonify(),
-            "weapons": self.jsonify(),
-            "characters": self.jsonify(),
+            "artifacts": self.artifact_list.jsonify(),
+            "weapons": self.weapon_list.jsonify(),
+            "characters": self.character_list.jsonify(),
             "money": self.money
         }
 

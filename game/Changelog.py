@@ -10,20 +10,25 @@ from IO import Window
 
 # change log groupings
 gameplay = [
-    InfoText("Added Changelog! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link]"),
-    InfoText("Reworked scaling [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/44]PR\[#44][/link]")
+    InfoText("Added Changelog! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link] by GDcheerios"),
+    InfoText("Reworked scaling! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/44]PR\[#44][/link] by GDcheerios"),
+    InfoText("Added credits! by GDcheerios"),
+    InfoText("Changed Gacha to give duplicate weapons rather than upgrading weapons! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/47]PR\[#47][/link] by GDcheerios"),
+    InfoText("Added multiple selection of items when upgrading weapon or artifacts! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/47]PR\[#47][/link] by GDcheerios"),
+    InfoText("Added visualization of item after leveling up! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/47]PR\[#47][/link] by GDcheerios"),
+    InfoText("Reworked Inventory Functions! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/47]PR\[#47][/link] by GDcheerios")
 ]
 graphics = []
 content = [
-    InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link]"),
-    InfoText("Added content to Brayden's House")
+    InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link] by GDcheerios"),
+    InfoText("Added content to Brayden's House! by GDcheerios")
 ]
 online = []
 code_structure = [
     InfoText("Changed enemy initialization in battle area to use deepcopy()")
 ]
 testing = [
-    InfoText("Added Changelog View Testing! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link]")
+    InfoText("Added Changelog View Testing! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link] by GDcheerios")
 ]
 
 

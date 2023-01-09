@@ -234,15 +234,17 @@ class ItemList:
     def jsonify(self):
 
         """
-        assuming all the items in the list have a jsonify method it will return:
-
-        :return:
-        jsonified item data
+        assuming all the items in the list have a jsonify method it will return jsonified item data
         """
 
         data = []
+        print("hello")
         for item in self.content:
+            print(item)
             data.append(item.jsonify())
+
+        print(data)
+        return data
 
     def __repr__(self):
         return str({

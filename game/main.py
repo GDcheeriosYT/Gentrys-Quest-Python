@@ -26,6 +26,7 @@ from IO import Window
 import sys
 import time
 import os
+import atexit
 
 # external packages
 import argparse
@@ -75,8 +76,10 @@ else:
         user = User(user_data["id"], account_info.username, server.API.get_power_level())  # user class initialization
         game_data = GameData(user_data["metadata"]["Gentry's Quest data"])
         game = Game(game_data, version, server)
-        game.start(args.character)
+        def byebye():
+            server.API.upload_data(game.game_data)
+            server.API.check_out()
+            server.API.token.delete()
 
-        server.API.upload_data(game.game_data)
-        server.API.check_out()
-        server.API.token.delete()
+        atexit.register(byebye)
+        game.start(args.character)

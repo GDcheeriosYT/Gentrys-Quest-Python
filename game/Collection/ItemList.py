@@ -215,6 +215,8 @@ class ItemList:
             elif isinstance(selection, list):
                 for range_group in selection:
                     x = range_group.start_index
+                    if range_group.end_index > self.get_length():
+                        range_group.end_index = self.get_length() - 1
                     while x <= range_group.end_index:
                         if x in self.selections:
                             self.selections.remove(x)

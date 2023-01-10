@@ -204,15 +204,16 @@ class ItemList:
                 if selection == 0:
                     self.selections = []
                     return None
-                elif selection >= self.get_length():
+                elif selection - 1 >= self.get_length():
                     WarningText("This is not in the list!").display()
                     return ""
 
                 else:
-                    if selection - 1 in self.selections:
-                        self.selections.remove(selection - 1)
+                    selection -= 1
+                    if selection in self.selections:
+                        self.selections.remove(selection)
                     else:
-                        self.selections.append(selection - 1)
+                        self.selections.append(selection)
 
                     return ""
 

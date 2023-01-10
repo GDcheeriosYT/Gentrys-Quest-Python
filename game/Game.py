@@ -171,7 +171,7 @@ class Game:
                 elif choices == 3:
                     Window.place_rule("Game Developers")
                     Text("Brayden", Style(text_color="green")).display()
-                    Text("Carter").display()
+                    Text("Carter", Style("green", "bright_magenta", ["italic"])).display()
                     print("\n")
 
                     Window.place_rule("Special Thanks")

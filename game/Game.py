@@ -13,6 +13,7 @@ from Content.Stories.Intro import Intro
 from Content.Gachas.ValleyHighSchool import ValleyHighSchool
 from Content.Gachas.BaseGacha import BaseGacha
 from Content.CharacterContentManager import CharacterContentManager
+from Content.Stories.GentrysQuest import GentrysQuest
 
 # collection packages
 from Collection.ItemList import ItemList
@@ -114,13 +115,23 @@ class Game:
                                            "2. Back")
                         if choices1 == 1:
                             while True:
-                                choices2 = get_int("1. Travel\n"
-                                                   "2. Gacha\n"
-                                                   "3. Inventory\n"
-                                                   "4. Back")
+                                choices2 = get_int("1. Story\n"
+                                                   "2. Travel\n"
+                                                   "3. Gacha\n"
+                                                   "4. Inventory\n"
+                                                   "5. Back")
 
                                 if choices2 == 1:
+                                    self.game_data
+
+                                elif choices2 == 2:
                                     while True:
+                                        if self.equipped_character is None:
+                                            character = "nobody"
+                                        else:
+                                            character = self.equipped_character.list_view()
+
+                                        Text(f"you currently have {character} equipped").display()
                                         locations = self.game_data.content.locations
                                         for location in locations:
                                             Text(f"{locations.index(location) + 1}. {location}").display()
@@ -129,6 +140,7 @@ class Game:
                                         if choices3 != len(locations) + 1:
                                             try:
                                                 location = locations[choices3 - 1]
+                                                Text(f"you currently have {character} equipped").display()
                                                 location.list_areas()
                                                 location.select_area(self.equipped_character, self.game_data.inventory, self.game_data.content)
                                             except IndexError:
@@ -137,7 +149,7 @@ class Game:
                                         else:
                                             break
 
-                                elif choices2 == 2:
+                                elif choices2 == 3:
                                     valley_high_school = ValleyHighSchool()
                                     base_gacha = BaseGacha()
                                     Text(f"1. {valley_high_school.name.raw_output()}\n"
@@ -150,7 +162,7 @@ class Game:
                                     elif choices3 == 2:
                                         base_gacha.manage_input(self.game_data.inventory)
 
-                                elif choices2 == 3:
+                                elif choices2 == 4:
                                     inventory_results = self.game_data.inventory.manage_input(self.equipped_character)
                                     if inventory_results is not None:
                                         self.equipped_character = inventory_results

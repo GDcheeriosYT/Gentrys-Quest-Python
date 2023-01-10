@@ -157,6 +157,7 @@ class Inventory:
                         Text(f"+{int(int(artifact_copy.experience.level/4) - int(artifact.experience.level/4))} attributes").display()
 
                         inp = self.artifact_list.select(False, list_content=False)
+
                         if inp is None:
                             break
 
@@ -219,8 +220,9 @@ class Inventory:
 
     def manage_weapon(self, weapon):
         while True:
-            if weapon is None:
+            if weapon is None or weapon == "":
                 break
+
             Text(weapon).display()
             choice = get_int("1. level up\n"
                              "2. back\n")

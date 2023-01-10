@@ -4,8 +4,7 @@ from Entity.Enemy.Enemy import Enemy
 from Entity.Stats.Experience import Experience
 
 # content packages
-from ..Weapons.Breifcase import Breifcase
-
+from ..Weapons.Briefcase import Briefcase
 
 class SaulGoodman(Enemy):
     def __init__(self):
@@ -14,7 +13,7 @@ class SaulGoodman(Enemy):
             3,
             1,
             1,
-            Breifcase(),
+            Briefcase(),
             "Saul Goodman is the best lawyer you could ask for! As long as you pay him well...",
             Experience()
         )

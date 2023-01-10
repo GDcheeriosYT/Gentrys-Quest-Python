@@ -3,7 +3,7 @@
 from .Locations.Iowa.Iowa import Iowa
 from .Locations.Nigeria.Nigeria import Nigeria
 from .Locations.Ohio.Ohio import Ohio
-from .Locations.Ohio.China import China
+from .Locations.China.China import China
 
 # graphics packages
 from Graphics.Status import Status

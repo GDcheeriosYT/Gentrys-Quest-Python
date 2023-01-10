@@ -7,15 +7,15 @@ from Entity.Stats.StarRating import StarRating
 from Entity.Stats.Experience import Experience
 
 
-class Briefcase(Weapon):
+class Money(Weapon):
     def __init__(self):
         super().__init__(
-            "Briefcase",
-            "Saul Goodman's Briefcase, its full of his clients.",
-            "Club",
-            1,
+            "Money",
+            "Yi Long Ma (younger brother of Elon Musk) has more money than he does!",
+            "sword",
+            5,
             Buff(),
-            Verbs("investigated", "lawyered"),
-            StarRating(2),
+            Verbs("gave it to you", "slapped"),
+            StarRating(5),
             Experience()
         )

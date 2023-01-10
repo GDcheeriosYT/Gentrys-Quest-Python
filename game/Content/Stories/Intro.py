@@ -90,6 +90,7 @@ class Intro(Story):
                 artifact_thing,
                 gacha_event,
                 "\"I wish you luck {player}!\"",
+                "\"Oh, by the way you can come over to my house and train your abilities\""
                 "welcome to Gentry's Quest!"
             ]
         )

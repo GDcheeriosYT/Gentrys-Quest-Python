@@ -2,6 +2,7 @@
 # content packages
 from .Locations.Iowa.Iowa import Iowa
 from .Locations.Nigeria.Nigeria import Nigeria
+from .Locations.GentrysHouse.GentrysHouse import GentrysHouseLocation
 
 # graphics packages
 from Graphics.Status import Status
@@ -29,7 +30,8 @@ class LocationContentManager:
         load_status.start()
         self.locations = [
             Iowa(),
-            Nigeria()
+            Nigeria(),
+            GentrysHouseLocation()
         ]
         load_status.stop()
 

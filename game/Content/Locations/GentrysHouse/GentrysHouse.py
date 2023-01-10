@@ -26,7 +26,7 @@ class TestDummy(Enemy):
 class GentrysHouse(BattleArea):
     def __init__(self, difficulty):
         artifact_families = ItemList(content_type=str)
-        artifact_families.add("GMoney")
+        artifact_families.add("Mr.Gentry")
         enemies = ItemList(content_type=Enemy)
         enemies.add(TestDummy())
         super().__init__(

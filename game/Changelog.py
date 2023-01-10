@@ -21,6 +21,10 @@ gameplay = [
 graphics = []
 content = [
     InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link] by GDcheerios"),
+    InfoText("Added content to Brayden's House by GDcheerios"),
+    InfoText("Added Ohio location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/42]PR\[#42][/link] by CarlBla123"),
+    InfoText("Added China location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/42]PR\[#42][/link] by CarlBla123"),
+    InfoText("Added Nigeria location! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/41]PR\[#41][/link] by GDcheerios"),
     InfoText("Added content to Brayden's House! by GDcheerios"),
     InfoText("Added Gentry's House location! by GDcheerios")
 ]
@@ -28,7 +32,7 @@ online = [
     InfoText("Added online features! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/49]PR\[#49][/link] by GDcheerios")
 ]
 code_structure = [
-    InfoText("Changed enemy initialization in battle area to use deepcopy()!")
+    InfoText("Changed enemy initialization in battle area to use deepcopy()! by GDcheerios")
 ]
 testing = [
     InfoText("Added Changelog View Testing! [link=https://github.com/GDcheeriosYT/Gentrys-Quest-Python/pull/35]PR\[#35][/link] by GDcheerios")

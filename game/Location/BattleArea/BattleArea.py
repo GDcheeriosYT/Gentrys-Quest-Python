@@ -207,7 +207,7 @@ class BattleArea(Area):
                     Text(f"\n{enemy.name if turn_counter != 0 else ''}").display()
                     if turn_counter != 0: enemy.show_stats()
                     else: print("")
-                    Text(f"{character.name} {character.health}\n").display()
+                    Text(f"{character.name} health: {character.health.total_value}\n").display()
                     options = character.get_battle_options()
                     if self.is_runnable:
                         options.append("run")

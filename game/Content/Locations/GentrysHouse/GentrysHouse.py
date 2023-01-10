@@ -28,7 +28,7 @@ class GentrysHouse(BattleArea):
         artifact_families = ItemList(content_type=str)
         artifact_families.add("GMoney")
         enemies = ItemList(content_type=Enemy)
-        enemies.add(TestDummy)
+        enemies.add(TestDummy())
         super().__init__(
             f"Gentry's House lvl{difficulty * 20}-{(difficulty * 20) + 19}",
             difficulty,

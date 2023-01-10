@@ -14,6 +14,9 @@ from Content.Gachas.ValleyHighSchool import ValleyHighSchool
 from Content.Gachas.BaseGacha import BaseGacha
 from Content.CharacterContentManager import CharacterContentManager
 
+# collection packages
+from Collection.ItemList import ItemList
+
 # IO packages
 from IO.Input import get_int, get_string, enter_to_continue
 from IO import Window
@@ -29,15 +32,21 @@ from Interface.Interfaces.Settings import SettingsInterface
 from Graphics.Content.Text.InfoText import InfoText
 from Graphics.Content.Text.WarningText import WarningText
 from Graphics.Text.Text import Text
+from Graphics.Text.Style import Style
+from Graphics.Status import Status
+
+# online packages
+from Online.Server import Server
 
 # built-in packages
 import time
 
 
 class Game:
-    def __init__(self, game_data, version):
+    def __init__(self, game_data, version, server):
         self.game_data = game_data
         self.version = version
+        self.server: Server = server
         self.equipped_character = None
         self.locations = ItemList(content_type=Location)
 
@@ -77,11 +86,11 @@ class Game:
             self.equipped_character = character
 
         self.equipped_character.weapon = Weapon()
-        self.game_data.inventory.character_list.characters.append(character)
+        self.game_data.inventory.character_list.add(character)
         time.sleep(1)
         intro_scene.start(self.equipped_character, self.game_data.inventory, self.game_data.content)
-        character.weapon = self.game_data.inventory.weapon_list.weapons[0]
-        self.game_data.inventory.weapon_list.weapons.pop(0)
+        character.weapon = self.game_data.inventory.weapon_list.content[0]
+        self.game_data.inventory.weapon_list.content.pop(0)
 
     def start(self, character_arg):
         if self.game_data.startup_amount < 1:
@@ -94,8 +103,10 @@ class Game:
                 choices = get_int("Main Menu\n"
                                   "1. Play\n"
                                   "2. Settings\n"
-                                  "3. Changelog\n"
-                                  "4. Quit")
+                                  "3. Credits\n"
+                                  "4. Online Players\n"
+                                  "5. Changelog\n"
+                                  "6. Quit")
 
                 if choices == 1:
                     while True:
@@ -158,9 +169,74 @@ class Game:
                         Window.clear()
 
                 elif choices == 3:
-                    display_changelog(self.version)
+                    Window.place_rule("Game Developers")
+                    Text("Brayden", Style(text_color="green")).display()
+                    Text("Carter", Style("green", "bright_magenta", ["italic"])).display()
+                    print("\n")
+
+                    Window.place_rule("Special Thanks")
+                    Text("Dylan").display()
+                    Text("Brody").display()
+                    Text("Nolan").display()
+                    Text("Bryce").display()
+                    Text("Jared").display()
+                    Text("Zach").display()
+                    Text("Luke").display()
+                    Text("Kelly").display()
+                    Text("Asher").display()
+                    Text("Alec").display()
+                    Text("Spencer").display()
+                    Text("David").display()
+                    Text("Nathan").display()
+                    Text("Joe").display()
+                    Text("Grant").display()
+                    Text("Gavin").display()
+                    Text("Pete").display()
+                    Text("MJ").display()
+                    Text("Mr.Lin(林老师)").display()
+                    Text("Mr.Gentry").display()
+                    Text("Mr.Goldsmith").display()
+                    Text("Cody").display()
+                    Text("Mason").display()
+                    Text("Max").display()
+                    Text("Greg").display()
+                    Text("Hanna").display()
+                    Text("Caleb").display()
+                    Text("Benji").display()
+                    Text("Derek").display()
+                    Text("Charlie").display()
+                    Text("other Grant").display()
+                    Text("Dyllon").display()
+                    Text("Jack").display()
+                    Text("Jaycee").display()
+                    Text("Luke").display()
+                    Text("Kolin").display()
+                    Text("Mak").display()
+                    Text("Matheu").display()
+                    Text("Ryan").display()
+                    Text("Sean").display()
+                    Text("Connor").display()
+                    Text("Seth").display()
+                    Text("Will").display()
+                    Text("Seth").display()
+                    Text("Oliver").display()
+                    Text("Toby").display()
+
+                    enter_to_continue()
 
                 elif choices == 4:
+                    online_status = Status("fetching online users...")
+                    Window.place_rule("Online Users")
+                    online_status.start()
+                    players = ItemList(content=self.server.API.get_online_players())
+                    online_status.stop()
+                    players.list_content(False)
+                    enter_to_continue()
+
+                elif choices == 5:
+                    display_changelog(self.version)
+
+                elif choices == 6:
                     in_game = False
             except ValueError:
                 WarningText("Number please...").display()

@@ -31,7 +31,7 @@ class Status:
         self.status.start()
 
     def stop(self):
-        time.sleep(0.5)
+        #time.sleep(0.5)
         self.status.stop()
 
     def modify_status(self, text="doing something", style="dots"):

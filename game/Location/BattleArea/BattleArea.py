@@ -139,31 +139,40 @@ class BattleArea(Area):
                     for artifact in family1.artifacts:
                         artifacts_to_choose_from.append(artifact)
 
-        while points > 0:
-            if len(artifacts_to_choose_from) < 0:
+        if len(artifacts_to_choose_from) > 0:
+            for i in range(int((self.get_difficulty(difficulty) + 1))):
+                artifact = random.choice(artifacts_to_choose_from)
+                star_rating = 1
+                if points >= 25:
+                    star_rating = 1
+                    points -= 25
+
+                elif points >= 50:
+                    star_rating = 2
+                    points -= 50
+
+                elif points >= 100:
+                    star_rating = 3
+                    points -= 100
+
+                elif points >= 150:
+                    star_rating = 4
+                    points -= 150
+
+                elif points >= 200:
+                    star_rating = 5
+                    points -= 200
+
+                artifact = artifact(StarRating(star_rating))
+                artifacts.append(artifact)
+
+            for i in range(int((self.get_difficulty(difficulty) + 1))):
                 artifact = random.choice(artifacts_to_choose_from)
                 star_rating = generate_artifact_star_rating(self.get_difficulty(difficulty) + 1)
                 artifact = artifact(StarRating(star_rating))
                 artifacts.append(artifact)
-                if star_rating == 1:
-                    points -= 25
 
-                elif star_rating == 2:
-                    points -= 45
-
-                elif star_rating == 3:
-                    points -= 65
-
-                elif star_rating == 4:
-                    points -= 75
-
-                else:
-                    points -= 100
-
-            else:
-                break
-
-        return artifacts
+            return artifacts
 
     @staticmethod
     def results(percentage, money=0, xp=0, artifacts=None):
@@ -174,7 +183,9 @@ class BattleArea(Area):
              f"{xp}xp\n").display()
         if artifacts is not None:
             print("\tartifacts")
-            Text(artifacts.list_content()).display()
+            for artifact in artifacts.content:
+                Text(artifact).display()
+
         enter_to_continue()
         raise EndException
 
@@ -243,14 +254,18 @@ class BattleArea(Area):
                             for effect in character_effects:
                                 effect.affect(character)
                     else:
-                        self.results(percentage, money, xp)
+                        if self.is_runnable:
+                            self.results(percentage, money, xp)
+                        else:
+                            WarningText("Not a valid option!").display()
+
                     turn_counter += 1
 
                 enemies_killed += 1
                 calculate_percentage()
 
             for artifact in artifacts.content:
-                inventory.artifact_list.artifacts.append(artifact)
+                inventory.artifact_list.add(artifact)
 
             self.results(percentage, money, xp, artifacts)
         except EndException:

@@ -79,23 +79,5 @@ class CharacterList:
 
         load_data_status.stop()
 
-    def list_characters(self):
-        while True:
-            try:
-                x = 1
-                for character in self.characters:
-                    Text(f"{x}. {character.name} {character.star_rating} {character.experience.display_level()}").display()
-                    x += 1
-
-                Text(f"{x}. back").display()
-                num = get_int("select a character\n")
-                return self.characters[num - 1]
-            except IndexError:
-                break
-
-    def give_character_json_list(self):
-        data = []
-        for character in self.characters:
-            data.append(character.jsonify())
-
-        return data
+    def give_item_list(self):
+        return ItemList(content_type=Character, content=self.characters)

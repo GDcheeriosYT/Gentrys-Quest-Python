@@ -4,6 +4,7 @@ from .Locations.Iowa.Iowa import Iowa
 from .Locations.Nigeria.Nigeria import Nigeria
 from .Locations.Ohio.Ohio import Ohio
 from .Locations.China.China import China
+from .Locations.GentrysHouse.GentrysHouse import GentrysHouseLocation
 
 # graphics packages
 from Graphics.Status import Status
@@ -33,7 +34,8 @@ class LocationContentManager:
             Iowa(),
             Nigeria(),
             Ohio(),
-            China()
+            China(),
+            GentrysHouseLocation()
         ]
         load_status.stop()
 

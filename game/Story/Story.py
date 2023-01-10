@@ -30,7 +30,7 @@ class Story:
                 event.start(character, inventory, content)
 
             elif isinstance(event, Artifact):
-                inventory.artifact_list.artifacts.append(event)
+                inventory.artifact_list.add(event)
                 Text(f"You have recieved {event}\n"
                      f"Go to {Text('manage artifacts', Style(text_style=['bold'])).raw_output()} to equip it").display()
                 enter_to_continue()

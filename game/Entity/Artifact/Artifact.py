@@ -59,7 +59,7 @@ class Artifact(Entity):
     experience = None
 
     def __init__(self, name, star_rating=StarRating(), family=None, main_attribute=None, attributes=None,
-                 experience=None):
+                 experience=None, display_info=True):
         super().__init__(name=name, description="description", star_rating=star_rating, experience=experience)
         if attributes is None:
             attributes = []
@@ -72,6 +72,7 @@ class Artifact(Entity):
         for attribute in self.attributes:
             attribute.handle_value(self.star_rating.value)
         self.experience.limit = self.star_rating.value * 4
+        self.display_info = display_info
         self.settings = [
             StringSetting("name", self.name),
             NumberSetting("star rating", self.star_rating.value, 1, 5),
@@ -84,7 +85,8 @@ class Artifact(Entity):
         if self.experience.level < self.star_rating.value * 4:
             self.experience.level += amount
             self.experience.xp = 0
-            print(f"Your artifact is now level {self.experience.level}!")
+            if self.display_info:
+                print(f"Your artifact is now level {self.experience.level}!")
             if self.experience.level % 4 == 0:
                 self.add_new_attribute()
             self.main_attribute.experience.level = self.experience.level
@@ -92,11 +94,13 @@ class Artifact(Entity):
         else:
             WarningText("Artifact is max level!").display()
 
-        enter_to_continue()
+        if self.display_info:
+            enter_to_continue()
 
     def add_new_attribute(self):
         new_attribute = Buff(experience=Experience(1))
-        InfoText(f"^{new_attribute.attribute_type.name}{'%' if new_attribute.is_percent else ''}^").display()
+        if self.display_info:
+            InfoText(f"^{new_attribute.attribute_type.name}{'%' if new_attribute.is_percent else ''}^").display()
         for attribute in self.attributes:
             if (new_attribute.attribute_type == attribute.attribute_type) and (
                     new_attribute.is_percent == attribute.is_percent):

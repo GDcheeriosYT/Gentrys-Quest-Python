@@ -75,7 +75,7 @@ class Entity:
     def add_xp(self, amount):
         def xp(amount):
             difference = self.experience.get_xp_required(self.star_rating.value) - self.experience.xp
-            while amount > difference:
+            while amount >= difference:
                 if difference == 0:
                     break
                 amount -= difference
